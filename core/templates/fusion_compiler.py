@@ -250,10 +250,11 @@ class FusionCompiler:
                     blur_tool.SetInput("Length", 0.0, rs + hold_end)
                     blur_tool.SetInput("Length", peak, rs + total_frames)
 
+            re = rs + total_frames
             if hasattr(blur_tool, "Length") and hasattr(blur_tool.Length, "SetExpression"):
                 blur_tool.Length.SetExpression(
-                    f"{peak:.4f} * math.exp(-math.max(0, time - comp.RenderStart) * 0.35) + "
-                    f"{peak:.4f} * math.exp(-math.max(0, comp.RenderEnd - time) * 0.35)"
+                    f"{peak:.4f} * math.exp(-math.max(0, time - {rs}) * 0.35) + "
+                    f"{peak:.4f} * math.exp(-math.max(0, {re} - time) * 0.35)"
                 )
         except Exception as exc:
             print(f"[Motion Resolve] Could not key template motion blur: {exc}")
@@ -1105,10 +1106,11 @@ class FusionCompiler:
         # 2. Set dynamic expressions for DaVinci Resolve Fusion real-time playback
         in_f_fl = float(in_frames)
         out_f_fl = float(out_frames)
-        p_in = f"math.max(0, math.min(1, (time - comp.RenderStart) / {in_f_fl}))"
+        re = rs + total_frames
+        p_in = f"math.max(0, math.min(1, (time - {rs}) / {in_f_fl}))"
         ease_in = f"(1.0 - math.pow(2, -10 * ({p_in})))"
 
-        p_out = f"math.max(0, math.min(1, (comp.RenderEnd - time) / {out_f_fl}))"
+        p_out = f"math.max(0, math.min(1, ({re} - time) / {out_f_fl}))"
         ease_out = f"(1.0 - math.pow(({p_out}), 3))"
 
         in_y_expr = f"({dy0:.4f} * (1.0 - {ease_in}))"
@@ -1125,7 +1127,7 @@ class FusionCompiler:
             if hasattr(xf_tool, "Size") and hasattr(xf_tool.Size, "SetExpression"):
                 xf_tool.Size.SetExpression(size_expr)
 
-        blend_expr = f"math.min(1.0, math.max(0.0, (time - comp.RenderStart) / {in_f_fl}), math.max(0.0, (comp.RenderEnd - time) / {out_f_fl}))"
+        blend_expr = f"math.min(1.0, math.max(0.0, (time - {rs}) / {in_f_fl}), math.max(0.0, ({re} - time) / {out_f_fl}))"
         if hasattr(xf_tool, "Blend") and hasattr(xf_tool.Blend, "SetExpression"):
             xf_tool.Blend.SetExpression(blend_expr)
 
