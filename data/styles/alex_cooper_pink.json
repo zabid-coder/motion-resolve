@@ -1,0 +1,46 @@
+{
+  "id": "alex_cooper_pink",
+  "name": "New One \u00b7 Magenta Hero",
+  "category": "Tutorial Inspired",
+  "text": "MIGHT\nBE",
+  "font": "Avenir Next Condensed",
+  "style": "Heavy",
+  "size": 0.088,
+  "character_spacing": 0.98,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.3,
+  "color": [
+    0.97,
+    0.94,
+    0.9,
+    1.0
+  ],
+  "accent_color": [
+    0.9,
+    0.08,
+    0.53,
+    1.0
+  ],
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.1,
+    0.015,
+    0.055,
+    0.6
+  ],
+  "shadow_softness": 0.04,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ],
+  "box_enabled": false,
+  "animation_in": "pop_in",
+  "animation_out": "slide_down",
+  "use_2color": true,
+  "main_word": "MIGHT",
+  "hero_font": "Pinyon Script",
+  "hero_style": "Regular",
+  "hero_size_multiplier": 1.18
+}

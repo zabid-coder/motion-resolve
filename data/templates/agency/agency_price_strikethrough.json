@@ -1,0 +1,477 @@
+{
+  "id": "agency_price_strikethrough",
+  "name": "Conversion Anchor — Price Strikethrough",
+  "category": "Agency / Social",
+  "description": "High-converting ecommerce price comparison with strike line and punchy discounted hero price.",
+  "tags": [
+    "pricing",
+    "ecommerce",
+    "discount",
+    "conversion",
+    "sales",
+    "social"
+  ],
+  "aspect_ratios": [
+    "9:16",
+    "16:9",
+    "1:1"
+  ],
+  "duration_default": 4.0,
+  "min_hold": 2.5,
+  "in_duration": 0.6,
+  "out_duration": 0.35,
+  "parameters": [
+    {
+      "id": "callout",
+      "name": "Offer Tag",
+      "type": "string",
+      "default": "LIMITED SPECIAL OFFER",
+      "category": "Text"
+    },
+    {
+      "id": "old_price",
+      "name": "Original Price",
+      "type": "string",
+      "default": "$1,200",
+      "category": "Text"
+    },
+    {
+      "id": "new_price",
+      "name": "Sale Price",
+      "type": "string",
+      "default": "$299",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Sale Price Color",
+      "type": "color",
+      "default": [
+        0.0,
+        1.0,
+        0.502,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "plate_enabled",
+      "name": "Background Plate",
+      "type": "boolean",
+      "default": true,
+      "category": "Style"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.3,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "price_plate",
+      "type": "shape_rect",
+      "name": "Price Card Plate",
+      "props": {
+        "width": 0.86,
+        "height": 0.22,
+        "color": "token:bg_plate",
+        "corner_radius": 14,
+        "role": "plate",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "border_color": [
+          0.26,
+          0.25,
+          0.34,
+          0.65
+        ],
+        "border_width": 1.2
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.35,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.35,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tag_text",
+      "type": "text",
+      "name": "Offer Tag",
+      "props": {
+        "text": "param:callout",
+        "font": "token:font_body",
+        "size": 0.036,
+        "weight": "Bold",
+        "color": "token:accent",
+        "alignment": "center",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": 0.065
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.33999999999999997,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "old_price_text",
+      "type": "text",
+      "name": "Original Price",
+      "props": {
+        "text": "param:old_price",
+        "font": "token:font_heading",
+        "size": 0.065,
+        "weight": "Demi",
+        "color": [
+          0.65,
+          0.65,
+          0.7,
+          0.75
+        ],
+        "alignment": "center",
+        "center_x": 0.34,
+        "center_y": "param:pos_y",
+        "offset_y": -0.018
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.24,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.4,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.24,
+              "value": 0.65,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.5,
+              "value": 1.08,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.5800000000000001,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.82,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strike_line",
+      "type": "shape_line",
+      "name": "Red Strike Line",
+      "props": {
+        "width": 0.16,
+        "height": 0.005,
+        "color": [
+          0.95,
+          0.22,
+          0.25,
+          0.95
+        ],
+        "center_x": 0.34,
+        "center_y": "param:pos_y",
+        "offset_y": -0.018
+      },
+      "motion_tracks": [
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.28,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "new_price_text",
+      "type": "text",
+      "name": "Discounted Price",
+      "props": {
+        "text": "param:new_price",
+        "font": "token:font_heading",
+        "size": 0.098,
+        "weight": "Bold",
+        "color": "param:accent_color",
+        "alignment": "center",
+        "center_x": 0.66,
+        "center_y": "param:pos_y",
+        "offset_y": -0.018
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.32,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.48,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.32,
+              "value": 0.65,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.5800000000000001,
+              "value": 1.08,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.66,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.82,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

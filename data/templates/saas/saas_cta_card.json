@@ -1,0 +1,375 @@
+{
+  "id": "saas_cta_card",
+  "name": "CTA Button Card",
+  "category": "SaaS / Tech",
+  "description": "Vercel / Stripe style URL and primary button call-to-action.",
+  "tags": [
+    "saas",
+    "cta",
+    "button",
+    "url",
+    "action"
+  ],
+  "duration_default": 4.5,
+  "min_hold": 2.0,
+  "in_duration": 0.55,
+  "out_duration": 0.35,
+  "parameters": [
+    {
+      "id": "cta_text",
+      "name": "CTA Text",
+      "type": "string",
+      "default": "START YOUR FREE TRIAL",
+      "category": "Text"
+    },
+    {
+      "id": "url",
+      "name": "Website URL",
+      "type": "string",
+      "default": "motionresolve.com",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.5,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "cta_plate",
+      "type": "shape_rect",
+      "name": "CTA Card Plate",
+      "props": {
+        "role": "plate",
+        "width": 0.62,
+        "height": 0.18,
+        "corner_radius": 14,
+        "color": "token:bg_plate",
+        "border": "token:border",
+        "border_color": [
+          0.26,
+          0.25,
+          0.34,
+          0.65
+        ],
+        "border_width": 1.2
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -0.06,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": -0.05,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "type": "text",
+      "name": "CTA",
+      "props": {
+        "text": "param:cta_text",
+        "font": "token:font_heading",
+        "size": 0.068,
+        "weight": "Bold",
+        "color": "token:text_primary",
+        "character_spacing": 1.05
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.2,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.36,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.2,
+              "value": 0.65,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.46,
+              "value": 1.08,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.54,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.82,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "url",
+      "type": "text",
+      "name": "URL",
+      "props": {
+        "text": "param:url",
+        "font": "JetBrains Mono",
+        "size": 0.038,
+        "weight": "Medium",
+        "color": "token:accent",
+        "character_spacing": 1.04
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": -0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.52,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line",
+      "type": "shape_line",
+      "name": "Hairline",
+      "props": {
+        "width": 0.24,
+        "height": 0.002,
+        "color": "token:accent"
+      },
+      "motion_tracks": [
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.28,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

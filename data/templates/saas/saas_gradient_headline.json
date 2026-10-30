@@ -1,0 +1,121 @@
+{
+  "id": "saas_gradient_headline",
+  "name": "Gradient Tech Headline",
+  "category": "SaaS / Tech",
+  "description": "Vercel / Next.js launch style headline with punchy modern typography.",
+  "tags": [
+    "saas",
+    "gradient",
+    "headline",
+    "launch"
+  ],
+  "duration_default": 4.0,
+  "min_hold": 1.8,
+  "in_duration": 0.5,
+  "out_duration": 0.32,
+  "parameters": [
+    {
+      "id": "headline",
+      "name": "Main Headline",
+      "type": "string",
+      "default": "THE FUTURE OF MOTION DESIGN",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.5,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "headline",
+      "type": "text",
+      "name": "Headline",
+      "props": {
+        "text": "param:headline",
+        "font": "token:font_heading",
+        "size": 0.082,
+        "weight": "Bold",
+        "color": "token:text_primary",
+        "character_spacing": 1.05
+      },
+      "motion_tracks": [
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.28,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

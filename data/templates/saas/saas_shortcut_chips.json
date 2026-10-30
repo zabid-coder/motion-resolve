@@ -1,0 +1,293 @@
+{
+  "id": "saas_shortcut_chips",
+  "name": "Shortcut Chips ⌘K",
+  "category": "SaaS / Tech",
+  "description": "Hardware keycap look (⌘ K) with action label micro-interaction.",
+  "tags": [
+    "saas",
+    "keyboard",
+    "shortcut",
+    "command"
+  ],
+  "duration_default": 3.8,
+  "min_hold": 1.8,
+  "in_duration": 0.45,
+  "out_duration": 0.3,
+  "parameters": [
+    {
+      "id": "shortcut",
+      "name": "Shortcut Keys",
+      "type": "string",
+      "default": "⌘ + K TO SEARCH",
+      "category": "Text"
+    },
+    {
+      "id": "action",
+      "name": "Action Description",
+      "type": "string",
+      "default": "Access all commands and presets instantly",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.25,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "chip_plate",
+      "type": "shape_rect",
+      "name": "Keycap Plate",
+      "props": {
+        "role": "plate",
+        "width": 0.58,
+        "height": 0.16,
+        "corner_radius": 12,
+        "color": "token:bg_plate",
+        "border": "token:border",
+        "border_color": [
+          0.26,
+          0.25,
+          0.34,
+          0.65
+        ],
+        "border_width": 1.2
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.06,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": 0.05,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "keys",
+      "type": "text",
+      "name": "Keys",
+      "props": {
+        "text": "param:shortcut",
+        "font": "JetBrains Mono",
+        "size": 0.074,
+        "weight": "Bold",
+        "color": "token:accent",
+        "character_spacing": 1.06
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.33999999999999997,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "type": "text",
+      "name": "Action",
+      "props": {
+        "text": "param:action",
+        "font": "token:font_body",
+        "size": 0.042,
+        "weight": "Regular",
+        "color": "token:text_secondary",
+        "character_spacing": 1.02
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.52,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

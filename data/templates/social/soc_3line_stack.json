@@ -1,0 +1,200 @@
+{
+  "id": "soc_3line_stack",
+  "name": "3-Line Punchy Stack",
+  "category": "Social / Reels 9:16",
+  "description": "Three-line punchy short-form caption stack with line-by-line reveal.",
+  "tags": [
+    "social",
+    "reels",
+    "stack",
+    "shorts",
+    "fast"
+  ],
+  "duration_default": 3.5,
+  "min_hold": 1.6,
+  "in_duration": 0.45,
+  "out_duration": 0.28,
+  "parameters": [
+    {
+      "id": "l1",
+      "name": "Line 1",
+      "type": "string",
+      "default": "THIS IS THE",
+      "category": "Text"
+    },
+    {
+      "id": "l2",
+      "name": "Line 2 (Hero)",
+      "type": "string",
+      "default": "NUMBER ONE MISTAKE",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.5,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "l2",
+      "type": "text",
+      "name": "Line 2",
+      "props": {
+        "text": "param:l2",
+        "size": 0.082
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": -0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.44,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "l1",
+      "type": "text",
+      "name": "Line 1",
+      "props": {
+        "text": "param:l1",
+        "size": 0.048
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.33999999999999997,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": -0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

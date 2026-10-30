@@ -1,0 +1,126 @@
+{
+  "id": "min_corner_tag",
+  "name": "Corner Index Tag",
+  "category": "Minimal Clean",
+  "description": "Unobtrusive corner label with category and index timecode.",
+  "tags": [
+    "minimal",
+    "corner",
+    "index",
+    "hud"
+  ],
+  "duration_default": 4.0,
+  "min_hold": 2.0,
+  "in_duration": 0.5,
+  "out_duration": 0.3,
+  "parameters": [
+    {
+      "id": "tag_text",
+      "name": "Tag Label",
+      "type": "string",
+      "default": "CASE STUDY // 04",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.84,
+      "min_val": 0.1,
+      "max_val": 0.9,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "tag",
+      "type": "text",
+      "name": "Tag",
+      "props": {
+        "text": "param:tag_text",
+        "font": "Avenir",
+        "size": 0.044,
+        "weight": "Medium",
+        "color": [
+          0.88,
+          0.86,
+          0.82,
+          1.0
+        ],
+        "character_spacing": 1.1
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": -0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.44,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

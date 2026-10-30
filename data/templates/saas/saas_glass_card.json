@@ -1,0 +1,380 @@
+{
+  "id": "saas_glass_card",
+  "name": "Frosted Glass Feature",
+  "category": "SaaS / Tech",
+  "description": "A restrained translucent title card with a clear headline, quiet supporting line, and a single warm hairline. The tint is theme-aware; it does not blur footage behind the title.",
+  "tags": [
+    "saas",
+    "glass-inspired",
+    "frosted",
+    "title card",
+    "minimal",
+    "modern"
+  ],
+  "duration_default": 4.6,
+  "min_hold": 2.4,
+  "in_duration": 0.58,
+  "out_duration": 0.36,
+  "parameters": [
+    {
+      "id": "card_title",
+      "name": "Card Title",
+      "type": "string",
+      "default": "REAL-TIME COLLABORATION",
+      "category": "Text"
+    },
+    {
+      "id": "card_desc",
+      "name": "Card Description",
+      "type": "string",
+      "default": "Sync changes with team members seamlessly",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.5,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "glass_plate",
+      "type": "shape_rect",
+      "name": "Translucent Plate",
+      "props": {
+        "role": "plate",
+        "width": 0.72,
+        "height": 0.24,
+        "corner_radius": 12,
+        "center_x": 0.5,
+        "center_y": 0.5,
+        "color": "token:bg_plate",
+        "border_color": [
+          0.26,
+          0.25,
+          0.34,
+          0.65
+        ],
+        "border_width": 1.2
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -0.06,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": -0.05,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "name": "Title",
+      "props": {
+        "text": "param:card_title",
+        "size": 0.073,
+        "font": "token:font_heading",
+        "weight": "Demi",
+        "alignment": "center",
+        "text_width": 0.68,
+        "center_x": 0.5,
+        "center_y": 0.55,
+        "color": "token:text_primary"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.33999999999999997,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": -0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "desc",
+      "type": "text",
+      "name": "Description",
+      "props": {
+        "text": "param:card_desc",
+        "size": 0.038,
+        "font": "token:font_body",
+        "weight": "Regular",
+        "alignment": "center",
+        "text_width": 0.64,
+        "center_x": 0.5,
+        "center_y": 0.43,
+        "color": "token:text_secondary"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": -0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.52,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "accent_line",
+      "type": "shape_line",
+      "name": "Hairline",
+      "props": {
+        "width": 0.28,
+        "height": 0.003,
+        "color": "token:accent",
+        "center_x": 0.5,
+        "center_y": 0.49
+      },
+      "motion_tracks": [
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.28,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

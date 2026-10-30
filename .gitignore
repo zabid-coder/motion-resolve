@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+._*
+.venv/
+venv/
+*.mp4
+scratch/
+.superpowers/
+*.rar

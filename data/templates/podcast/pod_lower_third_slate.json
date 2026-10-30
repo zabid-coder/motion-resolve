@@ -1,0 +1,369 @@
+{
+  "id": "pod_lower_third_slate",
+  "name": "Frosted Signal — Speaker ID",
+  "category": "Podcast",
+  "description": "A calm, glass-inspired speaker slate with clear name/role scale, warm hairline detail, and a measured editorial reveal. Uses a translucent tint rather than heavy opaque blocks.",
+  "tags": [
+    "podcast",
+    "lower third",
+    "interview",
+    "glass-inspired",
+    "editorial",
+    "speaker id"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ],
+  "duration_default": 4.2,
+  "min_hold": 2.6,
+  "in_duration": 0.58,
+  "out_duration": 0.32,
+  "parameters": [
+    {
+      "id": "name",
+      "name": "Guest Name",
+      "type": "string",
+      "default": "ZARA KHAN",
+      "category": "Text",
+      "description": "Full name of the speaker or guest"
+    },
+    {
+      "id": "role",
+      "name": "Title / Role",
+      "type": "string",
+      "default": "Creative Director · Studio North",
+      "category": "Text",
+      "description": "Professional title or organization"
+    },
+    {
+      "id": "social",
+      "name": "Social Handle",
+      "type": "string",
+      "default": "@zara.studio",
+      "category": "Text",
+      "description": "Optional social handle or tag"
+    },
+    {
+      "id": "plate_enabled",
+      "name": "Backing Plate",
+      "type": "boolean",
+      "default": true,
+      "category": "Style",
+      "description": "Enable translucent dark backdrop plate"
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent Color",
+      "type": "color",
+      "default": [
+        0.78,
+        0.56,
+        0.34,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.22,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "backing_plate",
+      "type": "shape_rect",
+      "name": "Backing Plate",
+      "props": {
+        "width": 0.78,
+        "height": 0.16,
+        "color": "token:bg_plate",
+        "corner_radius": 16,
+        "role": "plate",
+        "center_x": 0.49,
+        "center_y": "param:pos_y",
+        "border_color": [
+          0.26,
+          0.25,
+          0.34,
+          0.65
+        ],
+        "border_width": 1.2
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.45,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.35,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "accent_bar",
+      "type": "shape_line",
+      "name": "Accent Vertical Bar",
+      "props": {
+        "width": 0.003,
+        "height": 0.105,
+        "color": "param:accent_color",
+        "center_x": 0.105,
+        "center_y": "param:pos_y"
+      },
+      "motion_tracks": [
+        {
+          "property": "scale_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.35,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guest_name",
+      "type": "text",
+      "name": "Guest Name",
+      "props": {
+        "text": "param:name",
+        "font": "token:font_heading",
+        "font_bn": "token:font_heading_bn",
+        "size": 0.057,
+        "weight": "Demi",
+        "color": "token:text_primary",
+        "alignment": "left",
+        "text_width": 0.75,
+        "center_x": 0.16,
+        "center_y": "param:pos_y",
+        "offset_y": 0.06
+      },
+      "motion_tracks": [
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.08,
+              "value": -0.025,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.55,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.08,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.35,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.35,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guest_role",
+      "type": "text",
+      "name": "Guest Role",
+      "props": {
+        "text": "param:role",
+        "font": "token:font_body",
+        "font_bn": "token:font_body_bn",
+        "size": 0.035,
+        "weight": "Regular",
+        "color": "token:text_secondary",
+        "alignment": "left",
+        "text_width": 0.48,
+        "center_x": 0.16,
+        "center_y": "param:pos_y",
+        "offset_y": -0.07
+      },
+      "motion_tracks": [
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.16,
+              "value": -0.015,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.6,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.16,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.45,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.35,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "social_handle",
+      "type": "text",
+      "name": "Social Handle",
+      "props": {
+        "text": "param:social",
+        "font": "token:font_mono",
+        "size": 0.029,
+        "weight": "Medium",
+        "color": "param:accent_color",
+        "alignment": "right",
+        "text_width": 0.34,
+        "center_x": 0.85,
+        "center_y": "param:pos_y",
+        "offset_y": -0.045
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.2,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.5,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.35,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

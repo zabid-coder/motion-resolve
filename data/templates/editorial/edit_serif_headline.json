@@ -1,0 +1,294 @@
+{
+  "id": "edit_serif_headline",
+  "name": "Editorial Serif Headline",
+  "category": "Editorial / Magazine",
+  "description": "Print magazine layout in motion. Large serif headline with staggered line reveals and category tag.",
+  "tags": [
+    "editorial",
+    "magazine",
+    "serif",
+    "fashion",
+    "luxury"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ],
+  "duration_default": 4.5,
+  "min_hold": 2.2,
+  "in_duration": 0.65,
+  "out_duration": 0.35,
+  "parameters": [
+    {
+      "id": "line1",
+      "name": "Headline Line 1",
+      "type": "string",
+      "default": "THE TIMELESS",
+      "category": "Text"
+    },
+    {
+      "id": "line2",
+      "name": "Headline Line 2",
+      "type": "string",
+      "default": "AESTHETICS",
+      "category": "Text"
+    },
+    {
+      "id": "tag",
+      "name": "Issue / Tag",
+      "type": "string",
+      "default": "ISSUE NO. 04 • OCTOBER 2026",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.5,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "category_tag",
+      "type": "text",
+      "name": "Category Tag",
+      "props": {
+        "text": "param:tag",
+        "font": "token:font_body",
+        "font_bn": "token:font_body_bn",
+        "size": 0.026,
+        "weight": "Bold",
+        "color": "token:accent"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": -0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.44,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "headline_1",
+      "type": "text",
+      "name": "Headline Line 1",
+      "props": {
+        "text": "param:line1",
+        "font": "token:font_heading",
+        "font_bn": "token:font_heading_bn",
+        "size": 0.078,
+        "weight": "Bold",
+        "color": "token:text_primary"
+      },
+      "motion_tracks": [
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.28,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "headline_2",
+      "type": "text",
+      "name": "Headline Line 2",
+      "props": {
+        "text": "param:line2",
+        "font": "token:font_heading",
+        "font_bn": "token:font_heading_bn",
+        "size": 0.078,
+        "weight": "Bold",
+        "color": "token:text_primary"
+      },
+      "motion_tracks": [
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.28,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "bengali_pro_doc",
+  "name": "\u09ac\u09be\u0982\u09b2\u09be \u00b7 \u09aa\u09cd\u09b0\u09ab\u09c7\u09b6\u09a8\u09be\u09b2 \u09a1\u0995\u09c1\u09ae\u09c7\u09a8\u09cd\u099f\u09be\u09b0\u09bf",
+  "category": "Bengali / Multilingual",
+  "text": "\u0987\u09a4\u09bf\u09b9\u09be\u09b8\u09c7\u09b0 \u09aa\u09be\u09a4\u09be \u09a5\u09c7\u0995\u09c7",
+  "font": "Hind Siliguri",
+  "style": "SemiBold",
+  "hero_style": "Bold",
+  "size": 0.084,
+  "hero_size_multiplier": 1.15,
+  "character_spacing": 1.02,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.25,
+  "color": [
+    0.98,
+    0.98,
+    0.98,
+    1.0
+  ],
+  "accent_color": [
+    0.82,
+    0.12,
+    0.2,
+    1.0
+  ],
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.0,
+    0.0,
+    0.0,
+    0.6
+  ],
+  "shadow_softness": 0.04,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ],
+  "box_enabled": true,
+  "box_color": [
+    0.08,
+    0.08,
+    0.1,
+    0.88
+  ],
+  "box_extend_x": 0.04,
+  "box_extend_y": 0.025,
+  "box_round": 0.25,
+  "box_level": 1,
+  "animation_in": "slide_up",
+  "animation_out": "slide_down",
+  "use_2color": true,
+  "main_word": "\u0987\u09a4\u09bf\u09b9\u09be\u09b8\u09c7\u09b0",
+  "hero_font": "Kohinoor Bangla"
+}

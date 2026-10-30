@@ -1,0 +1,50 @@
+{
+  "id": "fintech_emerald",
+  "name": "Stat Callout Emerald",
+  "category": "Brand / Corporate",
+  "text": "REVENUE +142%",
+  "font": "Menlo",
+  "style": "Regular",
+  "size": 0.076,
+  "character_spacing": 1.06,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.28,
+  "color": [
+    0.78,
+    0.87,
+    0.78,
+    1
+  ],
+  "glow_enabled": false,
+  "glow_amount": 0.5,
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "box_enabled": true,
+  "box_color": [
+    0.09,
+    0.16,
+    0.13,
+    0.9
+  ],
+  "box_extend_x": 0.038,
+  "box_extend_y": 0.022,
+  "box_round": 0.25,
+  "box_level": 1,
+  "animation_in": "slide_up",
+  "animation_out": "slide_down",
+  "shadow_color": [
+    0.02,
+    0.06,
+    0.04,
+    0.58
+  ],
+  "shadow_softness": 0.04,
+  "hero_font": "Syne",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.12,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ]
+}

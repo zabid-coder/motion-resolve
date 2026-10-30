@@ -1,0 +1,53 @@
+{
+  "id": "iman_gadzhi_luxury",
+  "name": "Editorial Luxury Serif",
+  "category": "Cinematic",
+  "text": "THE ART OF FOCUS",
+  "font": "Didot",
+  "style": "Regular",
+  "size": 0.078,
+  "character_spacing": 1.08,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.22,
+  "color": [
+    0.97,
+    0.93,
+    0.85,
+    1
+  ],
+  "stroke_enabled": false,
+  "stroke_color": [
+    0.12,
+    0.1,
+    0.08,
+    0.9
+  ],
+  "stroke_thickness": 0.012,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.08,
+    0.05,
+    0.03,
+    0.56
+  ],
+  "shadow_softness": 0.05,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ],
+  "box_enabled": false,
+  "animation_in": "slide_up",
+  "animation_out": "slide_down",
+  "accent_color": [
+    0.72,
+    0.54,
+    0.34,
+    1
+  ],
+  "use_2color": true,
+  "main_word": "FOCUS",
+  "hero_font": "Playfair Display",
+  "hero_style": "Italic",
+  "hero_size_multiplier": 1.14
+}

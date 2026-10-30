@@ -1,0 +1,39 @@
+{
+  "id": "bounce_pop",
+  "name": "EM Bouncy \u00b7 Soft Impact",
+  "category": "Tutorial Inspired",
+  "text": "EASY\nMOTION",
+  "font": "Avenir Next Condensed",
+  "style": "Heavy",
+  "size": 0.09,
+  "character_spacing": 0.96,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.3,
+  "color": [
+    0.97,
+    0.95,
+    0.9,
+    1.0
+  ],
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.03,
+    0.025,
+    0.03,
+    0.6
+  ],
+  "shadow_softness": 0.04,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ],
+  "box_enabled": false,
+  "animation_in": "bounce_up",
+  "animation_out": "fade",
+  "use_2color": false,
+  "hero_font": "Pinyon Script",
+  "hero_style": "Regular",
+  "hero_size_multiplier": 1.18
+}

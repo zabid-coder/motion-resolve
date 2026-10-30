@@ -1,0 +1,300 @@
+{
+  "id": "soc_hook_pop",
+  "name": "Viral Hook Pop-In",
+  "category": "Social / Reels 9:16",
+  "description": "Punchy 9:16 vertical hook with accent highlight box and rapid 0.18s pop-in entry.",
+  "tags": [
+    "social",
+    "reels",
+    "tiktok",
+    "shorts",
+    "hook",
+    "viral"
+  ],
+  "aspect_ratios": [
+    "9:16",
+    "1:1",
+    "16:9"
+  ],
+  "duration_default": 3.0,
+  "min_hold": 1.5,
+  "in_duration": 0.45,
+  "out_duration": 0.28,
+  "parameters": [
+    {
+      "id": "hook",
+      "name": "Hook Headline",
+      "type": "string",
+      "default": "STOP SCROLLING",
+      "category": "Text"
+    },
+    {
+      "id": "sub",
+      "name": "Follow-Up Line",
+      "type": "string",
+      "default": "The #1 secret to 1M views",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.35,
+      "min_val": 0.25,
+      "max_val": 0.8,
+      "step": 0.02,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "hook_box",
+      "type": "shape_rect",
+      "name": "Hook Highlight Box",
+      "props": {
+        "width": 0.58,
+        "height": 0.1,
+        "color": "token:accent",
+        "corner_radius": 16,
+        "center_y": "param:pos_y",
+        "offset_y": 0.05,
+        "border_color": [
+          0.26,
+          0.25,
+          0.34,
+          0.65
+        ],
+        "border_width": 1.2
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.06,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": 0.05,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hook_text",
+      "type": "text",
+      "name": "Hook Text",
+      "props": {
+        "text": "param:hook",
+        "font": "token:font_heading",
+        "font_bn": "token:font_heading_bn",
+        "size": 0.058,
+        "weight": "Bold",
+        "color": [
+          0.08,
+          0.08,
+          0.1,
+          1.0
+        ]
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.33999999999999997,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sub_text",
+      "type": "text",
+      "name": "Follow-Up Text",
+      "props": {
+        "text": "param:sub",
+        "font": "token:font_body",
+        "font_bn": "token:font_body_bn",
+        "size": 0.038,
+        "weight": "Bold",
+        "color": "token:text_primary"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.52,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

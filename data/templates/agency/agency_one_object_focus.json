@@ -1,0 +1,317 @@
+{
+  "id": "agency_one_object_focus",
+  "name": "Hero Word Focal — Sans Header & Script Hero",
+  "category": "Agency / Social",
+  "description": "80/20 Dual-font rule in action: Bold uppercase Sans eyebrow with flowing Script hero word and body anchor.",
+  "tags": [
+    "dual font",
+    "script hero",
+    "focal point",
+    "hierarchy",
+    "viral",
+    "reels"
+  ],
+  "aspect_ratios": [
+    "9:16",
+    "16:9",
+    "1:1"
+  ],
+  "duration_default": 4.2,
+  "min_hold": 2.5,
+  "in_duration": 0.6,
+  "out_duration": 0.35,
+  "parameters": [
+    {
+      "id": "top_label",
+      "name": "Top Label",
+      "type": "string",
+      "default": "RULE OF THUMB",
+      "category": "Text"
+    },
+    {
+      "id": "hero_word",
+      "name": "Script Hero Word",
+      "type": "string",
+      "default": "Consistency",
+      "category": "Text"
+    },
+    {
+      "id": "description",
+      "name": "Bottom Anchor",
+      "type": "string",
+      "default": "beats occasional perfection every single time.",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent Color",
+      "type": "color",
+      "default": [
+        1.0,
+        0.333,
+        0.0,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.32,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "top_sans",
+      "type": "text",
+      "name": "Top Sans Eyebrow",
+      "props": {
+        "text": "param:top_label",
+        "font": "token:font_heading",
+        "size": 0.038,
+        "weight": "Bold",
+        "color": "param:accent_color",
+        "character_spacing": 1.08,
+        "alignment": "center",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": 0.075
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.44,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "middle_script",
+      "type": "text",
+      "name": "Middle Script Hero",
+      "props": {
+        "text": "param:hero_word",
+        "font": "Pinyon Script",
+        "size": 0.098,
+        "weight": "Regular",
+        "color": "token:text_primary",
+        "alignment": "center",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": 0.0
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.33999999999999997,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.48,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bottom_desc",
+      "type": "text",
+      "name": "Bottom Body Anchor",
+      "props": {
+        "text": "param:description",
+        "font": "token:font_body",
+        "size": 0.04,
+        "weight": "Medium",
+        "color": "token:text_secondary",
+        "alignment": "center",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": -0.07
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.38,
+              "value": 1.0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0.035,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.52,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.04,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
