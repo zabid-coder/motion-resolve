@@ -468,36 +468,22 @@ class ResolveBridge:
                 tl.AddTrack("video")
                 curr_tracks = tl.GetTrackCount("video")
 
-            # Temporarily lock all tracks below target_track to guarantee 100% footage safety
-            was_locked = {}
-            if hasattr(tl, "GetIsTrackLocked") and hasattr(tl, "SetTrackLock"):
-                for tr in range(1, target_track):
-                    try:
-                        was_locked[tr] = tl.GetIsTrackLocked("video", tr)
-                        tl.SetTrackLock("video", tr, True)
-                    except Exception:
-                        pass
-
             try:
                 tl.SetMarkInOut(int(start_frame), int(end_frame))
                 item = tl.InsertFusionTitleIntoTimeline("Text+")
                 tl.ClearMarkInOut()
 
-                if item and target_track > 1:
-                    try:
-                        track_info = item.GetTrackTypeAndIndex() if hasattr(item, "GetTrackTypeAndIndex") else None
-                        actual_track = track_info[1] if track_info and len(track_info) > 1 else None
-                        if actual_track != target_track and hasattr(tl, "MoveItems"):
-                            tl.MoveItems([item], {"trackIndex": int(target_track), "startFrame": float(start_frame)})
-                    except Exception as move_err:
-                        print(f"[ResolveAPI] Note on moving item to Track V{target_track}: {move_err}")
-            finally:
-                if hasattr(tl, "SetTrackLock"):
-                    for tr, locked_state in was_locked.items():
+                if item:
+                    track_info = item.GetTrackTypeAndIndex() if hasattr(item, "GetTrackTypeAndIndex") else None
+                    actual_track = track_info[1] if track_info and len(track_info) > 1 else None
+                    if actual_track != target_track and hasattr(tl, "MoveItems"):
                         try:
-                            tl.SetTrackLock("video", tr, locked_state)
-                        except Exception:
-                            pass
+                            tl.MoveItems([item], {"trackIndex": int(target_track), "startFrame": float(start_frame)})
+                        except Exception as move_err:
+                            print(f"[ResolveAPI] Note on moving item to Track V{target_track}: {move_err}")
+            except Exception as insert_err:
+                print(f"[ResolveAPI] Insert error: {insert_err}")
+                item = None
 
             return item
         except Exception as e:

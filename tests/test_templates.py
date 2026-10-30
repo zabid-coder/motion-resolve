@@ -227,7 +227,7 @@ class TestTypographyEngine(unittest.TestCase):
         # 3. Verify reveal_mask parameters
         self.assertEqual(reveal_mask.Center, [0.5, 0.25])
         self.assertEqual(reveal_mask.Width, 0.95)
-        self.assertAlmostEqual(reveal_mask.Height, 0.239, places=2)
+        self.assertAlmostEqual(reveal_mask.Height, 0.227, places=2)
 
         # 4. Verify MR_Transform.EffectMask is connected to reveal_mask.Mask
         mr_trans = tools["MR_Transform"]

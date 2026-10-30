@@ -46,7 +46,9 @@
       "name": "Quote",
       "props": {
         "text": "param:quote",
-        "size": 0.078
+        "size": 0.052,
+        "text_width": 0.8,
+        "alignment": "center"
       },
       "motion_tracks": [
         {

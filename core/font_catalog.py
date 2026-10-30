@@ -18,7 +18,7 @@ FONT_FALLBACKS = {
     "script": ("Pinyon Script", "Snell Roundhand", "Zapfino", "Brush Script MT", "Baskerville", "Georgia"),
     "sans": ("Inter", "Montserrat", "Manrope", "League Spartan", "Avenir Next", "Helvetica Neue", "Arial"),
     "mono": ("Menlo", "Monaco", "Andale Mono", "Courier New"),
-    "bengali": ("Kohinoor Bangla", "Bangla Sangam MN", "Bangla MN", "Arial Unicode MS"),
+    "bengali": ("Nirmala UI", "Vrinda", "Shonar Bangla", "Hind Siliguri", "Kalpurush", "SolaimanLipi", "Kohinoor Bangla", "Bangla Sangam MN", "Bangla MN", "Arial Unicode MS"),
 }
 
 
@@ -45,7 +45,10 @@ def _discover_system_fonts():
                             name = winreg.EnumValue(key, i)[0]
                             clean = name.split("(")[0].strip()
                             if clean:
-                                found.add(clean)
+                                for part in clean.split("&"):
+                                    p = part.strip()
+                                    if p:
+                                        found.add(p)
                 except Exception:
                     pass
     except Exception:
@@ -107,3 +110,21 @@ def installed_font_options(include_bengali=True):
             ordered.append(actual)
     ordered.extend(name for name in families if name not in ordered)
     return ordered
+
+
+def normalize_font_style(weight: str, font_family: str = "") -> str:
+    """Maps CSS-like font weights (e.g. Medium, Semibold) to universally valid DaVinci Resolve styles."""
+    w = str(weight or "").strip().lower()
+    if w in ("bold", "heavy", "black", "extrabold", "bolder"):
+        return "Bold"
+    elif w in ("italic", "oblique"):
+        return "Italic"
+    elif w in ("bold italic", "bolditalic"):
+        return "Bold Italic"
+    elif w in ("medium", "semibold", "semi-bold", "demibold"):
+        fam = str(font_family or "").lower()
+        if "arial" in fam or "helvetica" in fam or "segoe" in fam or "menlo" in fam:
+            return "Bold" if "semi" in w else "Regular"
+        return "Regular"
+    return "Regular"
+

@@ -41,13 +41,12 @@ APP_DIR = r"{app_dir}"
 BAT_PATH = r"{app_dir}\\Launch Motion Resolve.bat"
 
 if sys.platform == "win32":
-    # Break away from DaVinci Resolve Job Object via WMI process creation
-    ps_cmd = "(Get-CimClass Win32_Process | Invoke-CimMethod -MethodName Create -Arguments @{{CommandLine='cmd.exe /c \\"" + BAT_PATH + "\\"\'}})"
+    # Break away from DaVinci Resolve Job Object via Windows Explorer Shell on interactive desktop
     try:
-        subprocess.run(["powershell", "-NoProfile", "-WindowStyle", "Hidden", "-Command", ps_cmd], check=False, creationflags=0x08000000)
+        subprocess.run(["explorer.exe", BAT_PATH], check=False)
         print("[Motion Resolve] Companion panel launched successfully beside DaVinci Resolve!")
     except Exception as e:
-        os.system(f'start "" "{{BAT_PATH}}"')
+        os.system(f'explorer.exe "{{BAT_PATH}}"')
 else:
     from core.paths import find_system_python
     python_bin = find_system_python()
@@ -60,8 +59,7 @@ else:
 
     lua_launcher_content = f'''-- Motion Resolve Universal Native Launcher
 local bat = "{bat_escaped}"
-local ps_cmd = 'powershell -NoProfile -WindowStyle Hidden -Command "(Get-CimClass Win32_Process | Invoke-CimMethod -MethodName Create -Arguments @{{CommandLine=\\\'cmd.exe /c \\"' .. bat .. '\\"\\\'}})"'
-os.execute(ps_cmd)
+os.execute('explorer.exe "' .. bat .. '"')
 print("[Motion Resolve] Companion panel launched successfully beside DaVinci Resolve!")
 '''
 

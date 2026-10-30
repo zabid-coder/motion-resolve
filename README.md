@@ -89,29 +89,48 @@ Motion Resolve features a 4-tab workflow tailored for short-form creators, comme
 
 ---
 
+### 5. Multi-Aspect Ratio Responsive Intelligence (9:16 Vertical, 1:1 Square, 16:9 Landscape)
+- **Automatic Timeline Resolution Detection**: Dynamically inspects DaVinci Resolve timeline resolution and aspect ratio via `ResolveBridge.get_timeline_resolution()`.
+- **Dynamic Font & Geometry Scaling**:
+  - **Vertical 9:16 (1080x1920)**: Automatically scales typography and backing plates by `(1080 / frame_h) * 1.15` for maximum mobile readability on TikTok, Instagram Reels, and YouTube Shorts.
+  - **Square 1:1 (1080x1080)**: Automatically scales by `(1080 / frame_h) * 0.90` with proportional card padding.
+  - **Landscape 16:9 (1920x1080)**: Standard broadcast 1.0x layout with cinematic margins.
+- **Mobile Safe Zone Enforcer**:
+  - Automatically shifts lower thirds and badges into the broadcast-safe region (`pos_y >= 0.32` on vertical) to prevent overlapping with TikTok/Reels UI buttons, captions, and account handles.
+- **Dynamic Card & Plate Padding**:
+  - Backing plates and cards dynamically compute their bounding height (`min_needed_h`) to maintain generous 15-20% internal padding around multi-line text stacks and divider lines across all screen formats.
+- **Optical Multi-Line Stack Centering**:
+  - Multi-line badges, lower-third slates, and two-color presets automatically center their text hierarchy inside backing plates without border clipping.
+- **Non-Destructive Track 1 Footage Safety**:
+  - Protects user camera footage on Track 1. All title and template insertions automatically target Track 2 or higher (`tl.MoveItems` to Track 2+).
+
+---
+
 ## 🚀 Running Motion Resolve
 
 ### Installation
-Run the installer to link the launcher into DaVinci Resolve Studio's script directories:
+Run the automated installer to link native Python and Lua launchers into DaVinci Resolve Studio:
 ```bash
-python3 install.py
+py -3.12 install.py
 ```
-This links the scripts to:
+This automatically registers native launchers in:
 - **macOS**: `~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/Comp/` and `Edit/`
-- **Windows**: `%APPDATA%\Blackmagic Design\DaVinci Resolve\Support\Fusion\Scripts\Comp\` and `Edit\`
+- **Windows User**: `%APPDATA%\Blackmagic Design\DaVinci Resolve\Support\Fusion\Scripts\Comp\` and `Edit\`
+- **Windows System-Wide**: `%PROGRAMDATA%\Blackmagic Design\DaVinci Resolve\Fusion\Scripts\Utility\`
+- **Desktop Shortcut**: Creates `Launch Motion Resolve.bat` on your Desktop for 1-click startup.
 
 ### Launching in DaVinci Resolve Studio
 1. Open **DaVinci Resolve Studio 18, 19, or 21+**.
-2. Navigate to: **`Workspace > Scripts > Motion Resolve`** (or `CaptionForge`).
-3. The companion panel will launch immediately beside your viewer.
+2. Top menu: **`Workspace > Scripts > Motion Resolve`**.
+3. The companion panel launches immediately beside your reference viewer as an independent, non-blocking process.
 
-### Running Standalone for Testing
+### Running Standalone
 ```bash
-python3 ui_qt/main_window.py
+py -3.12 main.py
 ```
 
 ### Running Test Suite
 ```bash
-python3 -m unittest discover tests
+py -3.12 -m unittest discover tests
 ```
-All 60 automated unit tests verify animation math, template compilation, subtitle clamping, redo history, and typography normalization.
+All **103 automated unit tests** verify animation math, spline interpolation, responsive aspect ratios, template compilation, subtitle clamping, redo history, and typography normalization.

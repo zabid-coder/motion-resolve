@@ -25,7 +25,7 @@
       "id": "author",
       "name": "Attribution",
       "type": "string",
-      "default": "John Maeda • Laws of Simplicity",
+      "default": "John Maeda \u2022 Laws of Simplicity",
       "category": "Text"
     },
     {
@@ -46,7 +46,9 @@
       "name": "Quote Body",
       "props": {
         "text": "param:quote_text",
-        "size": 0.076
+        "size": 0.052,
+        "text_width": 0.8,
+        "alignment": "center"
       },
       "motion_tracks": [
         {

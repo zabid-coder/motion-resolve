@@ -36,33 +36,27 @@ class AutoGenerator:
         effect_in = anim_opts.get("in", style_dict.get("animation_in", "bounce_up"))
         effect_out = anim_opts.get("out", style_dict.get("animation_out", "slide_down"))
 
-        # Identify or create dedicated track for captions
+        # Identify or create dedicated track for captions (strictly Track 2+, never Track 1)
         target_track_idx = None
         orig_track_locks = {}
         total = len(cues)
         try:
             num_tracks = tl.GetTrackCount("video") or 0
-            if num_tracks > 0:
-                top_items = tl.GetItemListInTrack("video", num_tracks) or []
-                if len(top_items) > 0:
-                    if tl.AddTrack("video"):
-                        target_track_idx = tl.GetTrackCount("video")
-                    else:
-                        print("[AutoGenerator] Error: Top track has existing clips and AddTrack failed.")
-                        if progress_callback:
-                            progress_callback(0, total, "Error: Could not add a new dedicated video track.")
-                        return []
+            # Ensure at least 2 video tracks exist so Track 1 footage is never touched
+            while num_tracks < 2 and hasattr(tl, "AddTrack"):
+                tl.AddTrack("video")
+                num_tracks = tl.GetTrackCount("video") or 2
+
+            top_items = tl.GetItemListInTrack("video", num_tracks) or []
+            if len(top_items) > 0:
+                if hasattr(tl, "AddTrack") and tl.AddTrack("video"):
+                    target_track_idx = tl.GetTrackCount("video")
                 else:
                     target_track_idx = num_tracks
             else:
-                if tl.AddTrack("video"):
-                    target_track_idx = 1
-                else:
-                    if progress_callback:
-                        progress_callback(0, total, "Error: Could not create initial video track.")
-                    return []
+                target_track_idx = max(2, num_tracks)
 
-            # Lock other video tracks so Resolve's InsertFusionTitle strictly routes to target track
+            # Lock all tracks below target_track_idx so Resolve strictly protects lower tracks
             if target_track_idx:
                 for t in range(1, (tl.GetTrackCount("video") or 0) + 1):
                     if hasattr(tl, "GetIsTrackLocked"):
@@ -121,9 +115,11 @@ class AutoGenerator:
                     if end_frame <= start_frame:
                         end_frame = start_frame + 30
 
-                    tl.SetMarkInOut(start_frame, end_frame)
-                    item = tl.InsertFusionTitleIntoTimeline("Text+")
-                    tl.ClearMarkInOut()
+                    item = self.bridge.insert_text_plus_title(start_frame=start_frame, end_frame=end_frame)
+                    if not item:
+                        tl.SetMarkInOut(start_frame, end_frame)
+                        item = tl.InsertFusionTitleIntoTimeline("Text+")
+                        tl.ClearMarkInOut()
 
                     if item:
                         # Verify track placement if API supports it

@@ -47,10 +47,12 @@
       "props": {
         "text": "param:source",
         "font": "token:font_heading",
-        "size": 0.072,
+        "size": 0.05,
         "weight": "Bold",
         "color": "token:text_primary",
-        "character_spacing": 1.08
+        "character_spacing": 1.08,
+        "text_width": 0.82,
+        "alignment": "center"
       },
       "motion_tracks": [
         {
@@ -126,10 +128,12 @@
       "props": {
         "text": "param:subject",
         "font": "token:font_body",
-        "size": 0.042,
+        "size": 0.038,
         "weight": "Regular",
         "color": "token:text_secondary",
-        "character_spacing": 1.03
+        "character_spacing": 1.03,
+        "text_width": 0.82,
+        "alignment": "center"
       },
       "motion_tracks": [
         {

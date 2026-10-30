@@ -50,8 +50,8 @@ class TestStripeBenchmark(unittest.TestCase):
         compiler._compile_layer_motion(mock_tool_pill, amount_pill, [0.86, 0.28], timing, base_size=0.056)
 
         pill_calls = mock_tool_pill.SetInput.call_args_list
-        size_frames = {c[0][2] for c in pill_calls if c[0][0] == "Size"}
-        alpha_frames = {c[0][2] for c in pill_calls if c[0][0] == "Alpha1"}
+        size_frames = {c[0][2] for c in pill_calls if c[0][0] == "Size" and len(c[0]) > 2}
+        alpha_frames = {c[0][2] for c in pill_calls if c[0][0] == "Alpha1" and len(c[0]) > 2}
 
         self.assertTrue(any(0 <= f <= timing["in_frames"] for f in size_frames), "Size must be keyframed in 'in' phase")
         self.assertTrue(any(timing["in_frames"] < f < timing["hold_end_frame"] for f in size_frames), "Size must be set during hold phase")
@@ -66,7 +66,7 @@ class TestStripeBenchmark(unittest.TestCase):
             mock_layer_tool = MagicMock()
             compiler._compile_layer_motion(mock_layer_tool, layer_spec, [0.5, 0.28], timing)
             center_calls = [c for c in mock_layer_tool.SetInput.call_args_list if c[0][0] == "Center"]
-            center_frames = {c[0][2] for c in center_calls}
+            center_frames = {c[0][2] for c in center_calls if len(c[0]) > 2}
             self.assertTrue(any(0 <= f <= timing["in_frames"] for f in center_frames), f"{layer_spec.id} Center must be keyframed in 'in' phase")
             self.assertTrue(any(timing["hold_end_frame"] <= f <= timing["total_frames"] for f in center_frames), f"{layer_spec.id} Center must be keyframed in 'out' phase")
 

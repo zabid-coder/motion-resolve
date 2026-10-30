@@ -82,8 +82,8 @@
       "type": "shape_rect",
       "name": "Backing Plate",
       "props": {
-        "width": 0.78,
-        "height": 0.16,
+        "width": 0.82,
+        "height": 0.17,
         "color": "token:bg_plate",
         "corner_radius": 16,
         "role": "plate",
@@ -137,10 +137,10 @@
       "type": "shape_line",
       "name": "Accent Vertical Bar",
       "props": {
-        "width": 0.003,
-        "height": 0.105,
+        "width": 0.005,
+        "height": 0.11,
         "color": "param:accent_color",
-        "center_x": 0.105,
+        "center_x": 0.115,
         "center_y": "param:pos_y"
       },
       "motion_tracks": [
@@ -186,14 +186,14 @@
         "text": "param:name",
         "font": "token:font_heading",
         "font_bn": "token:font_heading_bn",
-        "size": 0.057,
+        "size": 0.052,
         "weight": "Demi",
         "color": "token:text_primary",
         "alignment": "left",
         "text_width": 0.75,
-        "center_x": 0.16,
+        "center_x": 0.145,
         "center_y": "param:pos_y",
-        "offset_y": 0.06
+        "offset_y": 0.032
       },
       "motion_tracks": [
         {
@@ -254,14 +254,14 @@
         "text": "param:role",
         "font": "token:font_body",
         "font_bn": "token:font_body_bn",
-        "size": 0.035,
+        "size": 0.032,
         "weight": "Regular",
         "color": "token:text_secondary",
         "alignment": "left",
         "text_width": 0.48,
-        "center_x": 0.16,
+        "center_x": 0.145,
         "center_y": "param:pos_y",
-        "offset_y": -0.07
+        "offset_y": -0.034
       },
       "motion_tracks": [
         {
@@ -321,14 +321,14 @@
       "props": {
         "text": "param:social",
         "font": "token:font_mono",
-        "size": 0.029,
+        "size": 0.028,
         "weight": "Medium",
         "color": "param:accent_color",
         "alignment": "right",
         "text_width": 0.34,
-        "center_x": 0.85,
+        "center_x": 0.84,
         "center_y": "param:pos_y",
-        "offset_y": -0.045
+        "offset_y": -0.034
       },
       "motion_tracks": [
         {

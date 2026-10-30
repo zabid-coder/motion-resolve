@@ -13,6 +13,7 @@ from core.templates.bengali_engine import (
     contains_bengali, get_optical_scale, get_safe_line_height,
     to_bengali_numerals, resolve_font_for_script
 )
+from core.font_catalog import normalize_font_style
 
 
 class FusionCompiler:
@@ -101,8 +102,13 @@ class FusionCompiler:
 
         # 2. Retrieve or create pipeline tools
         tpl_tool = comp.FindTool("Template")
-        if not tpl_tool:
-            tpl_tool = comp.AddTool("TextPlus", 0, 0)
+        if tpl_tool and hasattr(tpl_tool, "Delete"):
+            try:
+                tpl_tool.Delete()
+            except Exception:
+                pass
+        tpl_tool = comp.AddTool("TextPlus", 0, 0)
+        if hasattr(tpl_tool, "SetAttrs"):
             tpl_tool.SetAttrs({"TOOLS_Name": "Template"})
 
         mr_trans = comp.FindTool("MR_Transform")
@@ -112,9 +118,29 @@ class FusionCompiler:
 
         media_out = comp.FindTool("MediaOut1")
 
+        # Aspect Ratio & Resolution Intelligence (16:9 Landscape vs. 9:16 Vertical vs. 1:1 Square)
+        frame_w, frame_h = (1920, 1080)
+        if self.bridge:
+            try:
+                frame_w, frame_h = self.bridge.get_timeline_resolution()
+            except Exception:
+                frame_w, frame_h = (1920, 1080)
+        ar_comp = float(frame_w) / float(frame_h) if frame_h > 0 else 1.7778
+        is_vert_comp = ar_comp < 0.85
+        scale_h_comp = (1080.0 / float(frame_h)) if frame_h > 0 else 1.0
+
         # Create or retrieve MR_RevealMask with dynamic layout-aware sizing
         pos_x = float(params.get("pos_x", 0.5))
         pos_y = float(params.get("pos_y", 0.28))
+        if is_vert_comp and pos_y < 0.28:
+            pos_y = max(0.32, pos_y + 0.08)
+            params["pos_y"] = pos_y
+        elif 0.85 <= ar_comp < 1.4 and pos_y < 0.24:
+            pos_y = max(0.26, pos_y + 0.04)
+            params["pos_y"] = pos_y
+        if is_vert_comp and pos_x > 0.58:
+            pos_x = 0.50
+            params["pos_x"] = pos_x
 
         needs_reveal_mask = getattr(template, "use_mask", False) or template.id in (
             "kin_masked_line", "min_underline_reveal", "kin_split_reveal", "pod_lower_third_slate"
@@ -129,12 +155,12 @@ class FusionCompiler:
             text_layers = [l for l in template.layers if l.type == LayerType.TEXT]
             box_layers = [l for l in template.layers if l.type in (LayerType.SHAPE_RECT, LayerType.SHAPE_PILL, LayerType.SHAPE_LINE)]
 
-            min_y = pos_y - 0.08
-            max_y = pos_y + 0.08
+            min_y = pos_y - (0.08 * scale_h_comp)
+            max_y = pos_y + (0.08 * scale_h_comp)
             for l in text_layers:
                 props = l.props or {}
                 off_y = float(self._resolve_value(props.get("offset_y", 0.0), params, theme))
-                sz = float(self._resolve_value(props.get("size", 0.075), params, theme))
+                sz = float(self._resolve_value(props.get("size", 0.075), params, theme)) * scale_h_comp
                 cy = pos_y + off_y
                 min_y = min(min_y, cy - sz * 0.75)
                 max_y = max(max_y, cy + sz * 0.75)
@@ -142,13 +168,13 @@ class FusionCompiler:
             for l in box_layers:
                 props = l.props or {}
                 off_y = float(self._resolve_value(props.get("offset_y", 0.0), params, theme))
-                h = float(self._resolve_value(props.get("height", 0.1), params, theme))
+                h = float(self._resolve_value(props.get("height", 0.1), params, theme)) * scale_h_comp
                 cy = pos_y + off_y
                 min_y = min(min_y, cy - h * 0.55)
                 max_y = max(max_y, cy + h * 0.55)
 
-            raw_height = (max_y - min_y) + 0.04
-            mask_height = max(0.22, min(0.85, round(raw_height, 3)))
+            raw_height = (max_y - min_y) + (0.04 * scale_h_comp)
+            mask_height = max(0.12, min(0.85, round(raw_height, 3)))
             calc_cy = (min_y + max_y) * 0.5
             mask_cy = pos_y if abs(calc_cy - pos_y) < 0.025 else round(calc_cy, 3)
 
@@ -311,16 +337,32 @@ class FusionCompiler:
                 return theme.get(tid, [1.0, 1.0, 1.0, 1.0])
         return val
 
-    def _layer_center(self, layer, params, default_x=0.5, default_y=0.28):
+    def _layer_center(self, layer, params, default_x=0.5, default_y=0.28, scale_h=1.0, is_vertical=False, is_square=False):
         props = layer.props if layer else {}
         x = float(self._resolve_value(props.get("center_x", default_x), params, {}))
-        y = float(self._resolve_value(props.get("center_y", default_y), params, {}))
-        y += float(self._resolve_value(props.get("offset_y", 0.0), params, {}))
+        has_explicit_cy = bool(layer and "center_y" in (layer.props or {}))
+        raw_y = self._resolve_value(props.get("center_y", default_y), params, {})
+        y = float(raw_y)
+
+        # Responsive Safe Zone & Relative Center Displacement for explicit authored center_y
+        if has_explicit_cy:
+            if abs(default_y - 0.5) < 0.05 and abs(y - 0.5) > 0.01 and scale_h < 1.0:
+                y = 0.5 + (y - 0.5) * scale_h
+            elif is_vertical and y < 0.28:
+                y = max(0.32, y + 0.08)
+            elif is_square and y < 0.24:
+                y = max(0.26, y + 0.04)
+
+        raw_off_y = float(self._resolve_value(props.get("offset_y", 0.0), params, {}))
+        y += raw_off_y * scale_h
         return max(0.0, min(1.0, x)), max(0.0, min(1.0, y))
 
     def _layer_alignment(self, layer):
         value = str((layer.props if layer else {}).get("alignment", "center")).lower()
-        return {"left": 0.0, "center": 1.0, "right": 2.0}.get(value, 1.0)
+        # In DaVinci Resolve TextPlus:
+        # HorizontalLeftCenterRight (H Anchor): Left = -1.0, Center = 0.0, Right = 1.0
+        # HorizontalJustificationNew: Left = -1.0, Center = 0.0, Right = 1.0
+        return {"left": -1.0, "center": 0.0, "right": 1.0}.get(value, 0.0)
 
     def _layer_line_spacing(self, layer):
         raw = (layer.props if layer else {}).get("line_spacing", 0.0)
@@ -488,6 +530,8 @@ class FusionCompiler:
                 tool.SetInput("Height", float(base_height * sy), f)
                 if rs > 0:
                     tool.SetInput("Height", float(base_height * sy), rs + f)
+            tool.SetInput("Height", float(base_height), in_frames)
+            tool.SetInput("Height", float(base_height))
 
         if is_mask and (in_sx or out_sx or in_s or out_s):
             use_sx_in = in_sx if in_sx else in_s
@@ -504,6 +548,8 @@ class FusionCompiler:
                 tool.SetInput("Width", float(base_width * sx), f)
                 if rs > 0:
                     tool.SetInput("Width", float(base_width * sx), rs + f)
+            tool.SetInput("Width", float(base_width), in_frames)
+            tool.SetInput("Width", float(base_width))
 
         if (is_text or not is_mask) and (in_s or out_s):
             for f in sample_frames:
@@ -518,6 +564,8 @@ class FusionCompiler:
                 tool.SetInput("Size", float(base_size * s), f)
                 if rs > 0:
                     tool.SetInput("Size", float(base_size * s), rs + f)
+            tool.SetInput("Size", float(base_size), in_frames)
+            tool.SetInput("Size", float(base_size))
 
         # 3. Translation on Center (relative stagger or direct layer track)
         if in_ty or out_ty or in_tx or out_tx or ref_ty_kfs or ref_tx_kfs or ref_out_ty_kfs or ref_out_tx_kfs:
@@ -550,6 +598,9 @@ class FusionCompiler:
                 tool.SetInput("Center", [cx + delta_x, cy + delta_y], f)
                 if rs > 0:
                     tool.SetInput("Center", [cx + delta_x, cy + delta_y], rs + f)
+            # Restore baseline static Center to designed hold anchor
+            tool.SetInput("Center", [cx, cy], in_frames)
+            tool.SetInput("Center", [cx, cy])
 
     def _build_layers(self, comp, tpl_tool, template: TemplateSpec, params: Dict[str, Any], theme: Dict[str, Any], timing: Optional[Dict[str, Any]] = None):
         """
@@ -566,7 +617,47 @@ class FusionCompiler:
         plate_layers = [l for l in box_layers if l.props.get("role") == "plate"]
         text_box_layers = [l for l in box_layers if l.props.get("role") != "plate"]
 
+        # Determine timeline format and aspect ratio
+        frame_w, frame_h = (1920, 1080)
+        if self.bridge:
+            try:
+                frame_w, frame_h = self.bridge.get_timeline_resolution()
+            except Exception:
+                frame_w, frame_h = (1920, 1080)
+
+        ar = float(frame_w) / float(frame_h) if frame_h > 0 else 1.7778
+        is_vertical = ar < 0.85
+        is_square = 0.85 <= ar < 1.4
+        scale_h = (1080.0 / float(frame_h)) if frame_h > 0 else 1.0
+
+        if is_vertical:
+            scale_font = scale_h * 1.15
+            scale_plate_w = 1.18
+            default_wrap_w = 0.88
+            radius_div = 35.0
+        elif is_square:
+            scale_font = scale_h * 0.90
+            scale_plate_w = 1.10
+            default_wrap_w = 0.84
+            radius_div = 25.0
+        else:
+            scale_font = scale_h * 1.0
+            scale_plate_w = 1.0
+            default_wrap_w = 0.80
+            radius_div = 20.0
+
         pos_y = float(params.get("pos_y", 0.28))
+        if is_vertical and pos_y < 0.28:
+            pos_y = max(0.32, pos_y + 0.08)
+            params["pos_y"] = pos_y
+        elif is_square and pos_y < 0.24:
+            pos_y = max(0.26, pos_y + 0.04)
+            params["pos_y"] = pos_y
+
+        pos_x = float(params.get("pos_x", 0.5))
+        if is_vertical and pos_x > 0.58:
+            pos_x = 0.50
+            params["pos_x"] = pos_x
 
         string_params = [p.id for p in template.parameters if p.type == ParameterType.STRING]
 
@@ -592,7 +683,7 @@ class FusionCompiler:
         text0 = self._resolve_value(t0.props.get("text", "") if t0 else "", params, theme)
         if not text0 and string_params:
             text0 = str(params.get(string_params[0], "SAMPLE TITLE"))
-        size0 = float(t0.props.get("size", 0.075) if t0 else 0.075)
+        size0 = float(t0.props.get("size", 0.075) if t0 else 0.075) * scale_font
 
         is_bn = contains_bengali(str(text0))
         default_font0 = theme.get("font_heading_bn" if is_bn else "font_heading", "Helvetica Neue")
@@ -604,22 +695,33 @@ class FusionCompiler:
 
         tpl_tool.SetInput("StyledText", str(text0))
         tpl_tool.SetInput("Font", str(font0))
-        tpl_tool.SetInput("Style", str(t0.props.get("weight", "Bold") if t0 else "Bold"))
+        tpl_tool.SetInput("Style", normalize_font_style(t0.props.get("weight", "Bold") if t0 else "Bold", font0))
         tpl_tool.SetInput("Size", float(size0))
         tpl_tool.SetInput("CharacterSpacingClone", float(t0.props.get("character_spacing", 1.0) if t0 else 1.0))
         align0 = self._layer_alignment(t0)
         tpl_tool.SetInput("HorizontalLeftCenterRight", align0)
         tpl_tool.SetInput("VerticalTopCenterBottom", 0.0)
         tpl_tool.SetInput("HorizontalJustificationNew", align0)
-        center0 = self._layer_center(t0, params, float(params.get("pos_x", 0.5)), pos_y)
+        has_t0_off = bool(t0 and "offset_y" in (t0.props or {}))
+        has_t1_off = bool(len(text_layers) > 1 and "offset_y" in (text_layers[1].props or {}))
+        stack_offset = 0.0
+        if plate_layers and len(text_layers) > 1 and not has_t0_off and not has_t1_off:
+            t1_size = float(text_layers[1].props.get("size", 0.045)) * scale_font
+            line_has_divider = bool(line_layers)
+            stack_offset = (size0 + t1_size) * (0.48 if line_has_divider else 0.40)
+            center0 = self._layer_center(t0, params, pos_x, pos_y + stack_offset, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
+        else:
+            center0 = self._layer_center(t0, params, pos_x, pos_y, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
         tpl_tool.SetInput("Center", list(center0))
         tpl_tool.SetInput("LineSpacingClone", float(self._layer_line_spacing(t0)))
+        wrap_w0 = default_wrap_w
         if t0 and "text_width" in (t0.props or {}):
-            try:
-                tpl_tool.SetInput("WrapWidth", float(t0.props["text_width"]))
-                tpl_tool.SetInput("WordWrap", 1)
-            except Exception:
-                pass
+            wrap_w0 = min(0.92, float(t0.props["text_width"]) * (1.10 if is_vertical else 1.0))
+        try:
+            tpl_tool.SetInput("WrapWidth", wrap_w0)
+            tpl_tool.SetInput("WordWrap", 1)
+        except Exception:
+            pass
 
         # Primary Text Color
         c0 = normalize_color(self._resolve_value(t0.props.get("color", "token:text_primary") if t0 else "token:text_primary", params, theme))
@@ -648,9 +750,21 @@ class FusionCompiler:
             tpl_tool.SetInput("Green4", float(col_b[1]))
             tpl_tool.SetInput("Blue4", float(col_b[2]))
             tpl_tool.SetInput("Alpha4", float(col_b[3]))
-            tpl_tool.SetInput("ExtendHorizontal4", float(box.props.get("width", 0.04)))
-            tpl_tool.SetInput("ExtendVertical4", float(box.props.get("height", 0.025)))
-            tpl_tool.SetInput("Round4", float(box.props.get("corner_radius", 4) / 20.0))
+            ext_w = float(box.props.get("width", 0.04))
+            ext_h = float(box.props.get("height", 0.025))
+            if is_vertical:
+                ext_w *= 1.35
+                ext_h *= scale_h * 1.15
+                round_r = float(box.props.get("corner_radius", 4)) / 30.0
+            elif is_square:
+                ext_w *= 1.10
+                ext_h *= scale_h
+                round_r = float(box.props.get("corner_radius", 4)) / 25.0
+            else:
+                round_r = float(box.props.get("corner_radius", 4)) / 20.0
+            tpl_tool.SetInput("ExtendHorizontal4", ext_w)
+            tpl_tool.SetInput("ExtendVertical4", ext_h)
+            tpl_tool.SetInput("Round4", round_r)
             tpl_tool.SetInput("Level4", 1)
         else:
             tpl_tool.SetInput("Enabled4", 0.0)
@@ -674,19 +788,25 @@ class FusionCompiler:
             plate_bg.SetInput("TopLeftBlue", float(plate_color[2]))
             plate_bg.SetInput("TopLeftAlpha", float(plate_color[3]))
 
+            raw_w = float(self._resolve_value(plate.props.get("width", 0.58), params, theme))
+            raw_h = float(self._resolve_value(plate.props.get("height", 0.15), params, theme))
+            plate_w = min(0.94, raw_w * scale_plate_w)
+            min_needed_h = (stack_offset * 2.2 + size0 * 0.5) * 1.35 if stack_offset > 0 else (raw_h * scale_h)
+            plate_h = max(raw_h * scale_h * (1.30 if is_vertical else (1.10 if is_square else 1.0)), min_needed_h)
+
             plate_mask = comp.AddTool("RectangleMask")
             plate_mask.SetAttrs({"TOOLS_Name": "MR_Layer_PlateMask"})
-            plate_mask.SetInput("Width", float(self._resolve_value(plate.props.get("width", 0.58), params, theme)))
-            plate_mask.SetInput("Height", float(self._resolve_value(plate.props.get("height", 0.15), params, theme)))
-            plate_mask.SetInput("CornerRadius", float(plate.props.get("corner_radius", 8)) / 20.0)
-            plate_center = self._layer_center(plate, params, center0[0], pos_y)
+            plate_mask.SetInput("Width", float(plate_w))
+            plate_mask.SetInput("Height", float(plate_h))
+            plate_mask.SetInput("CornerRadius", float(plate.props.get("corner_radius", 8)) / radius_div)
+            plate_center = self._layer_center(plate, params, center0[0], pos_y, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
             plate_mask.SetInput("Center", list(plate_center))
             plate_bg.EffectMask.ConnectTo(plate_mask.Mask)
 
             self._compile_layer_motion(
                 plate_mask, plate, plate_center, timing,
-                base_width=float(self._resolve_value(plate.props.get("width", 0.58), params, theme)),
-                base_height=float(self._resolve_value(plate.props.get("height", 0.15), params, theme)),
+                base_width=plate_w,
+                base_height=plate_h,
                 ref_ty_kfs=ref_ty_kfs,
                 ref_tx_kfs=ref_tx_kfs,
                 ref_out_ty_kfs=ref_out_ty_kfs,
@@ -707,33 +827,44 @@ class FusionCompiler:
             text1 = self._resolve_value(t1.props.get("text", ""), params, theme)
             if not text1 and len(string_params) > 1:
                 text1 = str(params.get(string_params[1], ""))
-            size1 = float(t1.props.get("size", 0.045))
+            size1 = float(t1.props.get("size", 0.045)) * scale_font
             is_bn1 = contains_bengali(str(text1))
             default_font1 = theme.get("font_body_bn" if is_bn1 else "font_body", "Helvetica Neue")
             font1 = self._layer_font(t1, params, theme, default_font1, "bengali" if is_bn1 else "body")
+            if is_bn1:
+                size1 *= get_optical_scale(str(text1))
+                if params.get("bengali_digits", False):
+                    text1 = to_bengali_numerals(str(text1))
 
             sub_tool = comp.AddTool("TextPlus")
             sub_tool.SetAttrs({"TOOLS_Name": "MR_Layer_Text2"})
             sub_tool.SetInput("StyledText", str(text1))
             sub_tool.SetInput("Font", str(font1))
-            sub_tool.SetInput("Style", str(t1.props.get("weight", "Medium")))
+            sub_tool.SetInput("Style", normalize_font_style(t1.props.get("weight", "Medium"), font1))
             sub_tool.SetInput("Size", float(size1))
             sub_tool.SetInput("CharacterSpacingClone", float(t1.props.get("character_spacing", 1.0)))
             align1 = self._layer_alignment(t1)
             sub_tool.SetInput("HorizontalLeftCenterRight", align1)
             sub_tool.SetInput("VerticalTopCenterBottom", 0.0)
             sub_tool.SetInput("HorizontalJustificationNew", align1)
-            # Optical stack position offset below primary text
-            offset_y = (size0 + size1) * 0.72
-            center1 = self._layer_center(t1, params, center0[0], pos_y - offset_y)
+            # Optical stack position offset below primary text (broadcast-safe generous hierarchy)
+            if plate_layers and not has_t0_off and not has_t1_off:
+                line_has_divider = bool(line_layers)
+                offset_y = stack_offset * (1.05 if line_has_divider else 1.0)
+                center1 = self._layer_center(t1, params, center0[0], pos_y - offset_y, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
+            else:
+                offset_y = (size0 + size1) * 0.95
+                center1 = self._layer_center(t1, params, center0[0], pos_y - offset_y, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
             sub_tool.SetInput("Center", list(center1))
             sub_tool.SetInput("LineSpacingClone", float(self._layer_line_spacing(t1)))
+            wrap_w1 = default_wrap_w
             if t1 and "text_width" in (t1.props or {}):
-                try:
-                    sub_tool.SetInput("WrapWidth", float(t1.props["text_width"]))
-                    sub_tool.SetInput("WordWrap", 1)
-                except Exception:
-                    pass
+                wrap_w1 = min(0.92, float(t1.props["text_width"]) * (1.10 if is_vertical else 1.0))
+            try:
+                sub_tool.SetInput("WrapWidth", wrap_w1)
+                sub_tool.SetInput("WordWrap", 1)
+            except Exception:
+                pass
 
             c1 = normalize_color(self._resolve_value(t1.props.get("color", "token:text_secondary"), params, theme))
             sub_tool.SetInput("Red1", float(c1[0]))
@@ -775,16 +906,20 @@ class FusionCompiler:
             text2 = self._resolve_value(t2.props.get("text", ""), params, theme)
             if not text2 and len(string_params) > 2:
                 text2 = str(params.get(string_params[2], ""))
-            size2 = float(t2.props.get("size", 0.036))
+            size2 = float(t2.props.get("size", 0.036)) * scale_font
             is_bn2 = contains_bengali(str(text2))
             default_font2 = theme.get("font_mono" if not is_bn2 else "font_body_bn", "Menlo")
             font2 = self._layer_font(t2, params, theme, default_font2, "bengali" if is_bn2 else "mono")
+            if is_bn2:
+                size2 *= get_optical_scale(str(text2))
+                if params.get("bengali_digits", False):
+                    text2 = to_bengali_numerals(str(text2))
 
             tag_tool = comp.AddTool("TextPlus")
             tag_tool.SetAttrs({"TOOLS_Name": "MR_Layer_Text3"})
             tag_tool.SetInput("StyledText", str(text2))
             tag_tool.SetInput("Font", str(font2))
-            tag_tool.SetInput("Style", str(t2.props.get("weight", "Regular")))
+            tag_tool.SetInput("Style", normalize_font_style(t2.props.get("weight", "Regular"), font2))
             tag_tool.SetInput("Size", float(size2))
             tag_tool.SetInput("CharacterSpacingClone", float(t2.props.get("character_spacing", 1.0)))
             align2 = self._layer_alignment(t2)
@@ -792,16 +927,18 @@ class FusionCompiler:
             tag_tool.SetInput("VerticalTopCenterBottom", 0.0)
             tag_tool.SetInput("HorizontalJustificationNew", align2)
             # Offset further down
-            offset_y2 = (size0 + 0.045 + size2) * 0.78
-            center2 = self._layer_center(t2, params, center0[0], pos_y - offset_y2)
+            offset_y2 = (size0 + size1 + size2) * 1.02 if "size1" in locals() else (size0 + 0.045 + size2) * 1.02
+            center2 = self._layer_center(t2, params, center0[0], pos_y - offset_y2, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
             tag_tool.SetInput("Center", list(center2))
             tag_tool.SetInput("LineSpacingClone", float(self._layer_line_spacing(t2)))
+            wrap_w2 = default_wrap_w
             if t2 and "text_width" in (t2.props or {}):
-                try:
-                    tag_tool.SetInput("WrapWidth", float(t2.props["text_width"]))
-                    tag_tool.SetInput("WordWrap", 1)
-                except Exception:
-                    pass
+                wrap_w2 = min(0.92, float(t2.props["text_width"]) * (1.10 if is_vertical else 1.0))
+            try:
+                tag_tool.SetInput("WrapWidth", wrap_w2)
+                tag_tool.SetInput("WordWrap", 1)
+            except Exception:
+                pass
 
             c2 = normalize_color(self._resolve_value(t2.props.get("color", "token:accent"), params, theme))
             tag_tool.SetInput("Red1", float(c2[0]))
@@ -832,6 +969,12 @@ class FusionCompiler:
             l_width = float(self._resolve_value(ll.props.get("width", 0.22), params, theme))
             l_height = float(self._resolve_value(ll.props.get("height", 0.003), params, theme))
 
+            if l_width >= l_height:
+                l_height *= scale_h
+                l_width = min(0.92, l_width * (1.15 if is_vertical else 1.0))
+            else:
+                l_height *= scale_h
+
             line_bg = comp.AddTool("Background")
             line_bg.SetAttrs({"TOOLS_Name": "MR_Layer_LineBg"})
             line_bg.SetInput("UseFrameFormatSettings", 1)
@@ -846,26 +989,30 @@ class FusionCompiler:
             line_mask.SetInput("Height", float(l_height))
             # Pro-grade anchor calculation for lines
             if "center_x" in (ll.props or {}):
-                line_x, line_y = self._layer_center(ll, params, center0[0], pos_y - (size0 * 0.48))
+                line_x, line_y = self._layer_center(ll, params, center0[0], pos_y - (size0 * 0.48), scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
             elif l_height > l_width:
                 # Vertical accent rule (e.g. Lower Third bar)
-                if align0 == 0.0:  # Left aligned
+                if align0 == -1.0:  # Left aligned
                     def_lx = center0[0] - 0.025
-                elif align0 == 2.0:  # Right aligned
+                elif align0 == 1.0:  # Right aligned
                     def_lx = center0[0] + 0.025
                 else:
                     def_lx = center0[0]
                 def_ly = pos_y - (offset_y * 0.5 if len(text_layers) > 1 else 0.0)
-                line_x, line_y = self._layer_center(ll, params, def_lx, def_ly)
+                line_x, line_y = self._layer_center(ll, params, def_lx, def_ly, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
             else:
                 # Horizontal divider / hairline
-                if align0 == 0.0:  # Left aligned
+                if align0 == -1.0:  # Left aligned
                     def_lx = center0[0] + (l_width * 0.5)
-                elif align0 == 2.0:  # Right aligned
+                elif align0 == 1.0:  # Right aligned
                     def_lx = center0[0] - (l_width * 0.5)
                 else:
                     def_lx = center0[0]
-                line_x, line_y = self._layer_center(ll, params, def_lx, pos_y - (size0 * 0.48))
+                if "center1" in locals() and center1:
+                    def_ly = (center0[1] + center1[1]) * 0.5
+                else:
+                    def_ly = pos_y - (size0 * 0.48)
+                line_x, line_y = self._layer_center(ll, params, def_lx, def_ly, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
             line_mask.SetInput("Center", [line_x, line_y])
             line_bg.EffectMask.ConnectTo(line_mask.Mask)
 
@@ -891,9 +1038,11 @@ class FusionCompiler:
         if other_shape_layers:
             for s_idx, shape_layer in enumerate(other_shape_layers, start=2):
                 col_s = normalize_color(self._resolve_value(shape_layer.props.get("color", "token:accent"), params, theme))
-                sw = float(self._resolve_value(shape_layer.props.get("width", 0.15), params, theme))
-                sh = float(self._resolve_value(shape_layer.props.get("height", 0.04), params, theme))
-                s_radius = float(shape_layer.props.get("corner_radius", 4)) / 20.0
+                raw_sw = float(self._resolve_value(shape_layer.props.get("width", 0.15), params, theme))
+                raw_sh = float(self._resolve_value(shape_layer.props.get("height", 0.04), params, theme))
+                sw = min(0.92, raw_sw * scale_plate_w)
+                sh = raw_sh * scale_h
+                s_radius = float(shape_layer.props.get("corner_radius", 4)) / radius_div
 
                 s_bg = comp.AddTool("Background")
                 s_bg.SetAttrs({"TOOLS_Name": f"MR_Layer_ShapeBg_{s_idx}"})
@@ -908,7 +1057,7 @@ class FusionCompiler:
                 s_mask.SetInput("Width", sw)
                 s_mask.SetInput("Height", sh)
                 s_mask.SetInput("CornerRadius", s_radius)
-                shape_x, shape_y = self._layer_center(shape_layer, params, center0[0], pos_y)
+                shape_x, shape_y = self._layer_center(shape_layer, params, center0[0], pos_y, scale_h=scale_h, is_vertical=is_vertical, is_square=is_square)
                 s_mask.SetInput("Center", [shape_x, shape_y])
                 s_bg.EffectMask.ConnectTo(s_mask.Mask)
 

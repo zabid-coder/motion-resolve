@@ -46,7 +46,9 @@
       "name": "Topic",
       "props": {
         "text": "param:topic",
-        "size": 0.076
+        "size": 0.052,
+        "text_width": 0.82,
+        "alignment": "center"
       },
       "motion_tracks": [
         {

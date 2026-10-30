@@ -39,7 +39,9 @@
       "name": "Caption",
       "props": {
         "text": "param:caption_text",
-        "size": 0.078
+        "size": 0.054,
+        "text_width": 0.8,
+        "alignment": "center"
       },
       "motion_tracks": [
         {

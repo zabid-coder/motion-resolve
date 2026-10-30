@@ -137,7 +137,7 @@ class TextPlusBuilder:
             # 2. Typography
             target_font = str(style.get("font", "Avenir Next"))
             try:
-                from core.font_catalog import resolve_available_font
+                from core.font_catalog import resolve_available_font, normalize_font_style
                 from core.templates.bengali_engine import contains_bengali, resolve_font_for_script
                 if contains_bengali(str(final_text)):
                     bn_font = style.get("font_bn") or "Kohinoor Bangla"
@@ -148,12 +148,41 @@ class TextPlusBuilder:
                 pass
             tool.SetInput("Font", target_font)
             if "style" in style:
-                tool.SetInput("Style", str(style["style"]))
+                tool.SetInput("Style", normalize_font_style(str(style["style"]), target_font))
+            # Aspect ratio adaptation (16:9 Landscape vs. 9:16 Vertical vs. 1:1 Square)
+            frame_w, frame_h = (1920, 1080)
+            if self.bridge:
+                try:
+                    frame_w, frame_h = self.bridge.get_timeline_resolution()
+                except Exception:
+                    frame_w, frame_h = (1920, 1080)
+
+            ar = float(frame_w) / float(frame_h) if frame_h > 0 else 1.7778
+            is_vertical = ar < 0.85
+            is_square = 0.85 <= ar < 1.4
+
+            scale_font = 1.0
+            scale_h = (1080.0 / float(frame_h)) if frame_h > 0 else 1.0
+            if is_vertical:
+                scale_font = scale_h * 1.15
+            elif is_square:
+                scale_font = scale_h * 0.90
+
             if "size" in style:
-                tool.SetInput("Size", float(style["size"]))
+                tool.SetInput("Size", float(style["size"]) * scale_font)
+
+            # Line spacing in TextPlus: 1.0 is default standard spacing.
+            # 0.0 collapses lines onto each other.
+            raw_line_spacing = float(style.get("line_spacing", 0.0))
+            if abs(raw_line_spacing) < 0.05:
+                eff_line_spacing = 1.05
+            elif raw_line_spacing > 0.4:
+                eff_line_spacing = raw_line_spacing
+            else:
+                eff_line_spacing = 1.0 + raw_line_spacing
 
             tool.SetInput("CharacterSpacingClone", float(style.get("character_spacing", 1.0)))
-            tool.SetInput("LineSpacingClone", float(style.get("line_spacing", 0.0)))
+            tool.SetInput("LineSpacingClone", float(eff_line_spacing))
 
             if "horizontal_anchor" in style:
                 h_anchor = float(style["horizontal_anchor"])
@@ -164,7 +193,19 @@ class TextPlusBuilder:
 
             cx = float(style.get("center_x", 0.5))
             cy = float(style.get("center_y", 0.28))
+            if is_vertical and cy < 0.28:
+                cy = max(0.32, cy + 0.08)
+            elif is_square and cy < 0.24:
+                cy = max(0.26, cy + 0.04)
             tool.SetInput("Center", [cx, cy])
+
+            # Auto-wrap so captions never clip the phone screen
+            wrap_w = 0.88 if is_vertical else 0.84 if is_square else 0.80
+            try:
+                tool.SetInput("WrapWidth", wrap_w)
+                tool.SetInput("WordWrap", 1)
+            except Exception:
+                pass
 
             # Dual-color text split if 2-Color is active
             comp = None
@@ -198,11 +239,11 @@ class TextPlusBuilder:
                 primary_center_y = cy
                 hero_center_y = cy
                 if len(lines) > 1:
-                    size = float(style.get("size", 0.075))
+                    size = float(style.get("size", 0.075)) * scale_font
                     raw_spacing = float(style.get("line_spacing", 0.0))
                     spacing = 1.0 if abs(raw_spacing) < 0.05 else (raw_spacing if raw_spacing > 0.3 else max(0.4, 1.0 + raw_spacing))
                     hero_scale = max(1.0, min(1.5, float(style.get("hero_size_multiplier", 1.0))))
-                    line_step = max(0.075, size * 1.15 * spacing * min(1.25, hero_scale))
+                    line_step = max(0.045, size * 1.15 * spacing * min(1.25, hero_scale))
                     remaining_indices = [i for i in range(len(lines)) if i != hero_idx]
                     primary_mid = (remaining_indices[0] + remaining_indices[-1]) * 0.5
                     block_mid = (len(lines) - 1) * 0.5
@@ -224,8 +265,17 @@ class TextPlusBuilder:
                 merge.Foreground.ConnectTo(hero_tool.Output)
 
                 mr_trans = comp.FindTool("MR_Transform")
+                media_out = comp.FindTool("MediaOut1")
+                if not media_out:
+                    for t in comp.GetToolList().values():
+                        if t.GetAttrs().get("TOOLS_RegID") == "MediaOutput":
+                            media_out = t
+                            break
+
                 if mr_trans:
                     mr_trans.Input.ConnectTo(merge.Output)
+                elif media_out:
+                    media_out.Input.ConnectTo(merge.Output)
 
                 hero_tool.SetInput("StyledText", "\n".join(hero_lines))
                 hero_requested_font = str(style.get("hero_font", target_font))
@@ -247,11 +297,16 @@ class TextPlusBuilder:
                 if "style" in style:
                     hero_tool.SetInput("Style", str(style["style"]))
                 if "size" in style:
-                    hero_tool.SetInput("Size", float(style["size"]) * max(1.0, min(1.5, float(style.get("hero_size_multiplier", 1.0)))))
+                    hero_tool.SetInput("Size", float(style["size"]) * scale_font * max(1.0, min(1.5, float(style.get("hero_size_multiplier", 1.0)))))
                 if style.get("hero_style"):
                     hero_tool.SetInput("Style", str(style["hero_style"]))
                 hero_tool.SetInput("CharacterSpacingClone", float(style.get("character_spacing", 1.0)))
-                hero_tool.SetInput("LineSpacingClone", float(style.get("line_spacing", 0.0)))
+                hero_tool.SetInput("LineSpacingClone", float(eff_line_spacing))
+                try:
+                    hero_tool.SetInput("WrapWidth", wrap_w)
+                    hero_tool.SetInput("WordWrap", 1)
+                except Exception:
+                    pass
                 # Optical alignment compensation for script typefaces
                 optical_offset_y = 0.0
                 try:
@@ -282,7 +337,7 @@ class TextPlusBuilder:
                     hero_tool.SetInput("Green2", float(sc[1]))
                     hero_tool.SetInput("Blue2", float(sc[2]))
                     hero_tool.SetInput("Alpha2", float(sc[3]) if len(sc) > 3 else 1.0)
-                    th = style.get("hero_stroke_thickness", style.get("stroke_thickness", 0.03))
+                    th = float(style.get("hero_stroke_thickness", style.get("stroke_thickness", 0.03))) * scale_h
                     hero_tool.SetInput("Thickness2", float(th))
                 else:
                     hero_tool.SetInput("Enabled2", 0)
@@ -311,10 +366,19 @@ class TextPlusBuilder:
                 hero_tool = comp.FindTool("HeroText")
                 merge = comp.FindTool("MR_TextMerge")
                 mr_trans = comp.FindTool("MR_Transform")
+                media_out = comp.FindTool("MediaOut1")
+                if not media_out:
+                    for t in comp.GetToolList().values():
+                        if t.GetAttrs().get("TOOLS_RegID") == "MediaOutput":
+                            media_out = t
+                            break
+
                 if hero_tool:
                     hero_tool.SetInput("StyledText", "")
                 if mr_trans:
                     mr_trans.Input.ConnectTo(tool.Output)
+                elif media_out:
+                    media_out.Input.ConnectTo(tool.Output)
                 if merge and hasattr(merge, "Background"):
                     try:
                         merge.Background.ConnectTo(tool.Output)
@@ -348,7 +412,7 @@ class TextPlusBuilder:
                 tool.SetInput("Green2", float(sc[1]))
                 tool.SetInput("Blue2", float(sc[2]))
                 tool.SetInput("Alpha2", float(sc[3]) if len(sc) > 3 else 1.0)
-                tool.SetInput("Thickness2", float(style.get("stroke_thickness", 0.03)))
+                tool.SetInput("Thickness2", float(style.get("stroke_thickness", 0.03)) * scale_h)
             else:
                 tool.SetInput("Enabled2", 0)
 
@@ -377,10 +441,26 @@ class TextPlusBuilder:
                 tool.SetInput("Green4", float(bc[1]))
                 tool.SetInput("Blue4", float(bc[2]))
                 tool.SetInput("Alpha4", float(bc[3]) if len(bc) > 3 else 0.85)
-                tool.SetInput("ExtendHorizontal4", float(style.get("box_extend_x", 0.04)))
-                tool.SetInput("ExtendVertical4", float(style.get("box_extend_y", 0.025)))
-                tool.SetInput("Round4", float(style.get("box_round", 0.25)))
-                tool.SetInput("Level4", int(style.get("box_level", 1)))
+                base_ext_x = float(style.get("box_extend_x", 0.04))
+                base_ext_y = float(style.get("box_extend_y", 0.025))
+                if is_vertical:
+                    ext_x = base_ext_x * 1.35
+                    ext_y = base_ext_y * scale_h * 1.15
+                    round_r = float(style.get("box_round", 0.25)) * 0.85
+                elif is_square:
+                    ext_x = base_ext_x * 1.10
+                    ext_y = base_ext_y * scale_h
+                    round_r = float(style.get("box_round", 0.25))
+                else:
+                    ext_x = base_ext_x
+                    ext_y = base_ext_y
+                    round_r = float(style.get("box_round", 0.25))
+                tool.SetInput("ExtendHorizontal4", ext_x)
+                tool.SetInput("ExtendVertical4", ext_y)
+                tool.SetInput("Round4", round_r)
+                # Shading Element 4 Level: 0 = Text (single unified card for all lines), 1 = Line, 2 = Word, 3 = Character
+                box_level = int(style.get("box_level", 0))
+                tool.SetInput("Level4", box_level)
             else:
                 tool.SetInput("Enabled4", 0)
 

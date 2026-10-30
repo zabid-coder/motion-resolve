@@ -40,7 +40,7 @@
       "props": {
         "text": "param:statement",
         "font": "Didot",
-        "size": 0.078,
+        "size": 0.052,
         "weight": "Regular",
         "color": [
           0.96,
@@ -48,7 +48,9 @@
           0.9,
           1.0
         ],
-        "character_spacing": 1.08
+        "character_spacing": 1.08,
+        "text_width": 0.8,
+        "alignment": "center"
       },
       "motion_tracks": [
         {

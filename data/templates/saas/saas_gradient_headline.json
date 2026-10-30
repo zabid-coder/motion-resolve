@@ -40,10 +40,12 @@
       "props": {
         "text": "param:headline",
         "font": "token:font_heading",
-        "size": 0.082,
+        "size": 0.054,
         "weight": "Bold",
         "color": "token:text_primary",
-        "character_spacing": 1.05
+        "character_spacing": 1.05,
+        "text_width": 0.82,
+        "alignment": "center"
       },
       "motion_tracks": [
         {
