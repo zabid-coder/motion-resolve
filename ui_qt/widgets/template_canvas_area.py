@@ -171,6 +171,62 @@ class TemplateCanvasArea(QFrame):
                 return float(first.value) + (float(second.value) - float(first.value)) * fraction
         return float(default_value)
 
+    def _layer_motion_state(self, layer):
+        """Evaluate authored motion for one layer at the current preview time."""
+        state = {"opacity": 1.0, "translate_x": 0.0, "translate_y": 0.0,
+                 "scale": 1.0, "scale_x": 1.0, "scale_y": 1.0}
+        if not layer or not getattr(layer, "motion_tracks", None):
+            return state
+
+        in_dur = max(0.01, getattr(self.template, "in_duration", 0.5))
+        out_dur = max(0.01, getattr(self.template, "out_duration", 0.5))
+        total_dur = max(in_dur + out_dur, getattr(self.template, "duration_default", 3.0))
+        out_start = max(in_dur, total_dur - out_dur)
+        t = max(0.0, min(total_dur, self.current_time))
+
+        tracks_by_property = {}
+        for track in layer.motion_tracks:
+            if track.keyframes:
+                tracks_by_property.setdefault(str(track.property).lower(), {})[str(track.phase).lower()] = track.keyframes
+
+        for prop, phases in tracks_by_property.items():
+            in_keys, hold_keys, out_keys = phases.get("in"), phases.get("hold"), phases.get("out")
+            if t < in_dur and in_keys:
+                value = self._sample_keyframes(in_keys, t, state.get(prop, 1.0))
+            elif t >= out_start and out_keys:
+                value = self._sample_keyframes(out_keys, min(out_dur, t - out_start), state.get(prop, 1.0))
+            elif hold_keys:
+                value = self._sample_keyframes(hold_keys, t - in_dur, state.get(prop, 1.0))
+            elif in_keys:
+                value = float(in_keys[-1].value)
+            elif out_keys:
+                value = float(out_keys[0].value)
+            else:
+                continue
+
+            if prop in ("alpha", "opacity"):
+                state["opacity"] = max(0.0, min(1.0, float(value)))
+            elif prop == "size":
+                state["scale"] = float(value)
+            elif prop in state:
+                state[prop] = float(value)
+
+        return state
+
+    @staticmethod
+    def _apply_layer_transform(painter, state, center, width, height):
+        """Apply a layer's own transform around its visual center."""
+        dx = float(state.get("translate_x", 0.0))
+        dy = float(state.get("translate_y", 0.0))
+        dx = dx * width if abs(dx) <= 1.0 else dx
+        dy = dy * height if abs(dy) <= 1.0 else dy
+        sx = float(state.get("scale", 1.0)) * float(state.get("scale_x", 1.0))
+        sy = float(state.get("scale", 1.0)) * float(state.get("scale_y", 1.0))
+        painter.setOpacity(max(0.0, min(1.0, float(state.get("opacity", 1.0)))))
+        painter.translate(center.x() + dx, center.y() - dy)
+        painter.scale(sx, sy)
+        painter.translate(-center.x(), -center.y())
+
     @staticmethod
     def _font_weight(layer, fallback=QFont.Weight.Medium):
         value = str(layer.props.get("weight", "") if layer else "").lower()
@@ -260,66 +316,11 @@ class TemplateCanvasArea(QFrame):
             mask_rect = QRectF(0, 0, w, h)
         self.last_mask_rect = mask_rect
 
-        # Authored motion tracks
-        motion_tracks = [track for layer in self.template.layers for track in layer.motion_tracks]
-        def first_track(prop, phase_name):
-            return next((track.keyframes for track in motion_tracks
-                         if track.property == prop and track.phase == phase_name and track.keyframes), [])
-        in_x, out_x = first_track("translate_x", "in"), first_track("translate_x", "out")
-        in_y, out_y = first_track("translate_y", "in"), first_track("translate_y", "out")
-        in_scale = first_track("scale", "in") or first_track("scale_x", "in") or first_track("scale_y", "in")
-        out_scale = first_track("scale", "out") or first_track("scale_x", "out") or first_track("scale_y", "out")
-        in_op = first_track("opacity", "in") or first_track("alpha", "in")
-        out_op = first_track("opacity", "out") or first_track("alpha", "out")
-        has_pop = bool(in_scale or out_scale)
-
-        phase = self.playback_phase
-        global_alpha = 1.0
-        global_scale = 1.0
-        global_dx = 0.0
-        global_dy = 0.0
+        # Motion is evaluated per layer so authored stagger, direction and
+        # easing remain visible in the preview instead of collapsing into one
+        # global transform shared by the whole composition.
         ease_in = 1.0
-
-        # Three-phase animation lifecycle
-        if phase < 0.35:
-            # 1. Entrance phase (0.0 -> 0.35): translation from offscreen / scale up / fade in
-            progress = max(0.0, min(1.0, phase / 0.35))
-            ease_in = evaluate_easing("expoOut", progress)
-            phase_t = progress * in_dur
-            authored_alpha = self._sample_keyframes(in_op, phase_t, 1.0) if in_op else 1.0
-            global_alpha = max(0.0, min(1.0, authored_alpha * ease_in))
-            scale_start = 0.90 if has_pop else 0.88
-            global_scale = self._sample_keyframes(in_scale, phase_t, scale_start) if in_scale else scale_start + (1.0 - scale_start) * ease_in
-            global_dy = self._sample_keyframes(in_y, phase_t, 0.0) if in_y else -0.045 * (1.0 - ease_in)
-            global_dx = self._sample_keyframes(in_x, phase_t, 0.0) if in_x else 0.0
-        elif phase > 0.75:
-            # 3. Exit phase (0.75 -> 1.0): translation offscreen / fade out
-            progress = max(0.0, min(1.0, (phase - 0.75) / 0.25))
-            ease_out = evaluate_easing("cubicIn", progress)
-            ease_in = max(0.0, 1.0 - ease_out)
-            phase_t = progress * out_dur
-            authored_alpha = self._sample_keyframes(out_op, phase_t, 0.0) if out_op else 1.0
-            global_alpha = max(0.0, min(1.0, authored_alpha * (1.0 - ease_out)))
-            global_scale = self._sample_keyframes(out_scale, phase_t, 1.0) if out_scale else (1.0 - 0.10 * ease_out if has_pop else 1.0)
-            global_dy = self._sample_keyframes(out_y, phase_t, 0.0) if out_y else -0.045 * ease_out
-            global_dx = self._sample_keyframes(out_x, phase_t, 0.0) if out_x else 0.0
-        else:
-            # 2. Hold phase (0.35 -> 0.75): resting state at 100% opacity and [0,0] offset
-            global_alpha = 1.0
-            global_scale = 1.0
-            global_dx = 0.0
-            global_dy = 0.0
-            ease_in = 1.0
-
-        global_dx = global_dx / 1920.0 if abs(global_dx) > 1.0 else global_dx
-        global_dy = global_dy / 1080.0 if abs(global_dy) > 1.0 else global_dy
-        self.last_text_dy = -global_dy * h
-
-        painter.save()
-        painter.setOpacity(max(0.0, min(1.0, global_alpha)))
-        painter.translate(w * (0.5 + global_dx), h * (0.5 - global_dy))
-        painter.scale(global_scale, global_scale)
-        painter.translate(-w * 0.5, -h * 0.5)
+        self.last_text_dy = 0.0
 
         # Draw authored geometry in layer order using normalized template dimensions.
         if self.params.get("plate_enabled", True):
@@ -347,10 +348,13 @@ class TemplateCanvasArea(QFrame):
                     painter.setPen(Qt.PenStyle.NoPen)
                 painter.setBrush(QBrush(self._layer_color(shape, fallback)))
                 rect = QRectF(shape_x - shape_w / 2, shape_y - shape_h / 2, shape_w, shape_h)
+                painter.save()
+                self._apply_layer_transform(painter, self._layer_motion_state(shape), rect.center(), w, h)
                 if shape.type == LayerType.SHAPE_PILL or corner > 0:
                     painter.drawRoundedRect(rect, min(corner, shape_w / 2), min(corner, shape_h / 2))
                 else:
                     painter.drawRect(rect)
+                painter.restore()
 
         # Accents stay behind the text.
         for line in line_layers:
@@ -366,9 +370,13 @@ class TemplateCanvasArea(QFrame):
                         line_y = primary_y + h * primary_size * 0.72
             except (TypeError, ValueError):
                 continue
+            line_rect = QRectF(line_x - line_w / 2, line_y - line_h / 2, line_w, line_h)
+            painter.save()
+            self._apply_layer_transform(painter, self._layer_motion_state(line), line_rect.center(), w, h)
             painter.setPen(Qt.PenStyle.NoPen)
             painter.setBrush(QBrush(self._layer_color(line, "accent")))
-            painter.drawRect(QRectF(line_x - line_w / 2, line_y - line_h / 2, line_w, line_h))
+            painter.drawRect(line_rect)
+            painter.restore()
 
         # Draw every authored text layer. Normalized font sizes scale with canvas
         # height, keeping titles legible in both landscape and portrait previews.
@@ -422,11 +430,12 @@ class TemplateCanvasArea(QFrame):
                     content_bounds.translate(0.0, dy)
             painter.setFont(font)
             painter.setPen(self._layer_color(layer, "text_primary" if index == 0 else "text_secondary"))
+            painter.save()
+            self._apply_layer_transform(painter, self._layer_motion_state(layer), rect.center(), w, h)
             painter.drawText(rect, flags, raw_text)
+            painter.restore()
             painted_text_bounds.append((raw_text, content_bounds))
             if "center_y" not in layer.props and "offset_y" not in layer.props:
                 implicit_stack_px += (previous_line_height + metrics.height()) * 0.72 + h * 0.01
             previous_line_height = metrics.height()
-        painter.restore()
-
         painter.restore()
