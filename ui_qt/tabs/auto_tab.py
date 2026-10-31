@@ -20,6 +20,13 @@ from ui_qt.theme import (
     STYLE_PILL_ACTIVE, STYLE_PILL_INACTIVE, STYLE_ORANGE_OUTLINE
 )
 
+EMPTY_LAYOUT_PREVIEW_HTML = (
+    "<div style='font-size:12px;font-weight:700'>No captions loaded</div>"
+    "<div style='font-size:10px;font-weight:500;color:#a49ebd'>"
+    "Import an SRT file or refresh the Resolve timeline to preview your layout."
+    "</div>"
+)
+
 
 class AutoTab(QWidget):
     """Batch Caption Automation Tab."""
@@ -221,7 +228,7 @@ class AutoTab(QWidget):
         set_layout.addLayout(fx_row)
         layout.addWidget(settings_frame)
 
-        self.lbl_layout_preview = QLabel("Choose a caption layout to preview it here.")
+        self.lbl_layout_preview = QLabel(EMPTY_LAYOUT_PREVIEW_HTML)
         self.lbl_layout_preview.setMinimumHeight(42)
         self.lbl_layout_preview.setWordWrap(True)
         self.lbl_layout_preview.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -399,6 +406,9 @@ class AutoTab(QWidget):
     def _refresh_layout_preview(self):
         if not hasattr(self, "lbl_layout_preview"):
             return
+        if not self.raw_cues:
+            self.lbl_layout_preview.setText(EMPTY_LAYOUT_PREVIEW_HTML)
+            return
         cue_text = self.plan_cues[0].text if self.plan_cues else "YOUR CAPTION HERE"
         lines = self._format_caption_text(cue_text).splitlines() or [cue_text]
         base = self.active_style.get("color", [0.98, 0.96, 0.92, 1.0])
@@ -503,6 +513,7 @@ class AutoTab(QWidget):
         if not self.raw_cues:
             self.tree_plan.clear()
             self.lbl_plan_count.setText("Timeline Group Plan (0 captions)")
+            self.lbl_layout_preview.setText(EMPTY_LAYOUT_PREVIEW_HTML)
             return
 
         wps = self.slider_wps.value()

@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import (
     QPushButton, QLineEdit, QComboBox, QScrollArea, QFrame,
     QFileDialog, QInputDialog, QMessageBox, QTextEdit, QSizePolicy, QDoubleSpinBox
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QRectF, QPointF
+from PyQt6.QtCore import Qt, pyqtSignal, QRectF, QPointF, QTimer
 from PyQt6.QtGui import (
     QColor, QFont, QCursor, QPainter, QPainterPath, QPen, QBrush, QFontMetricsF,
     QLinearGradient
@@ -475,6 +475,7 @@ class TitlesTab(QWidget):
         self.target_mode = "playhead"
         self.active_style = None
         self.preset_cards = []
+        self._preset_columns = 0
 
         self._build_ui()
         self._load_presets()
@@ -583,8 +584,6 @@ class TitlesTab(QWidget):
         self.grid_layout = QGridLayout(self.grid_container)
         self.grid_layout.setContentsMargins(0, 2, 8, 2)
         self.grid_layout.setSpacing(6)
-        self.grid_layout.setColumnStretch(0, 1)
-        self.grid_layout.setColumnStretch(1, 1)
 
         self.scroll_area.setWidget(self.grid_container)
         layout.addWidget(self.scroll_area, stretch=3)
@@ -863,21 +862,39 @@ class TitlesTab(QWidget):
             self.grid_layout.addWidget(lbl_empty, 0, 0)
             return
 
-        row, col = 0, 0
         for p in presets:
             card = PresetCardWidget(p)
             card.clicked.connect(self._on_preset_clicked)
             card.applied.connect(self._on_preset_applied)
             card.deleted.connect(self._on_preset_deleted)
-            self.grid_layout.addWidget(card, row, col)
             self.preset_cards.append((p, card))
-            col += 1
-            if col > 1:
-                col = 0
-                row += 1
+
+        self._reflow_preset_cards()
 
         if not self.active_style and presets:
             self.select_preset(presets[0])
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        QTimer.singleShot(0, self._reflow_preset_cards)
+
+    def _reflow_preset_cards(self):
+        """Use one column in the Resolve dock and more columns in a full window."""
+        if not hasattr(self, "scroll_area") or not hasattr(self, "grid_layout"):
+            return
+        width = self.scroll_area.viewport().width()
+        columns = max(1, min(4, width // 390))
+        if columns == self._preset_columns:
+            return
+
+        self._preset_columns = columns
+        while self.grid_layout.count():
+            self.grid_layout.takeAt(0)
+        for index, (_, card) in enumerate(self.preset_cards):
+            row, col = divmod(index, columns)
+            self.grid_layout.addWidget(card, row, col)
+        for col in range(4):
+            self.grid_layout.setColumnStretch(col, 1 if col < columns else 0)
 
     def _filter_presets(self):
         query = self.txt_search.text().strip().lower()

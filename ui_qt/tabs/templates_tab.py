@@ -14,7 +14,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QComboBox, QScrollArea, QFrame, QSlider, QCheckBox,
     QColorDialog, QMessageBox, QGridLayout, QFileDialog, QButtonGroup
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QTimer
+from PyQt6.QtCore import Qt, pyqtSignal, QTimer, QEvent
 from PyQt6.QtGui import QColor
 
 from core.templates.registry import TemplateRegistry
@@ -117,6 +117,7 @@ class TemplateCardWidget(QFrame):
         top_row.addStretch()
 
         # Aspect ratio badges
+        self.ratio_badges = []
         for ar in getattr(self.template_spec, "aspect_ratios", ["16:9"]):
             lbl_ar = QLabel(str(ar))
             lbl_ar.setStyleSheet("""
@@ -129,6 +130,7 @@ class TemplateCardWidget(QFrame):
                 font-weight: 700;
             """)
             top_row.addWidget(lbl_ar)
+            self.ratio_badges.append(lbl_ar)
 
         # Category badge
         self.lbl_cat = QLabel(self.template_spec.category)
@@ -141,6 +143,10 @@ class TemplateCardWidget(QFrame):
             font-weight: 700;
         """)
         top_row.addWidget(self.lbl_cat)
+        self.lbl_cat.setToolTip(
+            f"{self.template_spec.category} · Ratios: "
+            f"{', '.join(str(ar) for ar in getattr(self.template_spec, 'aspect_ratios', ['16:9']))}"
+        )
         layout.addLayout(top_row)
 
         # 2. Preview canvas thumbnail
@@ -209,6 +215,12 @@ class TemplateCardWidget(QFrame):
         bot_row.addWidget(self.btn_quick_apply)
 
         layout.addLayout(bot_row)
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        compact = self.width() < 560
+        for badge in self.ratio_badges:
+            badge.setVisible(not compact)
 
     def _get_font_pairing(self) -> str:
         fonts = []
@@ -327,6 +339,7 @@ class TemplatesTab(QWidget):
         self.is_playing = False
         self.active_category_key = "all"
         self.pill_buttons: Dict[str, QPushButton] = {}
+        self._gallery_columns = 0
 
         self._build_ui()
         self._load_templates()
@@ -440,11 +453,12 @@ class TemplatesTab(QWidget):
 
         self.grid_container = QWidget()
         self.grid_container.setStyleSheet(f"background-color: {COLOR_BG};")
-        self.grid_layout = QVBoxLayout(self.grid_container)
+        self.grid_layout = QGridLayout(self.grid_container)
         self.grid_layout.setContentsMargins(2, 2, 2, 2)
         self.grid_layout.setSpacing(6)
 
         self.scroll_area.setWidget(self.grid_container)
+        self.scroll_area.viewport().installEventFilter(self)
         layout.addWidget(self.scroll_area, stretch=3)
 
         # 4. Dynamic Parameter Inspector
@@ -630,6 +644,8 @@ class TemplatesTab(QWidget):
             if is_vis:
                 visible_cards.append((tpl, card))
 
+        self._reflow_template_cards()
+
         # If current template is not in visible list, select first visible
         if visible_cards and self.active_template:
             if not any(t.id == self.active_template.id for t, _ in visible_cards):
@@ -672,6 +688,7 @@ class TemplatesTab(QWidget):
 
     def _load_templates(self):
         for _, card in self.cards:
+            self.grid_layout.removeWidget(card)
             card.deleteLater()
         self.cards.clear()
 
@@ -681,14 +698,43 @@ class TemplatesTab(QWidget):
             card = TemplateCardWidget(t, is_selected=(idx == 0))
             card.clicked.connect(self._on_template_selected)
             card.quick_apply.connect(self._on_quick_apply_clicked)
-            self.grid_layout.addWidget(card)
             self.cards.append((t, card))
+
+        self._reflow_template_cards()
 
         self._populate_category_pills()
         self._filter_cards()
 
         if templates:
             self._on_template_selected(templates[0])
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        QTimer.singleShot(0, self._reflow_template_cards)
+
+    def eventFilter(self, obj, event):
+        if (hasattr(self, "scroll_area") and obj is self.scroll_area.viewport()
+                and event.type() == QEvent.Type.Resize):
+            QTimer.singleShot(0, self._reflow_template_cards)
+        return super().eventFilter(obj, event)
+
+    def _reflow_template_cards(self):
+        """Keep cards compact on wide windows and unclipped in the narrow dock."""
+        if not hasattr(self, "scroll_area") or not hasattr(self, "grid_layout"):
+            return
+        width = self.scroll_area.viewport().width()
+        columns = 1 if width < 760 else (2 if width < 1540 else 3)
+        if columns == self._gallery_columns:
+            return
+
+        self._gallery_columns = columns
+        while self.grid_layout.count():
+            self.grid_layout.takeAt(0)
+        for index, (_, card) in enumerate(self.cards):
+            row, col = divmod(index, columns)
+            self.grid_layout.addWidget(card, row, col)
+        for col in range(3):
+            self.grid_layout.setColumnStretch(col, 1 if col < columns else 0)
 
     def _on_theme_changed(self):
         self._manual_theme_choice = True
