@@ -160,7 +160,7 @@
         "text": "param:hero_word",
         "font": "Snell Roundhand",
         "size": 0.12,
-        "weight": "Regular",
+        "weight": "Italic",
         "color": "token:text_primary",
         "alignment": "center",
         "center_x": 0.5,
@@ -245,17 +245,17 @@
       "props": {
         "text": "param:description",
         "font": "Avenir",
-        "size": 0.034,
+        "size": 0.03,
         "weight": "Medium",
         "color": "token:text_secondary",
         "alignment": "center",
         "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": -0.07,
+        "offset_y": -0.125,
         "font_bn": "token:font_body_bn",
         "role": "body",
         "character_spacing": 1.0,
-        "text_width": 0.72
+        "text_width": 0.76
       },
       "motion_tracks": [
         {

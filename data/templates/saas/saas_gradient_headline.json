@@ -205,7 +205,8 @@
         "center_x": 0.5,
         "center_y": "param:pos_y",
         "offset_y": 0.085,
-        "role": "eyebrow"
+        "role": "eyebrow",
+        "font_bn": "token:font_heading_bn"
       },
       "motion_tracks": [
         {

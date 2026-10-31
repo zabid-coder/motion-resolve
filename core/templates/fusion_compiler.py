@@ -375,9 +375,14 @@ class FusionCompiler:
             return 0.0
 
     def _layer_font(self, layer, params, theme, fallback, purpose="display"):
-        raw = layer.props.get("font", fallback) if layer else fallback
-        from core.font_catalog import resolve_available_font
-        return resolve_available_font(self._resolve_value(raw, params, theme), purpose)
+        if purpose == "bengali":
+            raw = layer.props.get("font_bn", fallback) if layer else fallback
+        else:
+            raw = layer.props.get("font", fallback) if layer else fallback
+        from core.font_catalog import infer_font_purpose, resolve_available_font
+        requested = self._resolve_value(raw, params, theme)
+        resolved_purpose = purpose if purpose == "bengali" else infer_font_purpose(requested, purpose)
+        return resolve_available_font(requested, resolved_purpose)
 
     def _compile_layer_motion(
         self,

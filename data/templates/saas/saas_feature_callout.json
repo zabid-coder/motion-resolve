@@ -200,7 +200,8 @@
         ],
         "border_width": 1.2,
         "center_y": "param:pos_y",
-        "center_x": 0.6
+        "center_x": 0.6,
+        "role": "plate"
       },
       "motion_tracks": [
         {

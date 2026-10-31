@@ -18,7 +18,9 @@ FONT_FALLBACKS = {
     "script": ("Pinyon Script", "Snell Roundhand", "Zapfino", "Brush Script MT", "Baskerville", "Georgia"),
     "sans": ("Inter", "Montserrat", "Manrope", "League Spartan", "Avenir Next", "Helvetica Neue", "Arial"),
     "mono": ("Menlo", "Monaco", "Andale Mono", "Courier New"),
-    "bengali": ("Nirmala UI", "Vrinda", "Shonar Bangla", "Hind Siliguri", "Kalpurush", "SolaimanLipi", "Kohinoor Bangla", "Bangla Sangam MN", "Bangla MN", "Arial Unicode MS"),
+    # Prefer Noto's Unicode-complete families: Resolve may show tofu with some
+    # other locally installed Bengali fonts even though Qt lists them.
+    "bengali": ("Noto Sans Bengali", "Noto Serif Bengali", "Nirmala UI", "Vrinda", "Shonar Bangla", "Hind Siliguri", "Kalpurush", "SolaimanLipi", "Kohinoor Bangla", "Bangla Sangam MN", "Bangla MN", "Arial Unicode MS"),
 }
 
 
@@ -29,6 +31,27 @@ def is_script_font(font_name: str) -> bool:
     name_lower = str(font_name).lower()
     script_keywords = ("script", "hand", "brush", "cursive", "roundhand", "zapfino", "calligraphy")
     return any(kw in name_lower for kw in script_keywords)
+
+
+def infer_font_purpose(font_name: str, default="body") -> str:
+    """Choose a fallback family with the same typographic character as requested."""
+    name = str(font_name or "").strip().lower()
+    if is_script_font(name):
+        return "script"
+    if any(token in name for token in ("mono", "menlo", "monaco", "courier", "console")):
+        return "mono"
+    if any(token in name for token in (
+        "serif", "baskerville", "didot", "bodoni", "garamond", "georgia",
+        "charter", "book antiqu", "bell mt", "calisto", "times new roman",
+    )):
+        return "editorial"
+    if any(token in name for token in (
+        "avenir", "helvetica", "arial", "inter", "montserrat", "poppins",
+        "roboto", "segoe", "gill sans", "league spartan", "manrope",
+        "futura", "verdana", "century gothic", "open sans", "source sans",
+    )):
+        return "body"
+    return default
 
 
 def _discover_system_fonts():
