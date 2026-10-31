@@ -39,7 +39,14 @@
       "name": "Card",
       "props": {
         "text": "param:card_text",
-        "size": 0.08
+        "size": 0.08,
+        "font": "Baskerville",
+        "weight": "Regular",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -47,13 +54,13 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.395,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
@@ -63,30 +70,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": -0.06,
+              "time": 0.015,
+              "value": -0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.515,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.32,
-              "value": -0.05,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -96,12 +87,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.32,
-              "value": 0.0,
+              "time": 0.34,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.34,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]

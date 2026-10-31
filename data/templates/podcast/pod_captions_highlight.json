@@ -11,8 +11,8 @@
   ],
   "duration_default": 3.5,
   "min_hold": 1.5,
-  "in_duration": 0.45,
-  "out_duration": 0.3,
+  "in_duration": 0.56,
+  "out_duration": 0.34,
   "parameters": [
     {
       "id": "caption_text",
@@ -41,7 +41,11 @@
         "text": "param:caption_text",
         "size": 0.054,
         "text_width": 0.8,
-        "alignment": "center"
+        "alignment": "center",
+        "font": "Avenir",
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
         {
@@ -49,46 +53,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.0,
+              "time": 0.13,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.4,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "translate_x",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.035,
+              "time": 0.13,
+              "value": -0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.44,
-              "value": 0.0,
+              "time": 0.51,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -98,12 +86,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]

@@ -11,7 +11,7 @@
   ],
   "duration_default": 4.5,
   "min_hold": 2.0,
-  "in_duration": 0.55,
+  "in_duration": 0.6,
   "out_duration": 0.35,
   "parameters": [
     {
@@ -46,18 +46,15 @@
       "name": "Bento Plate",
       "props": {
         "role": "plate",
-        "width": 0.72,
-        "height": 0.25,
+        "width": 0.7,
+        "height": 0.24,
         "corner_radius": 14,
         "color": "token:bg_plate",
         "border": "token:border",
-        "border_color": [
-          0.26,
-          0.25,
-          0.34,
-          0.65
-        ],
-        "border_width": 1.2
+        "border_color": "token:border",
+        "border_width": 0.7,
+        "center_x": 0.5,
+        "center_y": "param:pos_y"
       },
       "motion_tracks": [
         {
@@ -66,45 +63,29 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.34,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale_x",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": -0.06,
-              "easing": "expoOut"
+              "value": 0.96,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.5,
+              "value": 1,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.32,
-              "value": -0.05,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -114,12 +95,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.32,
-              "value": 0.0,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -132,12 +113,18 @@
       "name": "Title",
       "props": {
         "text": "param:bento_title",
-        "font": "token:font_heading",
-        "size": 0.07,
-        "weight": "Bold",
+        "font": "Avenir Next",
+        "size": 0.055,
+        "weight": "Demi",
         "color": "token:text_primary",
         "character_spacing": 1.04,
-        "text_width": 0.66
+        "text_width": 0.58,
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "alignment": "left",
+        "center_x": 0.22,
+        "center_y": "param:pos_y",
+        "offset_y": -0.005
       },
       "motion_tracks": [
         {
@@ -145,14 +132,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.275,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -161,30 +148,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": -0.035,
+              "time": 0.015,
+              "value": 0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.395,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -194,12 +165,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -212,12 +199,18 @@
       "name": "Category",
       "props": {
         "text": "param:bento_cat",
-        "font": "JetBrains Mono",
-        "size": 0.03,
+        "font": "Menlo",
+        "size": 0.026,
         "weight": "Medium",
         "color": "token:accent",
-        "character_spacing": 1.06,
-        "text_width": 0.66
+        "character_spacing": 1.08,
+        "text_width": 0.66,
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "alignment": "left",
+        "center_x": 0.22,
+        "center_y": "param:pos_y",
+        "offset_y": 0.065
       },
       "motion_tracks": [
         {
@@ -225,14 +218,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.0,
+              "time": 0.035,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.295,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -241,30 +234,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": -0.035,
+              "time": 0.035,
+              "value": 0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.52,
-              "value": 0.0,
+              "time": 0.415,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -274,12 +251,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -291,56 +284,43 @@
       "type": "shape_line",
       "name": "Line",
       "props": {
-        "width": 0.22,
+        "width": 0.08,
         "height": 0.002,
-        "color": "token:accent"
+        "color": "token:accent",
+        "center_x": 0.22,
+        "center_y": "param:pos_y",
+        "offset_y": 0.045
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_x",
-          "phase": "out",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -350,12 +330,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

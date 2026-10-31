@@ -11,8 +11,8 @@
   ],
   "duration_default": 3.2,
   "min_hold": 1.4,
-  "in_duration": 0.45,
-  "out_duration": 0.28,
+  "in_duration": 0.5,
+  "out_duration": 0.32,
   "parameters": [
     {
       "id": "reaction",
@@ -39,7 +39,14 @@
       "name": "Reaction",
       "props": {
         "text": "param:reaction",
-        "size": 0.084
+        "size": 0.084,
+        "font": "Avenir Next Condensed",
+        "weight": "Bold",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -47,46 +54,35 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.235,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.035,
-              "easing": "expoOut"
+              "time": 0.015,
+              "value": 0.95,
+              "easing": "softSpring"
             },
             {
-              "time": 0.44,
-              "value": 0.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.295,
+              "value": 1.025,
+              "easing": "softSpring"
             },
             {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
+              "time": 0.415,
+              "value": 1,
+              "easing": "softSpring"
             }
           ]
         },
@@ -96,12 +92,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

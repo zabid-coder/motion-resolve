@@ -11,7 +11,7 @@
   ],
   "duration_default": 4.0,
   "min_hold": 2.0,
-  "in_duration": 0.6,
+  "in_duration": 0.64,
   "out_duration": 0.35,
   "parameters": [
     {
@@ -39,7 +39,7 @@
       "name": "Text",
       "props": {
         "text": "param:text",
-        "font": "Didot",
+        "font": "Avenir Next",
         "size": 0.08,
         "weight": "Regular",
         "color": [
@@ -48,7 +48,11 @@
           0.89,
           1.0
         ],
-        "character_spacing": 1.12
+        "character_spacing": 1.12,
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -56,14 +60,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.275,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -72,30 +76,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": -0.035,
+              "time": 0.015,
+              "value": 0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.44,
-              "value": 0.0,
+              "time": 0.395,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -105,12 +93,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

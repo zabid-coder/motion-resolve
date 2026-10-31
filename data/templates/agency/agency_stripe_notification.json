@@ -19,8 +19,8 @@
   ],
   "duration_default": 3.8,
   "min_hold": 2.2,
-  "in_duration": 0.55,
-  "out_duration": 0.33,
+  "in_duration": 0.6,
+  "out_duration": 0.34,
   "parameters": [
     {
       "id": "brand",
@@ -48,9 +48,9 @@
       "name": "Accent Color",
       "type": "color",
       "default": [
-        0.204,
-        0.780,
-        0.349,
+        0.46,
+        0.72,
+        0.52,
         1.0
       ],
       "category": "Style"
@@ -66,7 +66,7 @@
       "id": "pos_y",
       "name": "Vertical Position",
       "type": "number",
-      "default": 0.80,
+      "default": 0.8,
       "min_val": 0.1,
       "max_val": 0.9,
       "step": 0.01,
@@ -91,7 +91,7 @@
           0.28,
           0.28,
           0.32,
-          0.60
+          0.6
         ],
         "border_width": 1.5,
         "corner_radius": 18,
@@ -106,45 +106,29 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.35,
-              "value": 1.0,
+              "time": 0.34,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale_x",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": -0.07,
-              "easing": "expoOut"
+              "value": 0.96,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.55,
-              "value": 0.0,
+              "time": 0.5,
+              "value": 1,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.33,
-              "value": -0.06,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -154,12 +138,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.33,
-              "value": 0.0,
+              "time": 0.32,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -172,7 +156,7 @@
       "name": "App Source",
       "props": {
         "text": "param:brand",
-        "font": "token:font_body",
+        "font": "Avenir Next",
         "size": 0.036,
         "weight": "Medium",
         "color": [
@@ -184,7 +168,11 @@
         "alignment": "left",
         "center_x": 0.14,
         "center_y": "param:pos_y",
-        "offset_y": 0.030
+        "offset_y": 0.03,
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -192,14 +180,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.08,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.275,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -208,30 +196,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.08,
-              "value": -0.04,
+              "time": 0.015,
+              "value": 0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.55,
-              "value": 0.0,
+              "time": 0.395,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.33,
-              "value": -0.05,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -241,12 +213,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.33,
-              "value": 0.0,
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -259,8 +247,8 @@
       "name": "Notification Title",
       "props": {
         "text": "param:headline",
-        "font": "token:font_heading",
-        "size": 0.050,
+        "font": "Avenir Next",
+        "size": 0.05,
         "weight": "Bold",
         "color": [
           1.0,
@@ -271,7 +259,11 @@
         "alignment": "left",
         "center_x": 0.14,
         "center_y": "param:pos_y",
-        "offset_y": -0.022
+        "offset_y": -0.022,
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -279,14 +271,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.12,
-              "value": 0.0,
+              "time": 0.035,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.42,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.295,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -295,30 +287,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.12,
-              "value": -0.04,
+              "time": 0.035,
+              "value": 0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.55,
-              "value": 0.0,
+              "time": 0.415,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.33,
-              "value": -0.05,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -328,12 +304,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.33,
-              "value": 0.0,
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -346,14 +338,18 @@
       "name": "Payment Amount",
       "props": {
         "text": "param:amount",
-        "font": "token:font_heading",
+        "font": "Avenir Next",
         "size": 0.056,
         "weight": "Bold",
         "color": "param:accent_color",
         "alignment": "right",
         "center_x": 0.86,
         "center_y": "param:pos_y",
-        "offset_y": -0.005
+        "offset_y": -0.005,
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -361,51 +357,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.20,
-              "value": 0.0,
+              "time": 0.055,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "quartInOut"
-            }
-          ]
-        },
-        {
-          "property": "scale",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.20,
-              "value": 0.65,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.48,
-              "value": 1.08,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.55,
-              "value": 1.0,
+              "time": 0.315,
+              "value": 1,
               "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "scale",
-          "phase": "out",
+          "property": "translate_y",
+          "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "time": 0.055,
+              "value": 0.012,
+              "easing": "expoOut"
             },
             {
-              "time": 0.33,
-              "value": 0.85,
-              "easing": "cubicIn"
+              "time": 0.435,
+              "value": 0,
+              "easing": "expoOut"
             }
           ]
         },
@@ -415,12 +390,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.33,
-              "value": 0.0,
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

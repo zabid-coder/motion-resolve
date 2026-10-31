@@ -1,13 +1,13 @@
 {
   "id": "editorial_silk_serif",
-  "name": "Editorial \u00b7 Silk Serif",
+  "name": "Editorial · Silk Serif",
   "category": "Cinematic",
   "text": "THE TIMELESS ARCHIVE",
   "font": "Playfair Display",
   "style": "Bold Italic",
   "hero_style": "Italic",
   "size": 0.082,
-  "hero_size_multiplier": 1.14,
+  "hero_size_multiplier": 1.1,
   "character_spacing": 1.08,
   "line_spacing": 0.0,
   "center_x": 0.5,
@@ -30,16 +30,16 @@
     0.05,
     0.03,
     0.02,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
-  "animation_in": "slide_up",
-  "animation_out": "slide_down",
+  "animation_in": "fade",
+  "animation_out": "fade",
   "use_2color": true,
   "main_word": "TIMELESS",
   "hero_font": "Playfair Display"

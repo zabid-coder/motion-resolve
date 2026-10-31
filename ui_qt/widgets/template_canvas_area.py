@@ -148,8 +148,12 @@ class TemplateCanvasArea(QFrame):
         return QColor(*(int(max(0.0, min(1.0, float(c))) * 255) for c in rgba[:3]), int(max(0.0, min(1.0, float(rgba[3]))) * 255))
 
     def _layer_font_name(self, layer, fallback, purpose="display"):
-        from core.font_catalog import resolve_available_font
+        from core.font_catalog import resolve_available_font, is_script_font
         requested = self._resolve_val(layer.props.get("font", fallback)) if layer else fallback
+        if is_script_font(requested):
+            purpose = "script"
+        elif str(requested).lower() in {"baskerville", "didot", "bodoni", "bodoni 72", "georgia", "dm serif display", "instrument serif", "playfair display"}:
+            purpose = "editorial"
         return resolve_available_font(requested, purpose)
 
     @staticmethod
@@ -266,8 +270,14 @@ class TemplateCanvasArea(QFrame):
         out_dur = max(0.1, getattr(self.template, "out_duration", 0.5))
         total_dur = max(in_dur + out_dur, getattr(self.template, "duration_default", 3.0))
 
-        pos_y_norm = float(self.params.get("pos_y", 0.28))
-        pos_x_norm = float(self.params.get("pos_x", 0.5))
+        try:
+            pos_y_norm = float(self._resolve_val("param:pos_y"))
+        except (TypeError, ValueError):
+            pos_y_norm = 0.28
+        try:
+            pos_x_norm = float(self._resolve_val("param:pos_x"))
+        except (TypeError, ValueError):
+            pos_x_norm = 0.5
         center_x = w * pos_x_norm
         base_center_y = h * (1.0 - pos_y_norm)
         text_layers = [l for l in self.template.layers if l.type == LayerType.TEXT]

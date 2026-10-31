@@ -11,8 +11,8 @@
   ],
   "duration_default": 3.5,
   "min_hold": 1.5,
-  "in_duration": 0.45,
-  "out_duration": 0.28,
+  "in_duration": 0.5,
+  "out_duration": 0.32,
   "parameters": [
     {
       "id": "top_word",
@@ -46,7 +46,14 @@
       "name": "Bottom Word",
       "props": {
         "text": "param:bottom_word",
-        "size": 0.088
+        "size": 0.088,
+        "font": "Avenir Next Condensed",
+        "weight": "Bold",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -54,46 +61,35 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.2,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": -0.035,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.44,
-              "value": 0.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
               "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "value": 0.9,
+              "easing": "softSpring"
             },
             {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
+              "time": 0.24,
+              "value": 1.045,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "softSpring"
             }
           ]
         },
@@ -103,12 +99,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.25,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -121,7 +117,14 @@
       "name": "Top Word",
       "props": {
         "text": "param:top_word",
-        "size": 0.05
+        "size": 0.05,
+        "font": "Avenir Next Condensed",
+        "weight": "Bold",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -129,46 +132,35 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
+              "time": 0.2,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": -0.035,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.48,
-              "value": 0.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
               "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "value": 0.9,
+              "easing": "softSpring"
             },
             {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
+              "time": 0.24,
+              "value": 1.045,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "softSpring"
             }
           ]
         },
@@ -178,12 +170,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.25,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

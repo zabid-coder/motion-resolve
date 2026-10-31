@@ -13,7 +13,7 @@
   ],
   "duration_default": 4.6,
   "min_hold": 2.4,
-  "in_duration": 0.58,
+  "in_duration": 0.6,
   "out_duration": 0.36,
   "parameters": [
     {
@@ -69,45 +69,29 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.34,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale_x",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": -0.06,
-              "easing": "expoOut"
+              "value": 0.96,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.5,
+              "value": 1,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.32,
-              "value": -0.05,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -117,12 +101,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.32,
-              "value": 0.0,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -136,13 +120,16 @@
       "props": {
         "text": "param:card_title",
         "size": 0.073,
-        "font": "token:font_heading",
+        "font": "Avenir Next",
         "weight": "Demi",
         "alignment": "center",
         "text_width": 0.68,
         "center_x": 0.5,
         "center_y": 0.55,
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
         {
@@ -150,14 +137,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.275,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -166,30 +153,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": -0.035,
+              "time": 0.015,
+              "value": 0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.395,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -199,12 +170,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -218,13 +205,16 @@
       "props": {
         "text": "param:card_desc",
         "size": 0.038,
-        "font": "token:font_body",
+        "font": "Avenir",
         "weight": "Regular",
         "alignment": "center",
         "text_width": 0.64,
         "center_x": 0.5,
         "center_y": 0.43,
-        "color": "token:text_secondary"
+        "color": "token:text_secondary",
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
         {
@@ -232,14 +222,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.0,
+              "time": 0.15,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.41,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -248,30 +238,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": -0.035,
+              "time": 0.15,
+              "value": 0.018,
               "easing": "expoOut"
             },
             {
-              "time": 0.52,
-              "value": 0.0,
+              "time": 0.53,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -281,12 +255,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -306,50 +296,34 @@
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_x",
-          "phase": "out",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -359,12 +333,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

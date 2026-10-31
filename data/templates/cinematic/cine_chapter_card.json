@@ -52,11 +52,15 @@
       "name": "Chapter Numeral",
       "props": {
         "text": "param:chapter",
-        "font": "token:font_body",
+        "font": "Menlo",
         "font_bn": "token:font_body_bn",
         "size": 0.032,
         "weight": "Bold",
-        "color": "token:accent"
+        "color": "token:accent",
+        "role": "eyebrow",
+        "character_spacing": 1.08,
+        "alignment": "center",
+        "text_width": 0.64
       },
       "motion_tracks": [
         {
@@ -64,51 +68,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.16,
-              "value": 0.0,
+              "time": 0.045,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.32,
-              "value": 1.0,
+              "time": 0.425,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "scale",
+          "property": "translate_y",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.16,
-              "value": 0.65,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.42000000000000004,
-              "value": 1.08,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.5,
-              "value": 1.0,
+              "time": 0.045,
+              "value": -0.012,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "scale",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.82,
-              "easing": "cubicIn"
+              "time": 0.545,
+              "value": 0,
+              "easing": "expoOut"
             }
           ]
         },
@@ -118,12 +101,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.34,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.34,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -141,50 +140,34 @@
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_x",
-          "phase": "out",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -194,12 +177,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -212,11 +195,15 @@
       "name": "Chapter Title",
       "props": {
         "text": "param:title",
-        "font": "token:font_heading",
+        "font": "Menlo",
         "font_bn": "token:font_heading_bn",
         "size": 0.062,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "role": "eyebrow",
+        "character_spacing": 1.08,
+        "alignment": "center",
+        "text_width": 0.64
       },
       "motion_tracks": [
         {
@@ -224,13 +211,13 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.0,
+              "time": 0.065,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
+              "time": 0.445,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
@@ -240,30 +227,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": -0.035,
+              "time": 0.065,
+              "value": -0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.52,
-              "value": 0.0,
+              "time": 0.565,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -273,12 +244,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.34,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.34,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]

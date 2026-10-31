@@ -29,21 +29,21 @@
     0.11,
     0.04,
     0.035,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
   "animation_in": "pop_in",
-  "animation_out": "slide_down",
+  "animation_out": "fade",
   "accent_color": [
-    0.78,
+    0.85,
     0.35,
-    0.28,
-    1
+    0.29,
+    1.0
   ],
   "use_2color": true,
   "main_word": "100 HOURS",

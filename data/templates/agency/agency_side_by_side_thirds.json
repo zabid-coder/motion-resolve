@@ -1,8 +1,8 @@
 {
   "id": "agency_side_by_side_thirds",
-  "name": "Horizontal Thirds \u2014 Speaker & Graphic Stack",
+  "name": "Horizontal Thirds — Speaker Message Card",
   "category": "Agency / Social",
-  "description": "Rule-of-thirds widescreen architecture: Left third reserved for talking head, right two-thirds card stack.",
+  "description": "A measured speaker card with a small kicker, clear headline, supporting line, and generous negative space.",
   "tags": [
     "rule of thirds",
     "widescreen",
@@ -110,28 +110,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.4,
-              "value": 1.0,
+              "time": 0.34,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_x",
+          "property": "scale_x",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.08,
-              "easing": "expoOut"
+              "value": 0.96,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.7,
-              "value": 0.0,
+              "time": 0.5,
+              "value": 1,
               "easing": "expoOut"
             }
           ]
@@ -142,12 +142,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.35,
-              "value": 0.0,
+              "time": 0.32,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -160,7 +160,7 @@
       "name": "Kicker Eyebrow",
       "props": {
         "text": "param:kicker",
-        "font": "token:font_body",
+        "font": "Menlo",
         "size": 0.038,
         "weight": "Bold",
         "color": "param:accent_color",
@@ -168,7 +168,10 @@
         "alignment": "left",
         "center_x": 0.42,
         "center_y": "param:pos_y",
-        "offset_y": 0.09
+        "offset_y": 0.09,
+        "font_bn": "token:font_heading_bn",
+        "role": "eyebrow",
+        "text_width": 0.64
       },
       "motion_tracks": [
         {
@@ -176,14 +179,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.045,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.325,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -192,30 +195,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": -0.035,
+              "time": 0.045,
+              "value": 0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.405,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -225,12 +212,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -243,7 +230,7 @@
       "name": "Card Headline",
       "props": {
         "text": "param:headline",
-        "font": "token:font_heading",
+        "font": "Avenir Next",
         "size": 0.054,
         "weight": "Bold",
         "color": "token:text_primary",
@@ -251,7 +238,10 @@
         "center_x": 0.42,
         "center_y": "param:pos_y",
         "offset_y": 0.02,
-        "text_width": 0.46
+        "text_width": 0.46,
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
         {
@@ -259,14 +249,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.0,
+              "time": 0.035,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.295,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -275,30 +265,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": -0.035,
+              "time": 0.035,
+              "value": 0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.52,
-              "value": 0.0,
+              "time": 0.415,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -308,12 +282,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -326,7 +316,7 @@
       "name": "Card Subtitle",
       "props": {
         "text": "param:subline",
-        "font": "token:font_body",
+        "font": "Avenir",
         "size": 0.036,
         "weight": "Regular",
         "color": "token:text_secondary",
@@ -334,7 +324,10 @@
         "center_x": 0.42,
         "center_y": "param:pos_y",
         "offset_y": -0.065,
-        "text_width": 0.46
+        "text_width": 0.46,
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
         {
@@ -342,14 +335,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.18,
-              "value": 0.0,
+              "time": 0.17,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.42,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.43,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -358,30 +351,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.18,
-              "value": -0.035,
+              "time": 0.17,
+              "value": 0.018,
               "easing": "expoOut"
             },
             {
-              "time": 0.56,
-              "value": 0.0,
+              "time": 0.55,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -391,12 +368,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

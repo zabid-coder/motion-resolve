@@ -1,48 +1,48 @@
 {
-    "id": "bengali_speaker_plate",
-    "name": "Bangla Speaker ID Plate",
-    "category": "Bengali / Multilingual",
-    "text": "\u09a1. \u09b8\u09be\u09b0\u09be\u09b9 \u0986\u09b9\u09ae\u09c7\u09a6\n\u09aa\u09cd\u09b0\u09a7\u09be\u09a8 \u09ac\u09bf\u099c\u09cd\u099e\u09be\u09a8\u09c0",
-    "font": "Kohinoor Bangla",
-    "font_bn": "Kohinoor Bangla",
-    "style": "SemiBold",
-    "size": 0.068,
-    "character_spacing": 1.0,
-    "line_spacing": 0.0,
-    "center_x": 0.5,
-    "center_y": 0.25,
-    "color": [
-        0.97,
-        0.92,
-        0.82,
-        1
-    ],
-    "stroke_enabled": false,
-    "shadow_enabled": true,
-    "box_enabled": true,
-    "box_color": [
-        0.12,
-        0.17,
-        0.15,
-        0.86
-    ],
-    "box_extend_x": 0.045,
-    "box_extend_y": 0.03,
-    "box_round": 0.12,
-    "animation_in": "slide_up",
-    "animation_out": "slide_down",
-    "shadow_color": [
-        0.03,
-        0.05,
-        0.04,
-        0.55
-    ],
-    "shadow_softness": 0.05,
-    "hero_font": "Kohinoor Bangla",
-    "hero_style": "Bold",
-    "hero_size_multiplier": 1.15,
-    "shadow_offset": [
-        0.0,
-        0.0
-    ]
+  "id": "bengali_speaker_plate",
+  "name": "Bangla Speaker ID Plate",
+  "category": "Bengali / Multilingual",
+  "text": "ড. সারাহ আহমেদ\nপ্রধান বিজ্ঞানী",
+  "font": "Kohinoor Bangla",
+  "font_bn": "Kohinoor Bangla",
+  "style": "SemiBold",
+  "size": 0.068,
+  "character_spacing": 1.0,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.25,
+  "color": [
+    0.97,
+    0.92,
+    0.82,
+    1
+  ],
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "box_enabled": true,
+  "box_color": [
+    0.12,
+    0.17,
+    0.15,
+    0.86
+  ],
+  "box_extend_x": 0.045,
+  "box_extend_y": 0.03,
+  "box_round": 0.12,
+  "animation_in": "fade",
+  "animation_out": "fade",
+  "shadow_color": [
+    0.03,
+    0.05,
+    0.04,
+    0.42
+  ],
+  "shadow_softness": 0.045,
+  "hero_font": "Kohinoor Bangla",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.15,
+  "shadow_offset": [
+    0.003,
+    -0.004
+  ]
 }

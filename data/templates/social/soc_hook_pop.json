@@ -18,8 +18,8 @@
   ],
   "duration_default": 3.0,
   "min_hold": 1.5,
-  "in_duration": 0.45,
-  "out_duration": 0.28,
+  "in_duration": 0.5,
+  "out_duration": 0.32,
   "parameters": [
     {
       "id": "hook",
@@ -73,45 +73,29 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.34,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale_x",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.06,
-              "easing": "expoOut"
+              "value": 0.96,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.5,
+              "value": 1,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.32,
-              "value": 0.05,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -121,12 +105,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.32,
-              "value": 0.0,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -139,7 +123,7 @@
       "name": "Hook Text",
       "props": {
         "text": "param:hook",
-        "font": "token:font_heading",
+        "font": "Avenir Next Condensed",
         "font_bn": "token:font_heading_bn",
         "size": 0.058,
         "weight": "Bold",
@@ -151,7 +135,11 @@
         ],
         "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": 0.05
+        "offset_y": 0.05,
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -159,46 +147,35 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
+              "time": 0.235,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.035,
-              "easing": "expoOut"
+              "time": 0.015,
+              "value": 0.95,
+              "easing": "softSpring"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.295,
+              "value": 1.025,
+              "easing": "softSpring"
             },
             {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
+              "time": 0.415,
+              "value": 1,
+              "easing": "softSpring"
             }
           ]
         },
@@ -208,12 +185,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -226,14 +203,18 @@
       "name": "Follow-Up Text",
       "props": {
         "text": "param:sub",
-        "font": "token:font_body",
+        "font": "Avenir",
         "font_bn": "token:font_body_bn",
         "size": 0.038,
         "weight": "Bold",
         "color": "token:text_primary",
         "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": "-0.09"
+        "offset_y": "-0.09",
+        "role": "body",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
@@ -241,14 +222,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.0,
+              "time": 0.15,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.41,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -257,30 +238,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.035,
+              "time": 0.15,
+              "value": 0.018,
               "easing": "expoOut"
             },
             {
-              "time": 0.52,
-              "value": 0.0,
+              "time": 0.53,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -290,12 +255,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

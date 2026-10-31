@@ -29,8 +29,8 @@
   "box_extend_y": 0.024,
   "box_round": 0.04,
   "box_level": 1,
-  "animation_in": "slide_up",
-  "animation_out": "slide_down",
+  "animation_in": "fade",
+  "animation_out": "fade",
   "accent_color": [
     0.75,
     0.52,

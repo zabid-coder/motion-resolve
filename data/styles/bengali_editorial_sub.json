@@ -2,7 +2,7 @@
   "id": "bengali_editorial_sub",
   "name": "Bangla Editorial Subtitle",
   "category": "Bengali / Multilingual",
-  "text": "\u09ac\u09be\u0982\u09b2\u09be \u09b8\u09be\u09ac\u099f\u09be\u0987\u099f\u09c7\u09b2 \u09aa\u09cd\u09b0\u09bf\u09ad\u09bf\u0989",
+  "text": "বাংলা সাবটাইটেল প্রিভিউ",
   "font": "Kohinoor Bangla",
   "font_bn": "Kohinoor Bangla",
   "style": "Medium",
@@ -30,16 +30,16 @@
     0.09,
     0.06,
     0.04,
-    0.58
+    0.42
   ],
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "shadow_softness": 0.04,
   "box_enabled": false,
-  "animation_in": "slide_up",
-  "animation_out": "slide_down",
+  "animation_in": "fade",
+  "animation_out": "fade",
   "hero_font": "Kohinoor Bangla",
   "hero_style": "Bold",
   "hero_size_multiplier": 1.15

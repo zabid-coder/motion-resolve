@@ -17,9 +17,9 @@
     1.0
   ],
   "accent_color": [
-    0.96,
-    0.7,
-    0.18,
+    0.9,
+    0.68,
+    0.27,
     1.0
   ],
   "stroke_enabled": false,
@@ -28,16 +28,16 @@
     0.06,
     0.035,
     0.015,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
   "animation_in": "pop_in",
-  "animation_out": "slide_down",
+  "animation_out": "fade",
   "use_2color": true,
   "main_word": "EDITING SYSTEM",
   "hero_font": "Avenir Next Condensed",

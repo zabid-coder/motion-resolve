@@ -1,6 +1,6 @@
 {
   "id": "doc_lower_third_slate",
-  "name": "Doc \u00b7 Slate Lower Third",
+  "name": "Doc · Slate Lower Third",
   "category": "Documentary",
   "text": "EVIDENCE ARCHIVE // 01",
   "font": "Inter",
@@ -30,12 +30,12 @@
     0.0,
     0.0,
     0.0,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": true,
   "box_color": [
@@ -48,8 +48,8 @@
   "box_extend_y": 0.024,
   "box_round": 0.22,
   "box_level": 1,
-  "animation_in": "slide_up",
-  "animation_out": "slide_down",
+  "animation_in": "fade",
+  "animation_out": "fade",
   "use_2color": true,
   "main_word": "EVIDENCE",
   "hero_font": "DM Serif Display"

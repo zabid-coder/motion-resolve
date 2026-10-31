@@ -25,7 +25,7 @@
       "id": "author",
       "name": "Attribution",
       "type": "string",
-      "default": "John Maeda \u2022 Laws of Simplicity",
+      "default": "John Maeda • Laws of Simplicity",
       "category": "Text"
     },
     {
@@ -41,14 +41,15 @@
   ],
   "layers": [
     {
-      "id": "quote",
-      "type": "text",
-      "name": "Quote Body",
+      "id": "quote_rule",
+      "type": "shape_line",
+      "name": "Quote Accent",
       "props": {
-        "text": "param:quote_text",
-        "size": 0.052,
-        "text_width": 0.8,
-        "alignment": "center"
+        "width": 0.003,
+        "height": 0.13,
+        "color": "token:accent",
+        "center_x": 0.115,
+        "center_y": "param:pos_y"
       },
       "motion_tracks": [
         {
@@ -56,46 +57,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale_y",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": -0.035,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.44,
-              "value": 0.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
               "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -105,12 +90,97 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quote",
+      "type": "text",
+      "name": "Quote Body",
+      "props": {
+        "text": "param:quote_text",
+        "size": 0.05,
+        "text_width": 0.72,
+        "alignment": "left",
+        "font": "Baskerville",
+        "weight": "Regular",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "center_x": 0.18,
+        "center_y": "param:pos_y",
+        "offset_y": 0.015
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.015,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.285,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.015,
+              "value": -0.014,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.395,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -123,7 +193,17 @@
       "name": "Author",
       "props": {
         "text": "param:author",
-        "size": 0.042
+        "size": 0.026,
+        "font": "Menlo",
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "character_spacing": 1.05,
+        "alignment": "left",
+        "text_width": 0.65,
+        "weight": "Medium",
+        "center_x": 0.18,
+        "center_y": "param:pos_y",
+        "offset_y": -0.07
       },
       "motion_tracks": [
         {
@@ -131,46 +211,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.15,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "translate_x",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": -0.035,
+              "time": 0.15,
+              "value": -0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.53,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -180,12 +244,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -197,56 +277,43 @@
       "type": "shape_line",
       "name": "Divider",
       "props": {
-        "width": 0.22,
-        "height": 0.003,
-        "color": "token:accent"
+        "width": 0.1,
+        "height": 0.002,
+        "color": "token:accent",
+        "center_x": 0.18,
+        "center_y": "param:pos_y",
+        "offset_y": -0.035
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_x",
-          "phase": "out",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -256,12 +323,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

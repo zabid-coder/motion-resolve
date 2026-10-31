@@ -1,8 +1,8 @@
 {
   "id": "bengali_pro_doc",
-  "name": "\u09ac\u09be\u0982\u09b2\u09be \u00b7 \u09aa\u09cd\u09b0\u09ab\u09c7\u09b6\u09a8\u09be\u09b2 \u09a1\u0995\u09c1\u09ae\u09c7\u09a8\u09cd\u099f\u09be\u09b0\u09bf",
+  "name": "বাংলা · প্রফেশনাল ডকুমেন্টারি",
   "category": "Bengali / Multilingual",
-  "text": "\u0987\u09a4\u09bf\u09b9\u09be\u09b8\u09c7\u09b0 \u09aa\u09be\u09a4\u09be \u09a5\u09c7\u0995\u09c7",
+  "text": "ইতিহাসের পাতা থেকে",
   "font": "Hind Siliguri",
   "style": "SemiBold",
   "hero_style": "Bold",
@@ -30,12 +30,12 @@
     0.0,
     0.0,
     0.0,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": true,
   "box_color": [
@@ -48,9 +48,9 @@
   "box_extend_y": 0.025,
   "box_round": 0.25,
   "box_level": 1,
-  "animation_in": "slide_up",
-  "animation_out": "slide_down",
+  "animation_in": "fade",
+  "animation_out": "fade",
   "use_2color": true,
-  "main_word": "\u0987\u09a4\u09bf\u09b9\u09be\u09b8\u09c7\u09b0",
+  "main_word": "ইতিহাসের",
   "hero_font": "Kohinoor Bangla"
 }

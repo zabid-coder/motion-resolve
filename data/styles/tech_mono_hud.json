@@ -1,6 +1,6 @@
 {
   "id": "tech_mono_hud",
-  "name": "Tech \u00b7 Cyber Monospace",
+  "name": "Tech · Cyber Monospace",
   "category": "Kinetic / Tech",
   "text": "SYS.TERMINAL // EXEC",
   "font": "JetBrains Mono",
@@ -19,9 +19,9 @@
     1.0
   ],
   "accent_color": [
-    0.0,
+    0.3,
+    0.75,
     0.82,
-    1.0,
     1.0
   ],
   "stroke_enabled": false,
@@ -30,12 +30,12 @@
     0.0,
     0.4,
     0.7,
-    0.55
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": true,
   "box_color": [
@@ -49,7 +49,7 @@
   "box_round": 0.15,
   "box_level": 1,
   "animation_in": "pop_in",
-  "animation_out": "slide_down",
+  "animation_out": "fade",
   "use_2color": true,
   "main_word": "EXEC",
   "hero_font": "Syne"

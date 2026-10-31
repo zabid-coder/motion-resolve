@@ -12,8 +12,8 @@
   ],
   "duration_default": 4.0,
   "min_hold": 1.8,
-  "in_duration": 0.5,
-  "out_duration": 0.32,
+  "in_duration": 0.6,
+  "out_duration": 0.34,
   "parameters": [
     {
       "id": "badge_tag",
@@ -67,45 +67,29 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.34,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale_x",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.06,
-              "easing": "expoOut"
+              "value": 0.96,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.5,
+              "value": 1,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.32,
-              "value": 0.05,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -115,12 +99,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.32,
-              "value": 0.0,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -133,12 +117,15 @@
       "name": "Badge Tag",
       "props": {
         "text": "param:badge_tag",
-        "font": "token:font_heading",
+        "font": "Menlo",
         "size": 0.056,
         "weight": "Bold",
         "color": "token:text_primary",
         "character_spacing": 1.06,
-        "text_width": 0.58
+        "text_width": 0.58,
+        "font_bn": "token:font_heading_bn",
+        "role": "eyebrow",
+        "alignment": "center"
       },
       "motion_tracks": [
         {
@@ -146,14 +133,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.045,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.325,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -162,30 +149,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.035,
+              "time": 0.045,
+              "value": 0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.405,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -195,12 +166,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -213,12 +184,15 @@
       "name": "Subtext",
       "props": {
         "text": "param:badge_desc",
-        "font": "token:font_body",
+        "font": "Avenir",
         "size": 0.026,
         "weight": "Regular",
         "color": "token:text_secondary",
         "character_spacing": 1.02,
-        "text_width": 0.58
+        "text_width": 0.58,
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "alignment": "center"
       },
       "motion_tracks": [
         {
@@ -226,14 +200,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.0,
+              "time": 0.15,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.41,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -242,30 +216,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.14,
-              "value": 0.035,
+              "time": 0.15,
+              "value": 0.018,
               "easing": "expoOut"
             },
             {
-              "time": 0.52,
-              "value": 0.0,
+              "time": 0.53,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -275,12 +233,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -298,50 +272,34 @@
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_x",
-          "phase": "out",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -351,12 +309,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

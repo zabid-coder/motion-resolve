@@ -11,7 +11,7 @@
   ],
   "duration_default": 4.5,
   "min_hold": 2.0,
-  "in_duration": 0.55,
+  "in_duration": 0.56,
   "out_duration": 0.35,
   "parameters": [
     {
@@ -46,13 +46,17 @@
       "name": "Source",
       "props": {
         "text": "param:source",
-        "font": "token:font_heading",
-        "size": 0.05,
+        "font": "Menlo",
+        "size": 0.038,
         "weight": "Bold",
         "color": "token:text_primary",
-        "character_spacing": 1.08,
-        "text_width": 0.82,
-        "alignment": "center"
+        "character_spacing": 1.06,
+        "text_width": 0.68,
+        "alignment": "left",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "center_x": 0.15,
+        "center_y": 0.2
       },
       "motion_tracks": [
         {
@@ -60,46 +64,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.285,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "translate_x",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.035,
+              "time": 0.015,
+              "value": -0.014,
               "easing": "expoOut"
             },
             {
-              "time": 0.44,
-              "value": 0.0,
+              "time": 0.395,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -109,12 +97,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -127,13 +131,17 @@
       "name": "Subject",
       "props": {
         "text": "param:subject",
-        "font": "token:font_body",
-        "size": 0.038,
+        "font": "Avenir",
+        "size": 0.031,
         "weight": "Regular",
         "color": "token:text_secondary",
         "character_spacing": 1.03,
-        "text_width": 0.82,
-        "alignment": "center"
+        "text_width": 0.68,
+        "alignment": "left",
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "center_x": 0.15,
+        "center_y": 0.13
       },
       "motion_tracks": [
         {
@@ -141,46 +149,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.15,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "translate_x",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.035,
+              "time": 0.15,
+              "value": -0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.53,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -190,12 +182,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
               "time": 0.3,
-              "value": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -207,56 +215,42 @@
       "type": "shape_line",
       "name": "Divider",
       "props": {
-        "width": 0.22,
+        "width": 0.12,
         "height": 0.002,
-        "color": "token:accent"
+        "color": "token:accent",
+        "center_x": 0.15,
+        "center_y": 0.17
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_x",
-          "phase": "out",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -266,12 +260,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

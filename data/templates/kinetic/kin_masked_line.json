@@ -52,58 +52,51 @@
       "name": "Kinetic Line 1",
       "props": {
         "text": "param:line1",
-        "font": "token:font_heading",
+        "font": "Avenir Next Condensed",
         "font_bn": "token:font_heading_bn",
         "size": 0.082,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.2,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "scale_x",
-          "phase": "out",
+          "property": "scale",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.9,
+              "easing": "softSpring"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.24,
+              "value": 1.045,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "softSpring"
             }
           ]
         },
@@ -113,12 +106,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.25,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -131,58 +124,51 @@
       "name": "Kinetic Line 2",
       "props": {
         "text": "param:line2",
-        "font": "token:font_heading",
+        "font": "Avenir Next Condensed",
         "font_bn": "token:font_heading_bn",
         "size": 0.082,
         "weight": "Bold",
-        "color": "token:accent"
+        "color": "token:accent",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.2,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "scale_x",
-          "phase": "out",
+          "property": "scale",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.9,
+              "easing": "softSpring"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.24,
+              "value": 1.045,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "softSpring"
             }
           ]
         },
@@ -192,12 +178,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.25,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

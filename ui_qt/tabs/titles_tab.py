@@ -86,13 +86,16 @@ class PresetPreviewCanvas(QWidget):
             text = "\n".join(part for part in (" ".join(before), hero.upper(), " ".join(after)) if part)
         font_family = self.preset_data.get("font", "Avenir Next")
         try:
-            from core.font_catalog import resolve_available_font
+            from core.font_catalog import resolve_available_font, is_script_font
             from core.templates.bengali_engine import contains_bengali, resolve_font_for_script
             if contains_bengali(text):
                 bn_font = self.preset_data.get("font_bn") or "Kohinoor Bangla"
                 font_family = resolve_font_for_script(text, font_family, bn_font)
             else:
-                font_family = resolve_available_font(font_family, "display")
+                requested = str(font_family).lower()
+                serif_names = ("serif", "baskerville", "didot", "bodoni", "georgia", "times", "playfair", "charter")
+                purpose = "script" if is_script_font(font_family) else ("editorial" if any(name in requested for name in serif_names) else "display")
+                font_family = resolve_available_font(font_family, purpose)
         except Exception:
             pass
         tracking = float(self.preset_data.get("character_spacing", 1.0))

@@ -1,8 +1,8 @@
 {
   "id": "bengali_viral_vlogger",
-  "name": "\u09ac\u09be\u0982\u09b2\u09be \u00b7 \u09ad\u09be\u0987\u09b0\u09be\u09b2 \u09ad\u09cd\u09b2\u0997\u09be\u09b0 \u09aa\u09be\u099e\u09cd\u099a",
+  "name": "বাংলা · ভাইরাল ভ্লগার পাঞ্চ",
   "category": "Bengali / Multilingual",
-  "text": "\u098f\u0995\u09a6\u09ae \u0985\u09ac\u09bf\u09b6\u09cd\u09ac\u09be\u09b8\u09cd\u09af \u0998\u099f\u09a8\u09be!",
+  "text": "একদম অবিশ্বাস্য ঘটনা!",
   "font": "Hind Siliguri",
   "style": "Bold",
   "hero_style": "Bold",
@@ -29,25 +29,25 @@
     0.0,
     0.0,
     0.0,
-    1.0
+    0.88
   ],
-  "stroke_thickness": 0.03,
+  "stroke_thickness": 0.016,
   "shadow_enabled": true,
   "shadow_color": [
     0.0,
     0.0,
     0.0,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
   "animation_in": "bounce_pop",
-  "animation_out": "slide_down",
+  "animation_out": "fade",
   "use_2color": true,
-  "main_word": "\u0985\u09ac\u09bf\u09b6\u09cd\u09ac\u09be\u09b8\u09cd\u09af",
+  "main_word": "অবিশ্বাস্য",
   "hero_font": "Kohinoor Bangla"
 }

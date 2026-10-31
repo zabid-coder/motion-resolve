@@ -29,20 +29,20 @@
   "shadow_enabled": true,
   "box_enabled": false,
   "animation_in": "jitter",
-  "animation_out": "slide_down",
+  "animation_out": "fade",
   "shadow_color": [
     0.03,
     0.06,
     0.07,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "hero_font": "Consolas",
   "hero_style": "Bold",
   "hero_size_multiplier": 1.0,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "use_2color": true,
   "main_word": "CRITICAL",

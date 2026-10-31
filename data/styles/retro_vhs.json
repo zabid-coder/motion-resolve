@@ -29,16 +29,16 @@
     0.1,
     0.05,
     0.1,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
   "animation_in": "scribble",
-  "animation_out": "slide_down",
+  "animation_out": "fade",
   "accent_color": [
     0.67,
     0.48,

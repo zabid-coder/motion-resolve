@@ -28,8 +28,8 @@
   "stroke_thickness": 0.02,
   "shadow_enabled": true,
   "box_enabled": false,
-  "animation_in": "bounce_up",
-  "animation_out": "slide_down",
+  "animation_in": "bounce_pop",
+  "animation_out": "fade",
   "accent_color": [
     0.43,
     0.71,
@@ -41,7 +41,7 @@
     0.03,
     0.09,
     0.12,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "main_word": "CYBERPUNK",
@@ -49,7 +49,7 @@
   "hero_style": "Bold",
   "hero_size_multiplier": 1.0,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ]
 }

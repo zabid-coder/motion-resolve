@@ -46,7 +46,17 @@
       "name": "Heading",
       "props": {
         "text": "param:heading",
-        "size": 0.082
+        "size": 0.071,
+        "font": "Baskerville",
+        "weight": "Regular",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 0.99,
+        "alignment": "left",
+        "text_width": 0.68,
+        "center_x": 0.14,
+        "center_y": "param:pos_y",
+        "offset_y": 0.035
       },
       "motion_tracks": [
         {
@@ -54,13 +64,13 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.3,
-              "value": 1.0,
+              "time": 0.395,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
@@ -70,30 +80,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.06,
-              "value": -0.035,
+              "time": 0.015,
+              "value": -0.012,
               "easing": "expoOut"
             },
             {
-              "time": 0.44,
-              "value": 0.0,
+              "time": 0.515,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -103,12 +97,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.34,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.34,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -121,7 +131,18 @@
       "name": "Body",
       "props": {
         "text": "param:body",
-        "size": 0.044
+        "size": 0.036,
+        "font": "Avenir",
+        "weight": "Regular",
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "character_spacing": 1.0,
+        "alignment": "left",
+        "text_width": 0.67,
+        "center_x": 0.14,
+        "center_y": "param:pos_y",
+        "offset_y": -0.055,
+        "color": "token:text_secondary"
       },
       "motion_tracks": [
         {
@@ -129,13 +150,13 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.15,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.33999999999999997,
-              "value": 1.0,
+              "time": 0.53,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
@@ -145,30 +166,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": -0.035,
+              "time": 0.15,
+              "value": -0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.48,
-              "value": 0.0,
+              "time": 0.65,
+              "value": 0,
               "easing": "expoOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0.0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.04,
-              "easing": "cubicIn"
             }
           ]
         },
@@ -178,12 +183,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.34,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.34,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -195,56 +216,43 @@
       "type": "shape_line",
       "name": "Hairline",
       "props": {
-        "width": 0.25,
-        "height": 0.003,
-        "color": "token:accent"
+        "width": 0.12,
+        "height": 0.002,
+        "color": "token:accent",
+        "center_x": 0.14,
+        "center_y": "param:pos_y",
+        "offset_y": 0.0
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_x",
-          "phase": "out",
+          "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "value": 0.08,
+              "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -254,12 +262,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]

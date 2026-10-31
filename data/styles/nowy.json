@@ -28,15 +28,15 @@
     0.07,
     0.025,
     0.04,
-    0.58
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
-  "animation_in": "slide_up",
+  "animation_in": "fade",
   "animation_out": "fade",
   "use_2color": true,
   "main_word": "FRAME COUNT",

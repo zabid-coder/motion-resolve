@@ -27,20 +27,20 @@
     0.82,
     0.79,
     0.72,
-    0.9
+    0.88
   ],
-  "stroke_thickness": 0.026,
+  "stroke_thickness": 0.016,
   "shadow_enabled": true,
   "shadow_color": [
     0.03,
     0.025,
     0.03,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
   "animation_in": "fade",

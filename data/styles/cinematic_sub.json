@@ -29,16 +29,16 @@
     0.04,
     0.035,
     0.03,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.045,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
-  "animation_in": "slide_up",
-  "animation_out": "slide_down",
+  "animation_in": "fade",
+  "animation_out": "fade",
   "hero_font": "Playfair Display",
   "hero_style": "Italic",
   "hero_size_multiplier": 1.14

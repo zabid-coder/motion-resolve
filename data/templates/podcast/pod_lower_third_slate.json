@@ -19,7 +19,7 @@
   "duration_default": 4.2,
   "min_hold": 2.6,
   "in_duration": 0.58,
-  "out_duration": 0.32,
+  "out_duration": 0.34,
   "parameters": [
     {
       "id": "name",
@@ -104,13 +104,29 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.45,
-              "value": 1.0,
+              "time": 0.34,
+              "value": 1,
               "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.96,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.5,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
@@ -120,12 +136,12 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.35,
-              "value": 0.0,
+              "time": 0.32,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -145,33 +161,49 @@
       },
       "motion_tracks": [
         {
-          "property": "scale_y",
+          "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.0,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.35,
-              "value": 1.0,
+              "time": 0.22,
+              "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
           "property": "scale_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.08,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
           "phase": "out",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
-              "value": 0.0,
+              "time": 0.26,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
@@ -184,7 +216,7 @@
       "name": "Guest Name",
       "props": {
         "text": "param:name",
-        "font": "token:font_heading",
+        "font": "Avenir Next",
         "font_bn": "token:font_heading_bn",
         "size": 0.052,
         "weight": "Demi",
@@ -193,37 +225,39 @@
         "text_width": 0.75,
         "center_x": 0.145,
         "center_y": "param:pos_y",
-        "offset_y": 0.032
+        "offset_y": 0.032,
+        "role": "headline",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
-        {
-          "property": "translate_y",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.08,
-              "value": -0.025,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.55,
-              "value": 0.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
         {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.08,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.285,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.015,
+              "value": -0.014,
               "easing": "expoOut"
             },
             {
-              "time": 0.35,
-              "value": 1.0,
+              "time": 0.395,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
@@ -234,12 +268,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.35,
-              "value": 0.0,
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -252,7 +302,7 @@
       "name": "Guest Role",
       "props": {
         "text": "param:role",
-        "font": "token:font_body",
+        "font": "Avenir",
         "font_bn": "token:font_body_bn",
         "size": 0.032,
         "weight": "Regular",
@@ -261,37 +311,39 @@
         "text_width": 0.48,
         "center_x": 0.145,
         "center_y": "param:pos_y",
-        "offset_y": -0.034
+        "offset_y": -0.034,
+        "role": "body",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
-        {
-          "property": "translate_y",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.16,
-              "value": -0.015,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.6,
-              "value": 0.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
         {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.16,
-              "value": 0.0,
+              "time": 0.15,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": -0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.45,
-              "value": 1.0,
+              "time": 0.53,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
@@ -302,12 +354,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.35,
-              "value": 0.0,
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -320,7 +388,7 @@
       "name": "Social Handle",
       "props": {
         "text": "param:social",
-        "font": "token:font_mono",
+        "font": "Avenir",
         "size": 0.028,
         "weight": "Medium",
         "color": "param:accent_color",
@@ -328,7 +396,10 @@
         "text_width": 0.34,
         "center_x": 0.84,
         "center_y": "param:pos_y",
-        "offset_y": -0.034
+        "offset_y": -0.034,
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "character_spacing": 1.0
       },
       "motion_tracks": [
         {
@@ -336,13 +407,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.2,
-              "value": 0.0,
+              "time": 0.17,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.44,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.17,
+              "value": -0.008,
               "easing": "expoOut"
             },
             {
-              "time": 0.5,
-              "value": 1.0,
+              "time": 0.55,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
@@ -353,12 +440,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.35,
-              "value": 0.0,
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
               "easing": "cubicIn"
             }
           ]

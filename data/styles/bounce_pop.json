@@ -22,15 +22,15 @@
     0.03,
     0.025,
     0.03,
-    0.6
+    0.42
   ],
   "shadow_softness": 0.04,
   "shadow_offset": [
-    0.0,
-    0.0
+    0.003,
+    -0.004
   ],
   "box_enabled": false,
-  "animation_in": "bounce_up",
+  "animation_in": "bounce_pop",
   "animation_out": "fade",
   "use_2color": false,
   "hero_font": "Avenir Next Condensed",

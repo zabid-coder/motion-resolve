@@ -1,8 +1,8 @@
 {
   "id": "saas_gradient_headline",
-  "name": "Gradient Tech Headline",
+  "name": "Signal Headline — Product Statement",
   "category": "SaaS / Tech",
-  "description": "Vercel / Next.js launch style headline with punchy modern typography.",
+  "description": "A restrained product headline with a small system label, precise hairline, and staggered reveal.",
   "tags": [
     "saas",
     "gradient",
@@ -11,9 +11,16 @@
   ],
   "duration_default": 4.0,
   "min_hold": 1.8,
-  "in_duration": 0.5,
-  "out_duration": 0.32,
+  "in_duration": 0.6,
+  "out_duration": 0.34,
   "parameters": [
+    {
+      "id": "eyebrow",
+      "name": "System Label",
+      "type": "string",
+      "default": "PRODUCT / SYSTEMS",
+      "category": "Text"
+    },
     {
       "id": "headline",
       "name": "Main Headline",
@@ -34,65 +41,117 @@
   ],
   "layers": [
     {
+      "id": "headline_rule",
+      "type": "shape_line",
+      "name": "Product Hairline",
+      "props": {
+        "width": 0.13,
+        "height": 0.0018,
+        "color": "token:border",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": 0.045
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.22,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.08,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "headline",
       "type": "text",
       "name": "Headline",
       "props": {
         "text": "param:headline",
-        "font": "token:font_heading",
-        "size": 0.054,
-        "weight": "Bold",
+        "font": "Avenir Next",
+        "size": 0.066,
+        "weight": "Demi",
         "color": "token:text_primary",
-        "character_spacing": 1.05,
+        "character_spacing": 0.99,
         "text_width": 0.82,
-        "alignment": "center"
+        "alignment": "center",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": -0.015
       },
       "motion_tracks": [
         {
-          "property": "scale_x",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.1,
-              "value": 0.0,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.38,
-              "value": 1.0,
-              "easing": "expoOut"
-            }
-          ]
-        },
-        {
           "property": "opacity",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.1,
-              "value": 0.0,
+              "time": 0.015,
+              "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.28,
-              "value": 1.0,
-              "easing": "quartInOut"
+              "time": 0.275,
+              "value": 1,
+              "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "scale_x",
-          "phase": "out",
+          "property": "translate_y",
+          "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 1.0,
-              "easing": "cubicIn"
+              "time": 0.015,
+              "value": 0.012,
+              "easing": "expoOut"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
-              "easing": "cubicIn"
+              "time": 0.395,
+              "value": 0,
+              "easing": "expoOut"
             }
           ]
         },
@@ -102,12 +161,97 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 1.0,
+              "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.28,
-              "value": 0.0,
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": -0.01,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product_label",
+      "type": "text",
+      "name": "Product Label",
+      "props": {
+        "text": "param:eyebrow",
+        "font": "Menlo",
+        "size": 0.026,
+        "weight": "Medium",
+        "color": "token:accent",
+        "alignment": "center",
+        "text_width": 0.56,
+        "character_spacing": 1.1,
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": 0.085,
+        "role": "eyebrow"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.065,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.345,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.065,
+              "value": 0.008,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.425,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
               "easing": "cubicIn"
             }
           ]
