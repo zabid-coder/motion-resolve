@@ -39,7 +39,7 @@
   "box_enabled": false,
   "animation_in": "slide_up",
   "animation_out": "slide_down",
-  "hero_font": "Pinyon Script",
-  "hero_style": "Regular",
-  "hero_size_multiplier": 1.18
+  "hero_font": "Avenir Next Condensed",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.0
 }

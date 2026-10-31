@@ -2,7 +2,7 @@
   "id": "mrbeast_bold",
   "name": "High Retention Impact",
   "category": "Bold Social",
-  "text": "I SURVIVED 100 HOURS",
+  "text": "I SURVIVED\n100 HOURS",
   "font": "Avenir Next Condensed",
   "style": "Regular",
   "size": 0.095,
@@ -46,8 +46,8 @@
     1
   ],
   "use_2color": true,
-  "main_word": "HOURS",
-  "hero_font": "Pinyon Script",
-  "hero_style": "Regular",
-  "hero_size_multiplier": 1.18
+  "main_word": "100 HOURS",
+  "hero_font": "Avenir Next Condensed",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.0
 }

@@ -47,8 +47,8 @@
       "name": "Badge Pill Plate",
       "props": {
         "role": "plate",
-        "width": 0.52,
-        "height": 0.14,
+        "width": 0.62,
+        "height": 0.2,
         "corner_radius": 16,
         "color": "token:bg_plate",
         "border": "token:border",
@@ -134,10 +134,11 @@
       "props": {
         "text": "param:badge_tag",
         "font": "token:font_heading",
-        "size": 0.052,
+        "size": 0.056,
         "weight": "Bold",
         "color": "token:text_primary",
-        "character_spacing": 1.06
+        "character_spacing": 1.06,
+        "text_width": 0.58
       },
       "motion_tracks": [
         {
@@ -213,10 +214,11 @@
       "props": {
         "text": "param:badge_desc",
         "font": "token:font_body",
-        "size": 0.034,
+        "size": 0.026,
         "weight": "Regular",
         "color": "token:text_secondary",
-        "character_spacing": 1.02
+        "character_spacing": 1.02,
+        "text_width": 0.58
       },
       "motion_tracks": [
         {

@@ -1,8 +1,8 @@
 {
   "id": "em_bold_yellow",
-  "name": "EM Bold Yellow \u00b7 Warm Accent",
+  "name": "EM Bold Yellow · Warm Accent",
   "category": "Tutorial Inspired",
-  "text": "EASY\nMOTION",
+  "text": "THE 3-STEP\nEDITING SYSTEM",
   "font": "Avenir Next Condensed",
   "style": "Heavy",
   "size": 0.09,
@@ -39,8 +39,8 @@
   "animation_in": "pop_in",
   "animation_out": "slide_down",
   "use_2color": true,
-  "main_word": "MOTION",
-  "hero_font": "Pinyon Script",
-  "hero_style": "Regular",
-  "hero_size_multiplier": 1.18
+  "main_word": "EDITING SYSTEM",
+  "hero_font": "Avenir Next Condensed",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.05
 }

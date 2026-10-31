@@ -46,8 +46,8 @@
       "name": "Step Plate",
       "props": {
         "role": "plate",
-        "width": 0.6,
-        "height": 0.16,
+        "width": 0.74,
+        "height": 0.2,
         "corner_radius": 12,
         "color": "token:bg_plate",
         "border": "token:border",
@@ -133,10 +133,11 @@
       "props": {
         "text": "param:step_title",
         "font": "token:font_heading",
-        "size": 0.068,
+        "size": 0.062,
         "weight": "Bold",
         "color": "token:text_primary",
-        "character_spacing": 1.04
+        "character_spacing": 1.04,
+        "text_width": 0.7
       },
       "motion_tracks": [
         {
@@ -212,10 +213,11 @@
       "props": {
         "text": "param:step_num",
         "font": "JetBrains Mono",
-        "size": 0.04,
+        "size": 0.028,
         "weight": "Bold",
         "color": "token:accent",
-        "character_spacing": 1.06
+        "character_spacing": 1.06,
+        "text_width": 0.7
       },
       "motion_tracks": [
         {

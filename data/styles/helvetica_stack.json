@@ -1,8 +1,8 @@
 {
   "id": "helvetica_stack",
-  "name": "Helvetica \u00b7 Minimal Stack",
+  "name": "Helvetica · Minimal Stack",
   "category": "Tutorial Inspired",
-  "text": "EASY\nMOTION",
+  "text": "DESIGNED TO\nMOVE CLEANLY",
   "font": "Helvetica Neue",
   "style": "Medium",
   "size": 0.082,
@@ -33,7 +33,8 @@
   "animation_in": "slide_up",
   "animation_out": "fade",
   "use_2color": false,
-  "hero_font": "DM Serif Display",
-  "hero_style": "Italic",
-  "hero_size_multiplier": 1.12
+  "hero_font": "Helvetica Neue",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.0,
+  "main_word": "MOVE CLEANLY"
 }

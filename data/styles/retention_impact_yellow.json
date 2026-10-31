@@ -1,13 +1,13 @@
 {
   "id": "retention_impact_yellow",
-  "name": "Social \u00b7 Retention Punch",
+  "name": "Social · Retention Punch",
   "category": "Bold Social",
-  "text": "VIRAL RETENTION PUNCH",
+  "text": "VIEWERS STAY\nFOR THE REVEAL",
   "font": "Montserrat",
   "style": "Black",
-  "hero_style": "Regular",
+  "hero_style": "Heavy",
   "size": 0.092,
-  "hero_size_multiplier": 1.18,
+  "hero_size_multiplier": 1.08,
   "character_spacing": 0.96,
   "line_spacing": 0.0,
   "center_x": 0.5,
@@ -48,6 +48,6 @@
   "animation_in": "bounce_pop",
   "animation_out": "slide_down",
   "use_2color": true,
-  "main_word": "PUNCH",
-  "hero_font": "Pinyon Script"
+  "main_word": "REVEAL",
+  "hero_font": "Avenir Next Condensed"
 }

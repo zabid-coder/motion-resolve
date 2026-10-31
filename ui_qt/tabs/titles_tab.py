@@ -125,7 +125,9 @@ class PresetPreviewCanvas(QWidget):
             for idx in range(len(lines)):
                 if idx == hero_index and hero_font_name:
                     from core.font_catalog import resolve_available_font, is_script_font
-                    purpose = "script" if is_script_font(hero_font_name) else "serif"
+                    hero_name_lower = str(hero_font_name).lower()
+                    serif_terms = ("serif", "baskerville", "didot", "bodoni", "georgia", "times", "playfair")
+                    purpose = "script" if is_script_font(hero_font_name) else ("editorial" if any(term in hero_name_lower for term in serif_terms) else "display")
                     fam = resolve_available_font(hero_font_name, purpose)
                     sz = max(1, round(base_font.pointSize() * (hero_multiplier if hero_multiplier > 1.0 else (1.15 if is_script_font(hero_font_name) else 1.0))))
                     weight = QFont.Weight.Normal if is_script_font(hero_font_name) else QFont.Weight.Bold
@@ -163,6 +165,17 @@ class PresetPreviewCanvas(QWidget):
         line_spacing = 1.0 if abs(raw_spacing) < 0.05 else (raw_spacing if raw_spacing > 0.3 else 1.0 + raw_spacing)
         line_gaps = [max(1.0, max(line_heights[i], line_heights[i + 1]) * (0.16 + (line_spacing - 1.0) * 0.5)) for i in range(max(0, len(lines) - 1))]
         total_block_h = sum(line_heights) + sum(line_gaps)
+        # Point-sized fonts can occupy more vertical space than the card's
+        # logical height (especially for Bengali combining marks). Refit the
+        # full stack until every line has a calm margin inside the preview.
+        while total_block_h > h - 20.0 and font_size > 10:
+            font_size -= 1
+            font.setPointSize(font_size)
+            fonts = line_fonts(font)
+            metrics = [QFontMetricsF(line_font) for line_font in fonts]
+            line_heights = [metric.height() for metric in metrics]
+            line_gaps = [max(1.0, max(line_heights[i], line_heights[i + 1]) * (0.16 + (line_spacing - 1.0) * 0.5)) for i in range(max(0, len(lines) - 1))]
+            total_block_h = sum(line_heights) + sum(line_gaps)
         align = str(self.preset_data.get("alignment", "center")).lower()
         center_x = w * max(0.12, min(0.88, float(self.preset_data.get("center_x", 0.5))))
         raw_center_y = float(self.preset_data.get("center_y", 0.28))

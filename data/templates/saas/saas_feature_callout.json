@@ -81,7 +81,9 @@
           0.34,
           0.65
         ],
-        "border_width": 1.2
+        "border_width": 1.2,
+        "center_x": "param:anchor_x",
+        "center_y": "param:anchor_y"
       },
       "motion_tracks": [
         {
@@ -155,9 +157,11 @@
       "type": "shape_line",
       "name": "Leader Line",
       "props": {
-        "width": 0.12,
-        "height": 0.003,
-        "color": "token:accent"
+        "width": 0.003,
+        "height": 0.24,
+        "color": "token:accent",
+        "center_x": "param:anchor_x",
+        "center_y": 0.415
       },
       "motion_tracks": [
         {
@@ -231,8 +235,8 @@
       "type": "shape_rect",
       "name": "Feature Card Plate",
       "props": {
-        "width": 0.38,
-        "height": 0.1,
+        "width": 0.48,
+        "height": 0.16,
         "color": "token:bg_plate",
         "border": "token:border",
         "corner_radius": 16,
@@ -242,7 +246,9 @@
           0.34,
           0.65
         ],
-        "border_width": 1.2
+        "border_width": 1.2,
+        "center_y": "param:pos_y",
+        "center_x": 0.6
       },
       "motion_tracks": [
         {
@@ -319,9 +325,12 @@
         "text": "param:title",
         "font": "token:font_heading",
         "font_bn": "token:font_heading_bn",
-        "size": 0.046,
+        "size": 0.04,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "text_width": 0.44,
+        "center_x": 0.6,
+        "alignment": "center"
       },
       "motion_tracks": [
         {
@@ -398,8 +407,11 @@
         "text": "param:desc",
         "font": "token:font_body",
         "font_bn": "token:font_body_bn",
-        "size": 0.03,
-        "color": "token:text_secondary"
+        "size": 0.026,
+        "color": "token:text_secondary",
+        "text_width": 0.44,
+        "center_x": 0.6,
+        "alignment": "center"
       },
       "motion_tracks": [
         {

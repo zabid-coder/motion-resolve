@@ -1,8 +1,8 @@
 {
   "id": "nowy",
-  "name": "Nowy \u00b7 Rose Split",
+  "name": "Nowy · Rose Split",
   "category": "Tutorial Inspired",
-  "text": "EASY\nMOTION",
+  "text": "MAKE EVERY\nFRAME COUNT",
   "font": "Avenir Next",
   "style": "Demi",
   "size": 0.084,
@@ -39,8 +39,8 @@
   "animation_in": "slide_up",
   "animation_out": "fade",
   "use_2color": true,
-  "main_word": "MOTION",
-  "hero_font": "Pinyon Script",
-  "hero_style": "Regular",
-  "hero_size_multiplier": 1.18
+  "main_word": "FRAME COUNT",
+  "hero_font": "Avenir Next",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.05
 }

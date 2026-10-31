@@ -1,8 +1,8 @@
 {
   "id": "alex_cooper_pink",
-  "name": "New One \u00b7 Magenta Hero",
+  "name": "New One · Magenta Hero",
   "category": "Tutorial Inspired",
-  "text": "MIGHT\nBE",
+  "text": "CASE FILE\nMISSING MOTIVE",
   "font": "Avenir Next Condensed",
   "style": "Heavy",
   "size": 0.088,
@@ -39,8 +39,8 @@
   "animation_in": "pop_in",
   "animation_out": "slide_down",
   "use_2color": true,
-  "main_word": "MIGHT",
-  "hero_font": "Pinyon Script",
-  "hero_style": "Regular",
-  "hero_size_multiplier": 1.18
+  "main_word": "MISSING MOTIVE",
+  "hero_font": "Avenir Next",
+  "hero_style": "Heavy",
+  "hero_size_multiplier": 1.08
 }

@@ -1,13 +1,13 @@
 {
   "id": "creator_bold_stack",
-  "name": "Creator \u00b7 2-Tone Gold Stack",
+  "name": "Creator · 2-Tone Gold Stack",
   "category": "Bold Social",
   "text": "MASTERCLASS BREAKTHROUGH",
   "font": "Montserrat",
   "style": "ExtraBold",
-  "hero_style": "Regular",
+  "hero_style": "Heavy",
   "size": 0.09,
-  "hero_size_multiplier": 1.18,
+  "hero_size_multiplier": 1.06,
   "character_spacing": 0.98,
   "line_spacing": 0.0,
   "center_x": 0.5,
@@ -49,5 +49,5 @@
   "animation_out": "slide_down",
   "use_2color": true,
   "main_word": "BREAKTHROUGH",
-  "hero_font": "Pinyon Script"
+  "hero_font": "Avenir Next Condensed"
 }

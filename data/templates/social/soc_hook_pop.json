@@ -148,7 +148,10 @@
           0.08,
           0.1,
           1.0
-        ]
+        ],
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": 0.05
       },
       "motion_tracks": [
         {
@@ -227,7 +230,10 @@
         "font_bn": "token:font_body_bn",
         "size": 0.038,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "center_x": 0.5,
+        "center_y": "param:pos_y",
+        "offset_y": "-0.09"
       },
       "motion_tracks": [
         {

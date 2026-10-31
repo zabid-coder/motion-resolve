@@ -3,8 +3,8 @@
   "name": "Cyber Terminal Jitter",
   "category": "Kinetic / Tech",
   "text": "SYSTEM CRITICAL",
-  "font": "Menlo",
-  "style": "Regular",
+  "font": "Consolas",
+  "style": "Bold",
   "size": 0.082,
   "character_spacing": 1.1,
   "line_spacing": 0.0,
@@ -37,11 +37,19 @@
     0.6
   ],
   "shadow_softness": 0.04,
-  "hero_font": "Syne",
+  "hero_font": "Consolas",
   "hero_style": "Bold",
-  "hero_size_multiplier": 1.12,
+  "hero_size_multiplier": 1.0,
   "shadow_offset": [
     0.0,
     0.0
+  ],
+  "use_2color": true,
+  "main_word": "CRITICAL",
+  "accent_color": [
+    0.0,
+    0.92,
+    0.78,
+    1.0
   ]
 }

@@ -47,7 +47,7 @@
   ],
   "use_2color": true,
   "main_word": "EASIEST",
-  "hero_font": "Pinyon Script",
-  "hero_style": "Regular",
-  "hero_size_multiplier": 1.18
+  "hero_font": "Avenir Next Condensed",
+  "hero_style": "Heavy",
+  "hero_size_multiplier": 1.08
 }

@@ -1,13 +1,13 @@
 {
   "id": "tutorial_phrase_hero",
-  "name": "Tutorial \u00b7 Phrase Hero Stack",
+  "name": "Tutorial · Phrase Hero Stack",
   "category": "Tutorial Inspired",
-  "text": "OKAY GUYS SO THIS",
+  "text": "PRESS THIS\nTO SPEED UP",
   "font": "Avenir Next Condensed",
   "style": "Heavy Italic",
-  "hero_style": "Regular",
+  "hero_style": "Bold",
   "size": 0.086,
-  "hero_size_multiplier": 1.18,
+  "hero_size_multiplier": 1.05,
   "character_spacing": 0.98,
   "line_spacing": 0.0,
   "center_x": 0.5,
@@ -41,6 +41,6 @@
   "animation_in": "bounce_up",
   "animation_out": "slide_down",
   "use_2color": true,
-  "main_word": "GUYS SO",
-  "hero_font": "Pinyon Script"
+  "main_word": "SPEED UP",
+  "hero_font": "Avenir Next Condensed"
 }

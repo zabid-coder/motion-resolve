@@ -8,7 +8,7 @@ and live dynamic layer transformations.
 from typing import Dict, Any, Optional
 from PyQt6.QtWidgets import QFrame
 from PyQt6.QtCore import Qt, QRectF
-from PyQt6.QtGui import QPainter, QColor, QFont, QPen, QBrush
+from PyQt6.QtGui import QPainter, QColor, QFont, QPen, QBrush, QFontMetricsF
 
 from core.templates.schema import TemplateSpec, LayerType, ParameterType
 from core.templates.motion_tokens import evaluate_easing
@@ -193,18 +193,19 @@ class TemplateCanvasArea(QFrame):
         w = self.width()
         h = self.height()
 
-        # Draw subtle center guidelines
-        pen_guide = QPen(QColor(255, 85, 0, 30), 1, Qt.PenStyle.DashLine)
-        painter.setPen(pen_guide)
-        painter.drawLine(int(w * 0.5), 0, int(w * 0.5), h)
-        painter.drawLine(0, int(h * 0.5), w, int(h * 0.5))
+        # Guides are useful while adjusting a layout, but should never contaminate
+        # the artwork preview or its screenshots.
+        if self.params.get("preview_guides", False):
+            pen_guide = QPen(QColor(255, 255, 255, 38), 1, Qt.PenStyle.DashLine)
+            painter.setPen(pen_guide)
+            painter.drawLine(int(w * 0.5), 0, int(w * 0.5), h)
+            painter.drawLine(0, int(h * 0.5), w, int(h * 0.5))
 
         if not self.template:
             painter.setPen(QColor("#5d5677"))
             painter.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, "Select a template to preview")
             return
 
-        preview_scale = min(1.0, max(0.75, h / 240.0))
         in_dur = max(0.1, getattr(self.template, "in_duration", 0.5))
         out_dur = max(0.1, getattr(self.template, "out_duration", 0.5))
         total_dur = max(in_dur + out_dur, getattr(self.template, "duration_default", 3.0))
@@ -217,7 +218,6 @@ class TemplateCanvasArea(QFrame):
         line_layers = [l for l in self.template.layers if l.type == LayerType.SHAPE_LINE]
         box_layers = [l for l in self.template.layers if l.type in (LayerType.SHAPE_RECT, LayerType.SHAPE_PILL)]
         plate_layers = [l for l in box_layers if l.props.get("role") == "plate"]
-        text_box_layers = [l for l in box_layers if l.props.get("role") != "plate"]
 
         # Reveal mask calculation
         mask_top, mask_bottom = pos_y_norm - 0.08, pos_y_norm + 0.08
@@ -321,129 +321,112 @@ class TemplateCanvasArea(QFrame):
         painter.scale(global_scale, global_scale)
         painter.translate(-w * 0.5, -h * 0.5)
 
-        # Draw Backing Plate
-        if plate_layers and self.params.get("plate_enabled", True):
-            plate = plate_layers[0]
-            plate_color = self._layer_color(plate, "bg_plate")
-            box_w = w * float(self._resolve_val(plate.props.get("width", 0.58)))
-            box_h = h * float(self._resolve_val(plate.props.get("height", 0.15)))
-            box_x, box_y = self._layer_center_px(plate, w, h, center_x, base_center_y)
-            painter.setBrush(QBrush(plate_color))
+        # Draw authored geometry in layer order using normalized template dimensions.
+        if self.params.get("plate_enabled", True):
+            for shape in box_layers:
+                try:
+                    shape_w = w * max(0.0, float(self._resolve_val(shape.props.get("width", 0.15))))
+                    shape_h = h * max(0.0, float(self._resolve_val(shape.props.get("height", 0.04))))
+                    shape_x, shape_y = self._layer_center_px(shape, w, h, center_x, base_center_y)
+                    corner = max(0.0, float(self._resolve_val(shape.props.get("corner_radius", 4))))
+                except (TypeError, ValueError):
+                    continue
+                fallback = "bg_plate" if shape in plate_layers or shape.props.get("role") == "plate" else "accent"
+                border_value = self._resolve_val(shape.props.get("border_color"))
+                try:
+                    border_width = max(0.0, float(self._resolve_val(shape.props.get("border_width", 0.0))))
+                except (TypeError, ValueError):
+                    border_width = 0.0
+                if isinstance(border_value, (list, tuple)) and len(border_value) >= 3 and border_width > 0:
+                    rgba = list(border_value[:4])
+                    while len(rgba) < 4:
+                        rgba.append(1.0)
+                    border_color = QColor(*(int(max(0.0, min(1.0, float(c))) * 255) for c in rgba[:3]), int(max(0.0, min(1.0, float(rgba[3]))) * 255))
+                    painter.setPen(QPen(border_color, border_width))
+                else:
+                    painter.setPen(Qt.PenStyle.NoPen)
+                painter.setBrush(QBrush(self._layer_color(shape, fallback)))
+                rect = QRectF(shape_x - shape_w / 2, shape_y - shape_h / 2, shape_w, shape_h)
+                if shape.type == LayerType.SHAPE_PILL or corner > 0:
+                    painter.drawRoundedRect(rect, min(corner, shape_w / 2), min(corner, shape_h / 2))
+                else:
+                    painter.drawRect(rect)
+
+        # Accents stay behind the text.
+        for line in line_layers:
+            try:
+                line_w = w * max(0.0, float(self._resolve_val(line.props.get("width", 0.22)))) * ease_in
+                line_h = max(1.0, h * float(self._resolve_val(line.props.get("height", 0.003))))
+                primary_size = float(self._resolve_val(text_layers[0].props.get("size", 0.075))) if text_layers else 0.075
+                default_line_y = base_center_y + h * primary_size * 0.62
+                line_x, line_y = self._layer_center_px(line, w, h, center_x, default_line_y)
+                if text_layers and line_w >= line_h * 2:
+                    primary_x, primary_y = self._layer_center_px(text_layers[0], w, h, center_x, base_center_y)
+                    if abs(line_y - primary_y) < h * primary_size * 0.42:
+                        line_y = primary_y + h * primary_size * 0.72
+            except (TypeError, ValueError):
+                continue
             painter.setPen(Qt.PenStyle.NoPen)
-            corner = float(plate.props.get("corner_radius", 8))
-            painter.drawRoundedRect(QRectF(box_x - box_w / 2, box_y - box_h / 2, box_w, box_h), corner, corner)
-
-        # Draw Text Box / Plate
-        if text_layers and text_box_layers and self.params.get("plate_enabled", True):
-            box = text_box_layers[0]
-            box_color = self._layer_color(box, "bg_plate")
-            primary = text_layers[0]
-            primary_center_x, primary_center_y = self._layer_center_px(primary, w, h, center_x, base_center_y)
-            box_w = w * (0.42 + 2.0 * float(self._resolve_val(box.props.get("width", 0.04))))
-            box_h = h * (0.12 + 2.0 * float(self._resolve_val(box.props.get("height", 0.025))))
-            painter.setBrush(QBrush(box_color))
-            painter.setPen(Qt.PenStyle.NoPen)
-            corner = float(box.props.get("corner_radius", 4))
-            painter.drawRoundedRect(QRectF(primary_center_x - box_w / 2, primary_center_y - box_h / 2, box_w, box_h), corner, corner)
-
-        # Draw Text Stack
-        painter.save()
-        painter.setClipRect(mask_rect)
-        string_params = [p.id for p in self.template.parameters if p.type == ParameterType.STRING]
-
-        # 1. Primary Headline (Layer 0)
-        if text_layers:
-            t0 = text_layers[0]
-            raw_text0 = str(self._resolve_val(t0.props.get("text", "")))
-            if not raw_text0 and string_params:
-                raw_text0 = str(self.params.get(string_params[0], "PRIMARY HEADLINE"))
-            if self.params.get("bengali_digits", False):
-                raw_text0 = to_bengali_numerals(raw_text0)
-
-            is_bn = contains_bengali(raw_text0)
-            fallback_font0 = self.theme.get("font_heading_bn" if is_bn else "font_heading", "Helvetica Neue")
-            font_name0 = self._layer_font_name(t0, fallback_font0, "bengali" if is_bn else "display")
-            base_pt0 = int(float(t0.props.get("size", 0.075)) * 260.0 * preview_scale)
-
-            color0 = self._layer_color(t0, "text_primary")
-            font0 = QFont(font_name0, max(6, base_pt0), self._font_weight(t0, QFont.Weight.Bold))
-            font0.setLetterSpacing(QFont.SpacingType.PercentageSpacing, max(80.0, float(t0.props.get("character_spacing", 1.0)) * 100.0))
-            painter.setFont(font0)
-
-            painter.setPen(QColor(0, 0, 0, 160))
-            rect_t0, align_name0 = self._layer_text_rect(t0, w, h, center_x, base_center_y, 32 * preview_scale)
-            rect_t0_shadow = QRectF(rect_t0.x() + 1.5, rect_t0.y() + 1.5, rect_t0.width(), rect_t0.height())
-            align0 = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(align_name0, Qt.AlignmentFlag.AlignHCenter) | Qt.AlignmentFlag.AlignVCenter
-            painter.drawText(rect_t0_shadow, align0, raw_text0)
-
-            painter.setPen(color0)
-            painter.drawText(rect_t0, align0, raw_text0)
-
-        # 2. Secondary Subtitle (Layer 1)
-        if len(text_layers) > 1:
-            t1 = text_layers[1]
-            raw_text1 = str(self._resolve_val(t1.props.get("text", "")))
-            if not raw_text1 and len(string_params) > 1:
-                raw_text1 = str(self.params.get(string_params[1], ""))
-            is_bn1 = contains_bengali(raw_text1)
-            fallback_font1 = self.theme.get("font_body_bn" if is_bn1 else "font_body", "Helvetica Neue")
-            font_name1 = self._layer_font_name(t1, fallback_font1, "bengali" if is_bn1 else "body")
-            base_pt1 = int(float(t1.props.get("size", 0.045)) * 240.0 * preview_scale)
-
-            color1 = self._layer_color(t1, "text_secondary")
-            font1 = QFont(font_name1, max(6, base_pt1), self._font_weight(t1, QFont.Weight.Medium))
-            font1.setLetterSpacing(QFont.SpacingType.PercentageSpacing, max(80.0, float(t1.props.get("character_spacing", 1.0)) * 100.0))
-            painter.setFont(font1)
-            painter.setPen(color1)
-            size0 = float(text_layers[0].props.get("size", 0.075))
-            size1 = float(t1.props.get("size", 0.045))
-            default_y1 = h * (1.0 - (pos_y_norm - (size0 + size1) * 0.72))
-            rect_t1, align_name1 = self._layer_text_rect(t1, w, h, center_x, default_y1, 24 * preview_scale)
-            align1 = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(align_name1, Qt.AlignmentFlag.AlignHCenter) | Qt.AlignmentFlag.AlignVCenter
-            painter.drawText(rect_t1, align1, raw_text1)
-
-        # 3. Tertiary Tag / Handle (Layer 2)
-        if len(text_layers) > 2:
-            t2 = text_layers[2]
-            raw_text2 = str(self._resolve_val(t2.props.get("text", "")))
-            if not raw_text2 and len(string_params) > 2:
-                raw_text2 = str(self.params.get(string_params[2], ""))
-            color2 = self._layer_color(t2, "accent")
-            fallback_font2 = self.theme.get("font_mono" if not contains_bengali(raw_text2) else "font_body_bn", "Menlo")
-            purpose2 = "bengali" if contains_bengali(raw_text2) else "mono"
-            font2 = QFont(self._layer_font_name(t2, fallback_font2, purpose2), max(6, int(float(t2.props.get("size", 0.036)) * 240.0 * preview_scale)), self._font_weight(t2, QFont.Weight.Bold))
-            painter.setFont(font2)
-            painter.setPen(color2)
-            size0 = float(text_layers[0].props.get("size", 0.075))
-            size2 = float(t2.props.get("size", 0.036))
-            default_y2 = h * (1.0 - (pos_y_norm - (size0 + 0.045 + size2) * 0.78))
-            rect_t2, align_name2 = self._layer_text_rect(t2, w, h, center_x, default_y2, 20 * preview_scale)
-            align2 = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(align_name2, Qt.AlignmentFlag.AlignHCenter) | Qt.AlignmentFlag.AlignVCenter
-            painter.drawText(rect_t2, align2, raw_text2)
-
-        painter.restore()
-
-        # Accent Dividers & Decorative shapes
-        if line_layers:
-            line = line_layers[0]
-            line_color = self._layer_color(line, "accent")
-            line_w = w * float(self._resolve_val(line.props.get("width", 0.22))) * ease_in
-            line_h = h * float(self._resolve_val(line.props.get("height", 0.003)))
-            default_line_y = h * (1.0 - (pos_y_norm - float(text_layers[0].props.get("size", 0.075)) * 0.48)) if text_layers else base_center_y
-            line_x, line_y = self._layer_center_px(line, w, h, center_x, default_line_y)
-            painter.setPen(Qt.PenStyle.NoPen)
-            painter.setBrush(QBrush(line_color))
+            painter.setBrush(QBrush(self._layer_color(line, "accent")))
             painter.drawRect(QRectF(line_x - line_w / 2, line_y - line_h / 2, line_w, line_h))
 
-        other_shapes = [layer for layer in box_layers if layer.props.get("role") != "plate" and layer not in text_box_layers[:1]]
-        for shape in other_shapes:
-            shape_color = self._layer_color(shape, "accent")
-            shape_w = w * float(self._resolve_val(shape.props.get("width", 0.15)))
-            shape_h = h * float(self._resolve_val(shape.props.get("height", 0.04)))
-            shape_x, shape_y = self._layer_center_px(shape, w, h, center_x, base_center_y)
-            corner = float(shape.props.get("corner_radius", 4))
-            painter.setBrush(QBrush(shape_color))
-            painter.setPen(Qt.PenStyle.NoPen)
-            painter.drawRoundedRect(QRectF(shape_x - shape_w / 2, shape_y - shape_h / 2, shape_w, shape_h), corner, corner)
+        # Draw every authored text layer. Normalized font sizes scale with canvas
+        # height, keeping titles legible in both landscape and portrait previews.
+        painter.save()
+        painter.setClipRect(self.rect())
+        string_params = [p.id for p in self.template.parameters if p.type == ParameterType.STRING]
+        implicit_stack_px = 0.0
+        previous_line_height = 0.0
+        painted_text_bounds = []
+        for index, layer in enumerate(text_layers):
+            raw_text = str(self._resolve_val(layer.props.get("text", "")))
+            if not raw_text and index < len(string_params):
+                raw_text = str(self.params.get(string_params[index], ""))
+            if not raw_text:
+                continue
+            if self.params.get("bengali_digits", False):
+                raw_text = to_bengali_numerals(raw_text)
+            is_bn = contains_bengali(raw_text)
+            role = str(layer.props.get("role", "")).lower()
+            purpose = "bengali" if is_bn else ("mono" if "tag" in role or "eyebrow" in role else ("display" if index == 0 else "body"))
+            font_token = ("font_heading_bn" if index == 0 else "font_body_bn") if is_bn else ("font_heading" if index == 0 else "font_body")
+            fallback_font = self.theme.get(font_token, "Arial")
+            font_name = self._layer_font_name(layer, fallback_font, purpose)
+            try:
+                normalized_size = float(self._resolve_val(layer.props.get("size", 0.045)))
+                tracking = float(self._resolve_val(layer.props.get("character_spacing", 1.0)))
+            except (TypeError, ValueError):
+                normalized_size, tracking = 0.045, 1.0
+            optical = get_optical_scale(raw_text) if is_bn else 1.0
+            point_size = max(8, round(normalized_size * h * optical))
+            font = QFont(font_name, point_size, self._font_weight(layer, QFont.Weight.Bold if index == 0 else QFont.Weight.Medium))
+            font.setPixelSize(point_size)
+            font.setLetterSpacing(QFont.SpacingType.PercentageSpacing, max(80.0, tracking * 100.0))
+            default_y = base_center_y + implicit_stack_px
+            rect, alignment_name = self._layer_text_rect(layer, w, h, center_x, default_y, max(point_size * 2.0, h * 0.055))
+            margin = max(4.0, w * 0.025)
+            rect.setLeft(max(margin, rect.left()))
+            rect.setRight(min(w - margin, rect.right()))
+            flags = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(alignment_name, Qt.AlignmentFlag.AlignHCenter)
+            flags |= Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextWordWrap
+            metrics = QFontMetricsF(font)
+            while point_size > 8 and metrics.horizontalAdvance(raw_text.splitlines()[0]) > rect.width() * 0.96:
+                point_size -= 1
+                font.setPixelSize(point_size)
+                metrics = QFontMetricsF(font)
+            content_bounds = metrics.boundingRect(rect, int(flags), raw_text)
+            for prior_text, prior_bounds in painted_text_bounds:
+                if raw_text != prior_text and content_bounds.intersects(prior_bounds):
+                    dy = prior_bounds.bottom() - content_bounds.top() + max(3.0, h * 0.008)
+                    rect.translate(0.0, dy)
+                    content_bounds.translate(0.0, dy)
+            painter.setFont(font)
+            painter.setPen(self._layer_color(layer, "text_primary" if index == 0 else "text_secondary"))
+            painter.drawText(rect, flags, raw_text)
+            painted_text_bounds.append((raw_text, content_bounds))
+            if "center_y" not in layer.props and "offset_y" not in layer.props:
+                implicit_stack_px += (previous_line_height + metrics.height()) * 0.72 + h * 0.01
+            previous_line_height = metrics.height()
+        painter.restore()
 
         painter.restore()

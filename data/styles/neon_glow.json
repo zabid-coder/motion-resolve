@@ -2,7 +2,7 @@
   "id": "neon_glow",
   "name": "Neon Cyber Ambient",
   "category": "Kinetic / Tech",
-  "text": "NEON CYBERPUNK",
+  "text": "CYBERPUNK\nAFTER DARK",
   "font": "Avenir Next",
   "style": "Demi",
   "size": 0.08,
@@ -45,9 +45,9 @@
   ],
   "shadow_softness": 0.04,
   "main_word": "CYBERPUNK",
-  "hero_font": "Pinyon Script",
-  "hero_style": "Regular",
-  "hero_size_multiplier": 1.18,
+  "hero_font": "Bahnschrift",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.0,
   "shadow_offset": [
     0.0,
     0.0

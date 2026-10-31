@@ -46,7 +46,7 @@
       "name": "Changelog Plate",
       "props": {
         "role": "plate",
-        "width": 0.64,
+        "width": 0.72,
         "height": 0.18,
         "corner_radius": 12,
         "color": "token:bg_plate",
@@ -136,7 +136,8 @@
         "size": 0.068,
         "weight": "Bold",
         "color": "token:text_primary",
-        "character_spacing": 1.04
+        "character_spacing": 1.04,
+        "text_width": 0.68
       },
       "motion_tracks": [
         {
@@ -212,10 +213,11 @@
       "props": {
         "text": "param:version",
         "font": "JetBrains Mono",
-        "size": 0.038,
+        "size": 0.03,
         "weight": "Medium",
         "color": "token:accent",
-        "character_spacing": 1.06
+        "character_spacing": 1.06,
+        "text_width": 0.64
       },
       "motion_tracks": [
         {
