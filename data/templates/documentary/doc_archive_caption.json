@@ -52,7 +52,19 @@
         "color": "token:text_primary",
         "character_spacing": 1.08,
         "text_width": 0.82,
-        "alignment": "center"
+        "alignment": "center",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -133,7 +145,19 @@
         "color": "token:text_secondary",
         "character_spacing": 1.03,
         "text_width": 0.82,
-        "alignment": "center"
+        "alignment": "center",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -283,5 +307,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "free"
 }

@@ -19,7 +19,7 @@
   "duration_default": 3.6,
   "min_hold": 1.6,
   "in_duration": 0.55,
-  "out_duration": 0.30,
+  "out_duration": 0.3,
   "parameters": [
     {
       "id": "headline",
@@ -51,7 +51,7 @@
       "id": "pos_y",
       "name": "Vertical Position",
       "type": "number",
-      "default": 0.50,
+      "default": 0.5,
       "min_val": 0.15,
       "max_val": 0.85,
       "step": 0.01,
@@ -67,7 +67,7 @@
         "width": 0.65,
         "height": 0.003,
         "color": "param:accent_color",
-        "center_x": 0.50,
+        "center_x": 0.5,
         "center_y": "param:pos_y"
       },
       "motion_tracks": [
@@ -117,9 +117,21 @@
         "weight": "Bold",
         "color": "token:text_primary",
         "alignment": "center",
-        "center_x": 0.50,
+        "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": 0.048
+        "offset_y": 0.048,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -132,7 +144,7 @@
               "easing": "expoOut"
             },
             {
-              "time": 0.50,
+              "time": 0.5,
               "value": 0.0,
               "easing": "expoOut"
             }
@@ -148,7 +160,7 @@
               "easing": "expoOut"
             },
             {
-              "time": 0.30,
+              "time": 0.3,
               "value": 1.0,
               "easing": "expoOut"
             }
@@ -184,9 +196,21 @@
         "weight": "SemiBold",
         "color": "token:accent",
         "alignment": "center",
-        "center_x": 0.50,
+        "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": -0.045
+        "offset_y": -0.045,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -239,5 +263,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }

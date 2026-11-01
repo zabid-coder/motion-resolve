@@ -72,7 +72,19 @@
           0.9,
           1.0
         ],
-        "character_spacing": 1.08
+        "character_spacing": 1.08,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -238,7 +250,19 @@
           0.72,
           1.0
         ],
-        "character_spacing": 1.05
+        "character_spacing": 1.05,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -307,5 +331,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }

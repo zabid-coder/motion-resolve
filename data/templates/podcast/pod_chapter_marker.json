@@ -46,7 +46,19 @@
       "name": "Chapter Title",
       "props": {
         "text": "param:chap_title",
-        "size": 0.074
+        "size": 0.074,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -121,7 +133,19 @@
       "name": "Chapter Index",
       "props": {
         "text": "param:chap_num",
-        "size": 0.04
+        "size": 0.04,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -276,5 +300,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "free"
 }

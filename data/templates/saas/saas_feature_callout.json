@@ -321,7 +321,19 @@
         "font_bn": "token:font_heading_bn",
         "size": 0.046,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -399,7 +411,19 @@
         "font": "token:font_body",
         "font_bn": "token:font_body_bn",
         "size": 0.03,
-        "color": "token:text_secondary"
+        "color": "token:text_secondary",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -468,5 +492,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }

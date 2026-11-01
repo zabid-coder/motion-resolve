@@ -1,6 +1,6 @@
 {
   "id": "agency_side_by_side_thirds",
-  "name": "Horizontal Thirds \u2014 Speaker & Graphic Stack",
+  "name": "Horizontal Thirds — Speaker & Graphic Stack",
   "category": "Agency / Social",
   "description": "Rule-of-thirds widescreen architecture: Left third reserved for talking head, right two-thirds card stack.",
   "tags": [
@@ -168,7 +168,19 @@
         "alignment": "left",
         "center_x": 0.42,
         "center_y": "param:pos_y",
-        "offset_y": 0.09
+        "offset_y": 0.09,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -251,7 +263,19 @@
         "center_x": 0.42,
         "center_y": "param:pos_y",
         "offset_y": 0.02,
-        "text_width": 0.46
+        "text_width": 0.46,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -334,7 +358,19 @@
         "center_x": 0.42,
         "center_y": "param:pos_y",
         "offset_y": -0.065,
-        "text_width": 0.46
+        "text_width": 0.46,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -403,5 +439,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }

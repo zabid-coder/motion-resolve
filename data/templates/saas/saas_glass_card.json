@@ -142,7 +142,29 @@
         "text_width": 0.68,
         "center_x": 0.5,
         "center_y": 0.55,
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 3.0,
+          "blur": 8.0,
+          "opacity": 0.55,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        "glow": {
+          "radius": 10.0,
+          "intensity": 0.35,
+          "color": [
+            255,
+            255,
+            255,
+            0.6
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -224,7 +246,29 @@
         "text_width": 0.64,
         "center_x": 0.5,
         "center_y": 0.43,
-        "color": "token:text_secondary"
+        "color": "token:text_secondary",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 3.0,
+          "blur": 8.0,
+          "opacity": 0.55,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        "glow": {
+          "radius": 10.0,
+          "intensity": 0.35,
+          "color": [
+            255,
+            255,
+            255,
+            0.6
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -376,5 +420,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "premium"
 }

@@ -47,7 +47,19 @@
       "name": "Topic",
       "props": {
         "text": "param:topic",
-        "size": 0.07
+        "size": 0.07,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -122,7 +134,19 @@
       "name": "Badge",
       "props": {
         "text": "param:badge_label",
-        "size": 0.038
+        "size": 0.038,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -277,5 +301,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "pro"
 }

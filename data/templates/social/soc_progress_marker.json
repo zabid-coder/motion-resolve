@@ -47,7 +47,19 @@
       "name": "Step",
       "props": {
         "text": "param:step_text",
-        "size": 0.076
+        "size": 0.076,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -122,7 +134,19 @@
       "name": "Advice",
       "props": {
         "text": "param:desc",
-        "size": 0.042
+        "size": 0.042,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -272,5 +296,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "pro"
 }

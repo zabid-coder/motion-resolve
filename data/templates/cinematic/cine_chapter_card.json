@@ -56,7 +56,29 @@
         "font_bn": "token:font_body_bn",
         "size": 0.032,
         "weight": "Bold",
-        "color": "token:accent"
+        "color": "token:accent",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 3.0,
+          "blur": 8.0,
+          "opacity": 0.55,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        "glow": {
+          "radius": 10.0,
+          "intensity": 0.35,
+          "color": [
+            255,
+            255,
+            255,
+            0.6
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -216,7 +238,29 @@
         "font_bn": "token:font_heading_bn",
         "size": 0.062,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 3.0,
+          "blur": 8.0,
+          "opacity": 0.55,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        "glow": {
+          "radius": 10.0,
+          "intensity": 0.35,
+          "color": [
+            255,
+            255,
+            255,
+            0.6
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -285,5 +329,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "premium"
 }

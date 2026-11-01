@@ -152,6 +152,106 @@ class TemplateCanvasArea(QFrame):
         requested = self._resolve_val(layer.props.get("font", fallback)) if layer else fallback
         return resolve_available_font(requested, purpose)
 
+    def _layer_style_color(self, layer, key, default):
+        """Resolve an optional styling color prop (shadow/glow/stroke color)."""
+        raw = layer.props.get(key) if layer else None
+        if raw is None:
+            return QColor(default)
+        value = self._resolve_val(raw)
+        if isinstance(value, str):
+            return QColor(value)
+        if isinstance(value, (list, tuple)) and len(value) >= 3:
+            rgba = list(value[:4])
+            while len(rgba) < 4:
+                rgba.append(1.0)
+            return QColor(*(int(max(0.0, min(1.0, float(c))) * 255) for c in rgba[:3]),
+                          int(max(0.0, min(1.0, float(rgba[3]))) * 255))
+        return QColor(default)
+
+    def _draw_styled_text(self, painter, layer, rect, align_flag, text, base_color, preview_scale=1.0):
+        """
+        Professional WYSIWYG text renderer honoring authored depth props on the layer:
+          - shadow: {"offset_x": px@1080, "offset_y": ..., "blur": ..., "color": [r,g,b,a] or "#hex"}
+          - stroke / outline: {"width": px@1080, "color": ...} or stroke_color prop
+          - glow: {"radius": px@1080, "color": ..., "intensity": 0..1}
+        Falls back to a subtle soft drop shadow so every template renders with depth.
+        """
+        props = layer.props if layer else {}
+        s = max(0.4, preview_scale)
+
+        # --- Glow (drawn first, behind everything) ---
+        glow = props.get("glow")
+        if isinstance(glow, dict) and glow:
+            radius = float(glow.get("radius", glow.get("size", 6.0))) * s
+            intensity = max(0.05, min(1.0, float(glow.get("intensity", 0.55))))
+            glow_color = self._layer_style_color(layer, "glow_color", "#ffffff")
+            steps = max(3, min(8, int(radius // 1.5) + 3))
+            painter.save()
+            for i in range(steps, 0, -1):
+                alpha = int(255 * intensity * (1.0 - i / (steps + 1)) * 0.5)
+                pen = QPen(QColor(glow_color.red(), glow_color.green(), glow_color.blue(), max(8, alpha)))
+                pen.setWidthF(max(1.0, (radius / steps) * i * 1.6))
+                painter.setPen(pen)
+                painter.drawText(rect, align_flag, text)
+            painter.restore()
+
+        # --- Drop shadow (360° ambient diffusion approximation) ---
+        shadow = props.get("shadow")
+        if isinstance(shadow, dict) and shadow:
+            ox = float(shadow.get("offset_x", 0.0)) * s
+            oy = float(shadow.get("offset_y", 2.5)) * s
+            blur = max(0.0, float(shadow.get("blur", 3.0))) * s
+            shadow_color = self._layer_style_color(layer, "shadow_color", "#000000")
+            base_alpha = float(shadow.get("opacity", shadow_color.alpha() / 255.0))
+            steps = max(1, int(round(blur / 1.5)))
+            painter.save()
+            for i in range(steps, -1, -1):
+                frac = i / steps if steps else 0.0
+                alpha = int(max(0.0, min(1.0, base_alpha * (1.0 - frac * 0.75))) * 255)
+                painter.setPen(QColor(shadow_color.red(), shadow_color.green(), shadow_color.blue(), alpha))
+                painter.drawText(QRectF(rect.x() + ox + frac * blur * 0.35,
+                                        rect.y() + oy + frac * blur * 0.35,
+                                        rect.width(), rect.height()), align_flag, text)
+            painter.restore()
+        elif shadow is None:
+            # Default professional soft shadow when nothing authored
+            painter.save()
+            painter.setPen(QColor(0, 0, 0, 120))
+            painter.drawText(QRectF(rect.x() + 1.2 * s, rect.y() + 1.6 * s, rect.width(), rect.height()),
+                             align_flag, text)
+            painter.restore()
+
+        # --- Stroke / outline under fill ---
+        stroke = props.get("stroke") if isinstance(props.get("stroke"), dict) else None
+        stroke_width = float((stroke or {}).get("width", props.get("stroke_width", props.get("outline_width", 0.0))))
+        stroke_raw = (stroke or {}).get("color") or props.get("stroke_color") or props.get("outline_color")
+        if stroke_width > 0.01 and stroke_raw is not None:
+            if isinstance(stroke_raw, dict):
+                stroke_color = QColor(str(stroke_raw.get("color", "#000000")))
+            else:
+                resolved = self._resolve_val(stroke_raw)
+                if isinstance(resolved, str):
+                    stroke_color = QColor(resolved)
+                elif isinstance(resolved, (list, tuple)) and len(resolved) >= 3:
+                    rgba = list(resolved[:4])
+                    while len(rgba) < 4:
+                        rgba.append(1.0)
+                    stroke_color = QColor(*(int(max(0.0, min(1.0, float(c))) * 255) for c in rgba[:3]),
+                                          int(max(0.0, min(1.0, float(rgba[3]))) * 255))
+                else:
+                    stroke_color = QColor("#000000")
+            pen = QPen(stroke_color)
+            pen.setWidthF(max(0.8, stroke_width * s * 2.0))
+            pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+            painter.save()
+            painter.setPen(pen)
+            painter.drawText(rect, align_flag, text)
+            painter.restore()
+
+        # --- Fill pass ---
+        painter.setPen(base_color)
+        painter.drawText(rect, align_flag, text)
+
     @staticmethod
     def _sample_keyframes(keyframes, phase_time, default_value=0.0):
         if not keyframes:
@@ -370,14 +470,9 @@ class TemplateCanvasArea(QFrame):
             font0.setLetterSpacing(QFont.SpacingType.PercentageSpacing, max(80.0, float(t0.props.get("character_spacing", 1.0)) * 100.0))
             painter.setFont(font0)
 
-            painter.setPen(QColor(0, 0, 0, 160))
             rect_t0, align_name0 = self._layer_text_rect(t0, w, h, center_x, base_center_y, 32 * preview_scale)
-            rect_t0_shadow = QRectF(rect_t0.x() + 1.5, rect_t0.y() + 1.5, rect_t0.width(), rect_t0.height())
             align0 = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(align_name0, Qt.AlignmentFlag.AlignHCenter) | Qt.AlignmentFlag.AlignVCenter
-            painter.drawText(rect_t0_shadow, align0, raw_text0)
-
-            painter.setPen(color0)
-            painter.drawText(rect_t0, align0, raw_text0)
+            self._draw_styled_text(painter, t0, rect_t0, align0, raw_text0, color0, preview_scale)
 
         # 2. Secondary Subtitle (Layer 1)
         if len(text_layers) > 1:
@@ -394,13 +489,12 @@ class TemplateCanvasArea(QFrame):
             font1 = QFont(font_name1, max(6, base_pt1), self._font_weight(t1, QFont.Weight.Medium))
             font1.setLetterSpacing(QFont.SpacingType.PercentageSpacing, max(80.0, float(t1.props.get("character_spacing", 1.0)) * 100.0))
             painter.setFont(font1)
-            painter.setPen(color1)
             size0 = float(text_layers[0].props.get("size", 0.075))
             size1 = float(t1.props.get("size", 0.045))
             default_y1 = h * (1.0 - (pos_y_norm - (size0 + size1) * 0.72))
             rect_t1, align_name1 = self._layer_text_rect(t1, w, h, center_x, default_y1, 24 * preview_scale)
             align1 = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(align_name1, Qt.AlignmentFlag.AlignHCenter) | Qt.AlignmentFlag.AlignVCenter
-            painter.drawText(rect_t1, align1, raw_text1)
+            self._draw_styled_text(painter, t1, rect_t1, align1, raw_text1, color1, preview_scale)
 
         # 3. Tertiary Tag / Handle (Layer 2)
         if len(text_layers) > 2:
@@ -413,13 +507,12 @@ class TemplateCanvasArea(QFrame):
             purpose2 = "bengali" if contains_bengali(raw_text2) else "mono"
             font2 = QFont(self._layer_font_name(t2, fallback_font2, purpose2), max(6, int(float(t2.props.get("size", 0.036)) * 240.0 * preview_scale)), self._font_weight(t2, QFont.Weight.Bold))
             painter.setFont(font2)
-            painter.setPen(color2)
             size0 = float(text_layers[0].props.get("size", 0.075))
             size2 = float(t2.props.get("size", 0.036))
             default_y2 = h * (1.0 - (pos_y_norm - (size0 + 0.045 + size2) * 0.78))
             rect_t2, align_name2 = self._layer_text_rect(t2, w, h, center_x, default_y2, 20 * preview_scale)
             align2 = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(align_name2, Qt.AlignmentFlag.AlignHCenter) | Qt.AlignmentFlag.AlignVCenter
-            painter.drawText(rect_t2, align2, raw_text2)
+            self._draw_styled_text(painter, t2, rect_t2, align2, raw_text2, color2, preview_scale)
 
         painter.restore()
 

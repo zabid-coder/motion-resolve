@@ -1,6 +1,6 @@
 {
   "id": "agency_diagonal_stat_split",
-  "name": "Diagonal Tension \u2014 Asymmetric Stat Callout",
+  "name": "Diagonal Tension — Asymmetric Stat Callout",
   "category": "Agency / Social",
   "description": "Asymmetric diagonal balance for 16:9 and 9:16: High-contrast percentage stat with category eyebrow.",
   "tags": [
@@ -90,7 +90,19 @@
         "alignment": "left",
         "center_x": "param:pos_x",
         "center_y": "param:pos_y",
-        "offset_y": 0.08
+        "offset_y": 0.08,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -173,7 +185,19 @@
         "center_x": "param:pos_x",
         "center_y": "param:pos_y",
         "offset_y": 0.0,
-        "text_width": 0.38
+        "text_width": 0.38,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -261,7 +285,19 @@
         "center_x": "param:pos_x",
         "center_y": "param:pos_y",
         "offset_y": -0.075,
-        "text_width": 0.38
+        "text_width": 0.38,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -335,5 +371,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }

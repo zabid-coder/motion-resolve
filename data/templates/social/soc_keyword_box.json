@@ -47,7 +47,19 @@
       "name": "Text",
       "props": {
         "text": "param:text",
-        "size": 0.082
+        "size": 0.082,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -205,5 +217,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "pro"
 }

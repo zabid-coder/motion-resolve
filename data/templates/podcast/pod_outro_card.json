@@ -46,7 +46,19 @@
       "name": "Headline",
       "props": {
         "text": "param:headline",
-        "size": 0.076
+        "size": 0.076,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -121,7 +133,19 @@
       "name": "Channel",
       "props": {
         "text": "param:channel",
-        "size": 0.044
+        "size": 0.044,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -271,5 +295,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "pro"
 }

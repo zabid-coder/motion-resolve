@@ -141,7 +141,19 @@
         "alignment": "center",
         "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": 0.065
+        "offset_y": 0.065,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -228,7 +240,19 @@
         "alignment": "center",
         "center_x": 0.34,
         "center_y": "param:pos_y",
-        "offset_y": -0.018
+        "offset_y": -0.018,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -399,7 +423,19 @@
         "alignment": "center",
         "center_x": 0.66,
         "center_y": "param:pos_y",
-        "offset_y": -0.018
+        "offset_y": -0.018,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -473,5 +509,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }

@@ -146,7 +146,19 @@
         "alignment": "left",
         "center_x": 0.15,
         "center_y": "param:pos_y",
-        "offset_y": 0.024
+        "offset_y": 0.024,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -230,7 +242,19 @@
         "alignment": "left",
         "center_x": 0.15,
         "center_y": "param:pos_y",
-        "offset_y": -0.024
+        "offset_y": -0.024,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -299,5 +323,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }

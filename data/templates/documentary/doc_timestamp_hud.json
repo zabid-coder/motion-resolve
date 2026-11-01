@@ -51,7 +51,19 @@
         "size": 0.076,
         "weight": "Bold",
         "color": "token:text_primary",
-        "character_spacing": 1.1
+        "character_spacing": 1.1,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -130,7 +142,19 @@
         "size": 0.04,
         "weight": "Medium",
         "color": "token:accent",
-        "character_spacing": 1.06
+        "character_spacing": 1.06,
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -280,5 +304,6 @@
     "16:9",
     "9:16",
     "1:1"
-  ]
+  ],
+  "tier": "pro"
 }

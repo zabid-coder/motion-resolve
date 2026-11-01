@@ -63,7 +63,19 @@
         "font_bn": "token:font_body_bn",
         "size": 0.026,
         "weight": "Bold",
-        "color": "token:accent"
+        "color": "token:accent",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -142,7 +154,19 @@
         "font_bn": "token:font_heading_bn",
         "size": 0.078,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -221,7 +245,19 @@
         "font_bn": "token:font_heading_bn",
         "size": 0.078,
         "weight": "Bold",
-        "color": "token:text_primary"
+        "color": "token:text_primary",
+        "shadow": {
+          "offset_x": 0.0,
+          "offset_y": 2.0,
+          "blur": 5.0,
+          "opacity": 0.4,
+          "color": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
       },
       "motion_tracks": [
         {
@@ -290,5 +326,6 @@
         }
       ]
     }
-  ]
+  ],
+  "tier": "pro"
 }
