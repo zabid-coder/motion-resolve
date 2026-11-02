@@ -1,0 +1,68 @@
+{
+    "id": "aurora_gradient_hero",
+    "tier": "premium",
+    "name": "Aurora Gradient Hero",
+    "category": "Kinetic / Tech",
+    "text": "SHIP FASTER EVERY DAY",
+    "font": "Avenir Next",
+    "style": "Bold",
+    "size": 0.078,
+    "character_spacing": 0.98,
+    "line_spacing": 0.0,
+    "center_x": 0.5,
+    "center_y": 0.3,
+    "alignment": "center",
+    "color": [
+        0.961,
+        0.949,
+        1.0,
+        1.0
+    ],
+    "accent_color": [
+        0.545,
+        0.361,
+        0.965,
+        1.0
+    ],
+    "use_2color": true,
+    "main_word": "FASTER",
+    "hero_font": "DM Serif Display",
+    "hero_style": "Italic",
+    "hero_size_multiplier": 1.12,
+    "stroke_enabled": false,
+    "shadow_enabled": true,
+    "shadow_color": [
+        0.102,
+        0.043,
+        0.239,
+        0.6
+    ],
+    "shadow_softness": 0.06,
+    "shadow_offset": [
+        0.0,
+        0.0
+    ],
+    "box_enabled": false,
+    "glow_enabled": true,
+    "glow_amount": 0.35,
+    "gradient_overlay": {
+        "colors": [
+            [
+                0.545,
+                0.361,
+                0.965,
+                1.0
+            ],
+            [
+                0.024,
+                0.714,
+                0.831,
+                1.0
+            ]
+        ],
+        "angle": 35
+    },
+    "animation_in": "slide_up_blur",
+    "animation_out": "fade_out",
+    "description": "Violet-to-cyan aurora gradient pass with serif italic hero word — the SaaS launch look of 2026."
+}

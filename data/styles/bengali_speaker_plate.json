@@ -2,7 +2,7 @@
     "id": "bengali_speaker_plate",
     "name": "Bangla Speaker ID Plate",
     "category": "Bengali / Multilingual",
-    "text": "\u09a1. \u09b8\u09be\u09b0\u09be\u09b9 \u0986\u09b9\u09ae\u09c7\u09a6\n\u09aa\u09cd\u09b0\u09a7\u09be\u09a8 \u09ac\u09bf\u099c\u09cd\u099e\u09be\u09a8\u09c0",
+    "text": "ড. সারাহ আহমেদ\nপ্রধান বিজ্ঞানী",
     "font": "Kohinoor Bangla",
     "font_bn": "Kohinoor Bangla",
     "style": "SemiBold",
@@ -44,5 +44,6 @@
     "shadow_offset": [
         0.0,
         0.0
-    ]
+    ],
+    "tier": "pro"
 }

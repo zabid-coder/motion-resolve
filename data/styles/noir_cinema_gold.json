@@ -1,0 +1,46 @@
+{
+    "id": "noir_cinema_gold",
+    "tier": "premium",
+    "name": "Noir Cinema Gold",
+    "category": "Cinematic",
+    "text": "CHAPTER ONE",
+    "font": "Baskerville",
+    "style": "Regular",
+    "size": 0.058,
+    "character_spacing": 1.6,
+    "line_spacing": 0.0,
+    "center_x": 0.5,
+    "center_y": 0.34,
+    "alignment": "center",
+    "color": [
+        0.91,
+        0.863,
+        0.753,
+        1.0
+    ],
+    "accent_color": [
+        0.792,
+        0.651,
+        0.29,
+        1.0
+    ],
+    "use_2color": false,
+    "stroke_enabled": false,
+    "shadow_enabled": true,
+    "shadow_color": [
+        0.0,
+        0.0,
+        0.0,
+        0.851
+    ],
+    "shadow_softness": 0.07,
+    "shadow_offset": [
+        0.0,
+        0.0
+    ],
+    "box_enabled": false,
+    "glow_enabled": false,
+    "animation_in": "fade_in_slow",
+    "animation_out": "fade_out",
+    "description": "Letterpress noir title with extreme tracking and filmic falloff — prestige documentary opener."
+}

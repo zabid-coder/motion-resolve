@@ -49,5 +49,6 @@
     ],
     "hero_font": "Playfair Display",
     "hero_style": "Italic",
-    "hero_size_multiplier": 1.14
+    "hero_size_multiplier": 1.14,
+    "tier": "free"
 }
