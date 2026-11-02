@@ -2,6 +2,7 @@
   "id": "min_corner_tag",
   "name": "Corner Index Tag",
   "category": "Minimal Clean",
+  "tier": "free",
   "description": "Unobtrusive corner label with category and index timecode.",
   "tags": [
     "minimal",

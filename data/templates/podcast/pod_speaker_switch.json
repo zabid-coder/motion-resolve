@@ -2,6 +2,7 @@
   "id": "pod_speaker_switch",
   "name": "Speaker Switch Tag",
   "category": "Podcast",
+  "tier": "pro",
   "description": "Dual host/guest speaker indicators. Active speaker tag expands with pulsing live accent dot.",
   "tags": [
     "podcast",

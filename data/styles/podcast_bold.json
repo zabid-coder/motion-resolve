@@ -2,6 +2,7 @@
   "id": "podcast_bold",
   "name": "Speaker ID Lower Third",
   "category": "Documentary",
+  "tier": "pro",
   "text": "GUEST SPEAKER",
   "font": "Avenir",
   "style": "Demi",

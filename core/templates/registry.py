@@ -6,7 +6,10 @@ Discovers, loads, validates, and indexes template specifications from JSON files
 import os
 import json
 from typing import Dict, List, Optional, Any
-from core.templates.schema import TemplateSpec, TemplateParameter, LayerSpec, MotionTrackSpec, KeyframeSpec, ParameterType, LayerType, EasingToken
+from core.templates.schema import (
+    TemplateSpec, TemplateParameter, LayerSpec, MotionTrackSpec, KeyframeSpec,
+    ParameterType, LayerType, EasingToken, TemplateTier,
+)
 
 
 class TemplateRegistry:
@@ -57,6 +60,28 @@ class TemplateRegistry:
 
     def get_by_category(self, category: str) -> List[TemplateSpec]:
         return [t for t in self._templates.values() if t.category.lower() == category.lower()]
+
+    def get_by_tier(self, tier: Any) -> List[TemplateSpec]:
+        """Return templates matching the given commercial tier ('free', 'pro', 'premium')."""
+        target = TemplateTier.from_value(tier)
+        return [t for t in self._templates.values() if TemplateTier.from_value(t.tier) == target]
+
+    def has_depth_styling(self, template: TemplateSpec) -> bool:
+        """True if any text layer authors premium depth styling (shadow / stroke / glow)."""
+        for layer in template.layers:
+            if layer.type != LayerType.TEXT:
+                continue
+            props = layer.props or {}
+            shadow = props.get("shadow")
+            glow = props.get("glow")
+            stroke = props.get("stroke_color") or props.get("outline_color")
+            if isinstance(shadow, dict) and shadow:
+                return True
+            if isinstance(glow, dict) and glow:
+                return True
+            if stroke:
+                return True
+        return False
 
     def get_categories(self) -> List[str]:
         cats = sorted(list({t.category for t in self._templates.values()}))
@@ -123,6 +148,7 @@ class TemplateRegistry:
             id=d["id"],
             name=d["name"],
             category=d.get("category", "General"),
+            tier=TemplateTier.from_value(d.get("tier", "pro")),
             description=d.get("description", ""),
             tags=d.get("tags", []),
             aspect_ratios=d.get("aspect_ratios", ["16:9", "9:16", "1:1"]),

@@ -2,6 +2,7 @@
   "id": "tutorial_phrase_hero",
   "name": "Tutorial · Phrase Hero Stack",
   "category": "Tutorial Inspired",
+  "tier": "pro",
   "text": "PRESS THIS\nTO SPEED UP",
   "font": "Avenir Next Condensed",
   "style": "Heavy Italic",

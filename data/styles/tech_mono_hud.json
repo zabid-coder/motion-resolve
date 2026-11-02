@@ -2,6 +2,7 @@
   "id": "tech_mono_hud",
   "name": "Tech · Cyber Monospace",
   "category": "Kinetic / Tech",
+  "tier": "pro",
   "text": "SYS.TERMINAL // EXEC",
   "font": "JetBrains Mono",
   "style": "Bold",

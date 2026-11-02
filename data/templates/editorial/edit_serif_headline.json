@@ -2,6 +2,7 @@
   "id": "edit_serif_headline",
   "name": "Editorial Serif Headline",
   "category": "Editorial / Magazine",
+  "tier": "pro",
   "description": "Print magazine layout in motion. Large serif headline with staggered line reveals and category tag.",
   "tags": [
     "editorial",
@@ -38,7 +39,7 @@
       "id": "tag",
       "name": "Issue / Tag",
       "type": "string",
-      "default": "ISSUE NO. 04 • OCTOBER 2026",
+      "default": "ISSUE NO. 04 \u2022 OCTOBER 2026",
       "category": "Text"
     },
     {

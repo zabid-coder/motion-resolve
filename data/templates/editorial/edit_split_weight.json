@@ -2,6 +2,7 @@
   "id": "edit_split_weight",
   "name": "Split-Weight Contrast",
   "category": "Editorial / Magazine",
+  "tier": "pro",
   "description": "Light + bold contrast headline with mask reveals.",
   "tags": [
     "editorial",

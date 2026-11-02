@@ -2,6 +2,7 @@
   "id": "pod_outro_card",
   "name": "Outro & Subscribe Card",
   "category": "Podcast",
+  "tier": "pro",
   "description": "High-retention end card with social handle rows and subscription call-to-action.",
   "tags": [
     "podcast",

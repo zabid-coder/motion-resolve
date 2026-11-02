@@ -2,6 +2,7 @@
   "id": "saas_feature_callout",
   "name": "Feature Callout Line & Card",
   "category": "SaaS / Tech",
+  "tier": "pro",
   "description": "Linear / Stripe style leader line drawing to an anchor dot with frosted glass card rise.",
   "tags": [
     "saas",

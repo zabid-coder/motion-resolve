@@ -2,6 +2,7 @@
   "id": "saas_cta_card",
   "name": "CTA Button Card",
   "category": "SaaS / Tech",
+  "tier": "pro",
   "description": "Vercel / Stripe style URL and primary button call-to-action.",
   "tags": [
     "saas",

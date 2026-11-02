@@ -2,6 +2,7 @@
   "id": "saas_glass_card",
   "name": "Frosted Glass Feature",
   "category": "SaaS / Tech",
+  "tier": "premium",
   "description": "A restrained translucent title card with a clear headline, quiet supporting line, and a single warm hairline. The tint is theme-aware; it does not blur footage behind the title.",
   "tags": [
     "saas",

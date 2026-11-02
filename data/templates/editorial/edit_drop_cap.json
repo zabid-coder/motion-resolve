@@ -2,6 +2,7 @@
   "id": "edit_drop_cap",
   "name": "Editorial Drop Cap",
   "category": "Editorial / Magazine",
+  "tier": "premium",
   "description": "Classic magazine typography with large drop-cap and body paragraph.",
   "tags": [
     "editorial",

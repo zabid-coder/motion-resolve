@@ -2,6 +2,7 @@
   "id": "saas_bento_grid",
   "name": "Bento Feature Grid",
   "category": "SaaS / Tech",
+  "tier": "premium",
   "description": "Apple / Linear product bento cell label with category tag.",
   "tags": [
     "saas",

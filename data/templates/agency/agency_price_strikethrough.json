@@ -1,7 +1,8 @@
 {
   "id": "agency_price_strikethrough",
-  "name": "Conversion Anchor — Price Strikethrough",
+  "name": "Conversion Anchor \u2014 Price Strikethrough",
   "category": "Agency / Social",
+  "tier": "pro",
   "description": "High-converting ecommerce price comparison with strike line and punchy discounted hero price.",
   "tags": [
     "pricing",

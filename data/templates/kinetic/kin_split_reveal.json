@@ -2,6 +2,7 @@
   "id": "kin_split_reveal",
   "name": "Split-Seam Razor Reveal",
   "category": "Kinetic, Restrained",
+  "tier": "pro",
   "description": "Top headline slides up from a razor-sharp horizontal seam line while bottom subline slides down in opposite choreography.",
   "tags": [
     "kinetic",

@@ -2,6 +2,7 @@
   "id": "cine_main_title",
   "name": "Cinematic Anamorphic Title",
   "category": "Cinematic",
+  "tier": "premium",
   "description": "Wide-tracked patient film main title with subtle slow zoom.",
   "tags": [
     "cinematic",

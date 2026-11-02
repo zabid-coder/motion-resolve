@@ -2,6 +2,7 @@
   "id": "pod_episode_card",
   "name": "Episode Title Card",
   "category": "Podcast",
+  "tier": "pro",
   "description": "Bold episode identifier EP 12 with tabular numerals and masked line reveal.",
   "tags": [
     "podcast",

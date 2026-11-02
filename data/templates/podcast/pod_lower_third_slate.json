@@ -1,7 +1,8 @@
 {
   "id": "pod_lower_third_slate",
-  "name": "Frosted Signal — Speaker ID",
+  "name": "Frosted Signal \u2014 Speaker ID",
   "category": "Podcast",
+  "tier": "premium",
   "description": "A calm, glass-inspired speaker slate with clear name/role scale, warm hairline detail, and a measured editorial reveal. Uses a translucent tint rather than heavy opaque blocks.",
   "tags": [
     "podcast",
@@ -33,7 +34,7 @@
       "id": "role",
       "name": "Title / Role",
       "type": "string",
-      "default": "Creative Director · Studio North",
+      "default": "Creative Director \u00b7 Studio North",
       "category": "Text",
       "description": "Professional title or organization"
     },

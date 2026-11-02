@@ -2,6 +2,7 @@
   "id": "doc_archive_caption",
   "name": "Archive Photo Caption",
   "category": "Documentary / NGO / Corporate",
+  "tier": "free",
   "description": "Historical archive photo/footage source attribution with source tag.",
   "tags": [
     "documentary",

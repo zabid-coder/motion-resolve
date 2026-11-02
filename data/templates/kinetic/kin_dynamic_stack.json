@@ -2,6 +2,7 @@
   "id": "kin_dynamic_stack",
   "name": "Dynamic Stacking Block",
   "category": "Kinetic, Restrained",
+  "tier": "premium",
   "description": "Staggered kinetic block with heavy typographic punch.",
   "tags": [
     "kinetic",

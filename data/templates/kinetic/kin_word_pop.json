@@ -2,6 +2,7 @@
   "id": "kin_word_pop",
   "name": "Stroboscopic Word Pop",
   "category": "Kinetic, Restrained",
+  "tier": "free",
   "description": "Fast-paced kinetic word pop with instantaneous entrance.",
   "tags": [
     "kinetic",

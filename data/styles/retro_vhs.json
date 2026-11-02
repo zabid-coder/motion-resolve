@@ -2,6 +2,7 @@
   "id": "retro_vhs",
   "name": "Retro Title Display",
   "category": "Cinematic",
+  "tier": "pro",
   "text": "SIGNAL LOST\n1987",
   "font": "Futura",
   "style": "Medium",

@@ -2,6 +2,7 @@
   "id": "doc_interviewee_rule",
   "name": "Interviewee Accent Rule",
   "category": "Documentary / NGO / Corporate",
+  "tier": "pro",
   "description": "Calm, credible lower third with 2-3px vertical accent rule and 10px subtle rise. Zero wipes.",
   "tags": [
     "documentary",
@@ -38,7 +39,7 @@
       "id": "location",
       "name": "Location / Date",
       "type": "string",
-      "default": "Dhaka, Bangladesh • 2026",
+      "default": "Dhaka, Bangladesh \u2022 2026",
       "category": "Text"
     },
     {

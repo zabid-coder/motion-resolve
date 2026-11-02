@@ -10,6 +10,8 @@ from PyQt6.QtWidgets import (
     QSlider, QCheckBox, QTreeWidget, QTreeWidgetItem, QFrame,
     QProgressBar, QHeaderView, QComboBox, QFileDialog, QSizePolicy, QMessageBox
 )
+import os
+
 from PyQt6.QtCore import Qt, pyqtSignal
 
 from core.subtitle_parser import SubtitleParser, SubtitleCue

@@ -2,6 +2,7 @@
   "id": "pod_quote_card",
   "name": "Quote & Clip Card",
   "category": "Podcast",
+  "tier": "premium",
   "description": "Oversized quotation mark with staggered quote reveal and attribution hairline.",
   "tags": [
     "podcast",

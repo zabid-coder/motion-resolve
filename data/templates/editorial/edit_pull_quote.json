@@ -2,6 +2,7 @@
   "id": "edit_pull_quote",
   "name": "Editorial Pull Quote",
   "category": "Editorial / Magazine",
+  "tier": "premium",
   "description": "Hanging quote layout with vertical accent rule and serif typography.",
   "tags": [
     "editorial",

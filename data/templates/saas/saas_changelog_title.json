@@ -2,6 +2,7 @@
   "id": "saas_changelog_title",
   "name": "Changelog Release Title",
   "category": "SaaS / Tech",
+  "tier": "pro",
   "description": "Mono version tag with release date and staggered changelog items.",
   "tags": [
     "saas",

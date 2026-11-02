@@ -2,6 +2,7 @@
   "id": "kin_masked_line",
   "name": "Masked Line Reveal Primitive",
   "category": "Kinetic, Restrained",
+  "tier": "premium",
   "description": "The core kinetic primitive: masked slide-up with crisp stagger. One kinetic idea executed with precision.",
   "tags": [
     "kinetic",

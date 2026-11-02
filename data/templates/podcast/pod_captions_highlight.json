@@ -2,6 +2,7 @@
   "id": "pod_captions_highlight",
   "name": "Captions Moving Highlight",
   "category": "Podcast",
+  "tier": "pro",
   "description": "Clean short-chunk caption with accent-highlighted keyword pill.",
   "tags": [
     "podcast",

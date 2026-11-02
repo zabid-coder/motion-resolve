@@ -2,6 +2,7 @@
   "id": "min_single_line",
   "name": "Single-line Minimal",
   "category": "Minimal Clean",
+  "tier": "free",
   "description": "Pure negative space single-line title with subtle tracking expansion.",
   "tags": [
     "minimal",

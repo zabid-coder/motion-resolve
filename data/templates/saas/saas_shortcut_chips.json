@@ -1,8 +1,9 @@
 {
   "id": "saas_shortcut_chips",
-  "name": "Shortcut Chips ⌘K",
+  "name": "Shortcut Chips \u2318K",
   "category": "SaaS / Tech",
-  "description": "Hardware keycap look (⌘ K) with action label micro-interaction.",
+  "tier": "pro",
+  "description": "Hardware keycap look (\u2318 K) with action label micro-interaction.",
   "tags": [
     "saas",
     "keyboard",
@@ -18,7 +19,7 @@
       "id": "shortcut",
       "name": "Shortcut Keys",
       "type": "string",
-      "default": "⌘ + K TO SEARCH",
+      "default": "\u2318 + K TO SEARCH",
       "category": "Text"
     },
     {

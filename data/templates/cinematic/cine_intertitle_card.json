@@ -2,6 +2,7 @@
   "id": "cine_intertitle_card",
   "name": "Film Intertitle Card",
   "category": "Cinematic",
+  "tier": "premium",
   "description": "Classic dramatic film narrative card with centered statement.",
   "tags": [
     "cinematic",

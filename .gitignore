@@ -1,10 +1,4 @@
+*.bundle
 __pycache__/
-*.py[cod]
+*.pyc
 .DS_Store
-._*
-.venv/
-venv/
-*.mp4
-scratch/
-.superpowers/
-*.rar

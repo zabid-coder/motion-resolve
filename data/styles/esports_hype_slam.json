@@ -1,0 +1,55 @@
+{
+    "id": "esports_hype_slam",
+    "tier": "premium",
+    "name": "Esports Hype Slam",
+    "category": "Bold Social",
+    "text": "GRAND FINALS",
+    "font": "Avenir Next Condensed",
+    "style": "Heavy",
+    "size": 0.095,
+    "character_spacing": 0.94,
+    "line_spacing": 0.0,
+    "center_x": 0.5,
+    "center_y": 0.3,
+    "alignment": "center",
+    "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+    ],
+    "accent_color": [
+        1.0,
+        0.239,
+        0.353,
+        1.0
+    ],
+    "use_2color": true,
+    "main_word": "FINALS",
+    "stroke_enabled": true,
+    "stroke_color": [
+        0.024,
+        0.027,
+        0.051,
+        1.0
+    ],
+    "stroke_thickness": 0.03,
+    "shadow_enabled": true,
+    "shadow_color": [
+        1.0,
+        0.239,
+        0.353,
+        0.4
+    ],
+    "shadow_softness": 0.08,
+    "shadow_offset": [
+        0.006,
+        -0.008
+    ],
+    "box_enabled": false,
+    "glow_enabled": true,
+    "glow_amount": 0.3,
+    "animation_in": "slam_drop",
+    "animation_out": "slide_down",
+    "description": "Impact-condensed slam with red rim-light bounce — tournament broadcast intensity."
+}

@@ -2,6 +2,7 @@
   "id": "saas_pill_badge",
   "name": "SaaS Pill Badge",
   "category": "SaaS / Tech",
+  "tier": "free",
   "description": "Refined Linear-style badge pill with version tag and soft spring entrance.",
   "tags": [
     "saas",

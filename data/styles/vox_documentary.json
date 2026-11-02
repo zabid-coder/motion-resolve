@@ -2,6 +2,7 @@
   "id": "vox_documentary",
   "name": "Documentary Highlight Box",
   "category": "Documentary",
+  "tier": "pro",
   "text": "DOCUMENTARY STATEMENT",
   "font": "Avenir Next",
   "style": "Demi",

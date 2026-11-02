@@ -2,6 +2,7 @@
   "id": "saas_step_titles",
   "name": "Step Titles 01/02/03",
   "category": "SaaS / Tech",
+  "tier": "pro",
   "description": "Clean sequential step cards with mono numeral and masked title reveal.",
   "tags": [
     "saas",

@@ -2,6 +2,7 @@
   "id": "ssa_classic_sub",
   "name": "Two-Line Classic Subtitle",
   "category": "Clean Subtitles",
+  "tier": "free",
   "text": "Classic Dialogue Subtitle",
   "font": "Trebuchet MS",
   "style": "Regular",

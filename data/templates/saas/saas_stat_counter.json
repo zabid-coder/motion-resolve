@@ -2,6 +2,7 @@
   "id": "saas_stat_counter",
   "name": "Stat Counter Hero",
   "category": "SaaS / Tech",
+  "tier": "pro",
   "description": "Hero metric counter (10x, 98%, M) with tabular figures and metric label rise.",
   "tags": [
     "saas",

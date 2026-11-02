@@ -2,6 +2,7 @@
   "id": "min_underline_reveal",
   "name": "Underline Keyword Reveal",
   "category": "Minimal Clean",
+  "tier": "pro",
   "description": "Precision hairline draws under statement with crisp masked rise.",
   "tags": [
     "minimal",

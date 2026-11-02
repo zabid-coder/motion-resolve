@@ -1,0 +1,47 @@
+{
+    "id": "ink_wash_bengali",
+    "tier": "pro",
+    "name": "Ink Wash Bangla",
+    "category": "Bengali / Multilingual",
+    "text": "লেখা হোক প্রকৃতই",
+    "font": "Kohinoor Bangla",
+    "font_bn": "Kohinoor Bangla",
+    "style": "Bold",
+    "size": 0.068,
+    "character_spacing": 1.0,
+    "line_spacing": 0.0,
+    "center_x": 0.5,
+    "center_y": 0.3,
+    "alignment": "center",
+    "color": [
+        0.961,
+        0.937,
+        0.886,
+        1.0
+    ],
+    "accent_color": [
+        0.753,
+        0.224,
+        0.169,
+        1.0
+    ],
+    "use_2color": false,
+    "stroke_enabled": false,
+    "shadow_enabled": true,
+    "shadow_color": [
+        0.106,
+        0.071,
+        0.043,
+        0.702
+    ],
+    "shadow_softness": 0.05,
+    "shadow_offset": [
+        0.0,
+        0.0
+    ],
+    "box_enabled": false,
+    "glow_enabled": false,
+    "animation_in": "fade_in",
+    "animation_out": "fade_out",
+    "description": "Bangla display type on an ink-wash warmth grade — editorial subtitling with soul."
+}

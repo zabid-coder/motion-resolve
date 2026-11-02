@@ -1,7 +1,8 @@
 {
   "id": "agency_testimonial_proof",
-  "name": "Social Proof — Dual-Font Quote & Verified Badge",
+  "name": "Social Proof \u2014 Dual-Font Quote & Verified Badge",
   "category": "Agency / Social",
+  "tier": "pro",
   "description": "Authentic testimonial quote with Pinyon Script hero emphasis and verified badge container.",
   "tags": [
     "social proof",
@@ -25,14 +26,14 @@
       "id": "quote",
       "name": "Quote Statement",
       "type": "string",
-      "default": "“This completely elevated our retention rate.”",
+      "default": "\u201cThis completely elevated our retention rate.\u201d",
       "category": "Text"
     },
     {
       "id": "author",
       "name": "Author & Title",
       "type": "string",
-      "default": "ALEX RIVERA · FOUNDER & CEO",
+      "default": "ALEX RIVERA \u00b7 FOUNDER & CEO",
       "category": "Text"
     },
     {

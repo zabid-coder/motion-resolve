@@ -2,6 +2,7 @@
   "id": "cine_chapter_card",
   "name": "Cinematic Chapter Card",
   "category": "Cinematic",
+  "tier": "premium",
   "description": "Slow, wide, patient chapter card with fine divider line and wide-tracked title.",
   "tags": [
     "cinematic",

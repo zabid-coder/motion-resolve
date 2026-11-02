@@ -2,6 +2,7 @@
   "id": "pod_chapter_marker",
   "name": "Chapter Marker",
   "category": "Podcast",
+  "tier": "free",
   "description": "Index counter 03 / 08 with vertical digit roll and slim progress line.",
   "tags": [
     "podcast",

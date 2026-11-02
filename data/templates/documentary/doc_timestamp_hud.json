@@ -2,6 +2,7 @@
   "id": "doc_timestamp_hud",
   "name": "Location & Timestamp HUD",
   "category": "Documentary / NGO / Corporate",
+  "tier": "pro",
   "description": "Investigative documentary HUD with coordinates, city, and timestamp.",
   "tags": [
     "documentary",

@@ -1,7 +1,8 @@
 {
   "id": "agency_stripe_notification",
-  "name": "Stripe Alert — Payment Push Card",
+  "name": "Stripe Alert \u2014 Payment Push Card",
   "category": "Agency / Social",
+  "tier": "pro",
   "description": "Floating Apple iOS notification card with emerald transaction amount and tactile spring pop.",
   "tags": [
     "stripe",
@@ -26,7 +27,7 @@
       "id": "brand",
       "name": "App Source",
       "type": "string",
-      "default": "Stripe • now",
+      "default": "Stripe \u2022 now",
       "category": "Text"
     },
     {

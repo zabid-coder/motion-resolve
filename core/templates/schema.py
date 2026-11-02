@@ -26,6 +26,25 @@ class ParameterType(str, Enum):
     FONT = "font"
 
 
+class TemplateTier(str, Enum):
+    """Commercial tiering for the template & preset library."""
+    FREE = "free"
+    PRO = "pro"
+    PREMIUM = "premium"
+
+    @classmethod
+    def from_value(cls, value: Any) -> "TemplateTier":
+        # Already a TemplateTier (or any str-Enum member): identity fast-path.
+        if isinstance(value, cls):
+            return value
+        v = str(getattr(value, "value", value) or "").strip().lower()
+        if v in ("premium", "pro+", "studio"):
+            return cls.PREMIUM
+        if v in ("pro", "professional"):
+            return cls.PRO
+        return cls.FREE
+
+
 class EasingToken(str, Enum):
     EXPO_OUT = "expoOut"
     QUART_IN_OUT = "quartInOut"
@@ -105,6 +124,7 @@ class TemplateSpec:
     id: str
     name: str
     category: str          # Podcast, SaaS, Minimal, Editorial, Social, Documentary, Cinematic, Kinetic
+    tier: TemplateTier = TemplateTier.PRO
     description: str = ""
     tags: List[str] = field(default_factory=list)
     aspect_ratios: List[str] = field(default_factory=lambda: ["16:9", "9:16", "1:1"])
@@ -121,6 +141,7 @@ class TemplateSpec:
             "id": self.id,
             "name": self.name,
             "category": self.category,
+            "tier": self.tier.value if isinstance(self.tier, TemplateTier) else TemplateTier.from_value(self.tier).value,
             "description": self.description,
             "tags": self.tags,
             "aspect_ratios": self.aspect_ratios,

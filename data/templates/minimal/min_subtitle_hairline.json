@@ -2,6 +2,7 @@
   "id": "min_subtitle_hairline",
   "name": "Subtitle & Outward Hairline",
   "category": "Minimal Clean",
+  "tier": "pro",
   "description": "High-negative space title with center hairline drawing outward and masked subtitle rise.",
   "tags": [
     "minimal",
@@ -31,7 +32,7 @@
       "id": "subtitle",
       "name": "Subtitle",
       "type": "string",
-      "default": "DIRECTED BY ZABID • 2026",
+      "default": "DIRECTED BY ZABID \u2022 2026",
       "category": "Text"
     },
     {

@@ -2,6 +2,7 @@
   "id": "edit_issue_tag",
   "name": "Issue / Number Tag",
   "category": "Editorial / Magazine",
+  "tier": "free",
   "description": "Monochrome volume / issue tag with date indicator.",
   "tags": [
     "editorial",

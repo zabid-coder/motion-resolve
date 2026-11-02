@@ -20,7 +20,7 @@ from PyQt6.QtGui import QColor
 from core.templates.registry import TemplateRegistry
 from core.templates.fusion_compiler import FusionCompiler
 from core.templates.theme_tokens import get_theme, get_available_themes
-from core.templates.schema import ParameterType, TemplateSpec
+from core.templates.schema import ParameterType, TemplateSpec, TemplateTier
 from ui_qt.widgets.template_canvas_area import TemplateCanvasArea
 from ui_qt.styles import (
     COLOR_BG_BASE, COLOR_SURFACE_CARD, COLOR_BORDER_SUBTLE,
@@ -68,6 +68,50 @@ CATEGORY_PILLS = [
     ("broadcast_news", "Broadcast & News"),
     ("bold_kinetic", "Bold Kinetic"),
 ]
+
+TIER_FILTERS = [
+    ("all", "All Tiers"),
+    (TemplateTier.FREE.value, "Free"),
+    (TemplateTier.PRO.value, "Pro"),
+    (TemplateTier.PREMIUM.value, "Premium ★"),
+]
+
+
+def _tier_badge_style(tier: str) -> tuple:
+    """Return (label, stylesheet) for a commercial tier badge."""
+    t = TemplateTier.from_value(tier).value
+    if t == TemplateTier.PREMIUM.value:
+        return ("★ PREMIUM", """
+            background-color: #3a2b0d;
+            color: #ffd76a;
+            border: 1px solid #b8912f;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        """)
+    if t == TemplateTier.PRO.value:
+        return ("PRO", """
+            background-color: #12283a;
+            color: #6fd3ff;
+            border: 1px solid #2b6a94;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        """)
+    return ("FREE", """
+        background-color: #1c2218;
+        color: #9fd08c;
+        border: 1px solid #3f5c36;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    """)
 
 
 def _recommended_theme_id(category: str) -> str:
@@ -147,6 +191,12 @@ class TemplateCardWidget(QFrame):
             f"{self.template_spec.category} · Ratios: "
             f"{', '.join(str(ar) for ar in getattr(self.template_spec, 'aspect_ratios', ['16:9']))}"
         )
+
+        # Commercial tier badge (Free / Pro / Premium)
+        tier_label, tier_style = _tier_badge_style(getattr(self.template_spec, "tier", "pro"))
+        self.lbl_tier = QLabel(tier_label)
+        self.lbl_tier.setStyleSheet(tier_style)
+        top_row.addWidget(self.lbl_tier)
         layout.addLayout(top_row)
 
         # 2. Preview canvas thumbnail
@@ -338,6 +388,8 @@ class TemplatesTab(QWidget):
         self.cards: List[tuple] = []
         self.is_playing = False
         self.active_category_key = "all"
+        self.active_tier_key = "all"
+        self.tier_buttons: Dict[str, QPushButton] = {}
         self.pill_buttons: Dict[str, QPushButton] = {}
         self._gallery_columns = 0
 
@@ -422,6 +474,30 @@ class TemplatesTab(QWidget):
         hdr_bar.addWidget(self.btn_export_template)
 
         layout.addLayout(hdr_bar)
+
+        # 1b. Commercial Tier Filter Row (All / Free / Pro / Premium)
+        tier_bar = QHBoxLayout()
+        tier_bar.setSpacing(6)
+        lbl_tier_filter = QLabel("Tier:")
+        lbl_tier_filter.setStyleSheet("color: #928ba8; font-size: 10px; font-weight: 700; letter-spacing: 0.5px;")
+        tier_bar.addWidget(lbl_tier_filter)
+
+        self.tier_button_group = QButtonGroup(self)
+        self.tier_button_group.setExclusive(True)
+        for idx, (tier_key, tier_name) in enumerate(TIER_FILTERS):
+            tbtn = QPushButton(tier_name)
+            tbtn.setCheckable(True)
+            tbtn.setFixedHeight(22)
+            tbtn.setCursor(Qt.CursorShape.PointingHandCursor)
+            is_active = (tier_key == self.active_tier_key)
+            tbtn.setChecked(is_active)
+            tbtn.setStyleSheet(STYLE_PILL_ACTIVE if is_active else STYLE_PILL_INACTIVE)
+            self.tier_button_group.addButton(tbtn, idx)
+            self.tier_buttons[tier_key] = tbtn
+            tbtn.clicked.connect(lambda checked, key=tier_key: self._on_tier_filter_clicked(key))
+            tier_bar.addWidget(tbtn)
+        tier_bar.addStretch()
+        layout.addLayout(tier_bar)
 
         # 2. Category Filter Pills Row (wrapped in QButtonGroup)
         self.pill_scroll = QScrollArea()
@@ -616,6 +692,17 @@ class TemplatesTab(QWidget):
                 btn.setStyleSheet(STYLE_PILL_INACTIVE)
         self._filter_cards()
 
+    def _on_tier_filter_clicked(self, key: str):
+        self.active_tier_key = key
+        for tier_k, btn in self.tier_buttons.items():
+            if tier_k == key:
+                btn.setChecked(True)
+                btn.setStyleSheet(STYLE_PILL_ACTIVE)
+            else:
+                btn.setChecked(False)
+                btn.setStyleSheet(STYLE_PILL_INACTIVE)
+        self._filter_cards()
+
     def _on_search_changed(self, text: str):
         self._filter_cards()
 
@@ -626,6 +713,12 @@ class TemplatesTab(QWidget):
         for tpl, card in self.cards:
             tpl_key = get_template_pill_category_key(tpl.category)
             cat_match = (self.active_category_key == "all" or tpl_key == self.active_category_key)
+
+            # Commercial tier filter (free / pro / premium)
+            if self.active_tier_key == "all":
+                tier_match = True
+            else:
+                tier_match = TemplateTier.from_value(getattr(tpl, "tier", "pro")).value == self.active_tier_key
 
             if not query:
                 search_match = True
@@ -639,7 +732,7 @@ class TemplatesTab(QWidget):
                     query in tpl.id.lower()
                 )
 
-            is_vis = bool(cat_match and search_match)
+            is_vis = bool(cat_match and tier_match and search_match)
             card.setVisible(is_vis)
             if is_vis:
                 visible_cards.append((tpl, card))
@@ -675,11 +768,22 @@ class TemplatesTab(QWidget):
     def _update_timecode(self, phase: float):
         dur = float(self.active_template.duration_default) if self.active_template else 3.0
         curr_sec = phase * dur
+        # Use the actual timeline frame rate (fallback 30) instead of a hardcoded value
+        fps = 30.0
+        try:
+            bridge_fps = getattr(self.bridge, "get_timeline_fps", None)
+            if callable(bridge_fps):
+                fps = float(bridge_fps() or 30.0)
+        except Exception:
+            fps = 30.0
 
-        m_curr, s_curr = divmod(int(curr_sec), 60)
-        f_curr = int((curr_sec - int(curr_sec)) * 30.0)
-        m_tot, s_tot = divmod(int(dur), 60)
-        f_tot = int((dur - int(dur)) * 30.0)
+        total_frames = int(round(dur * fps))
+        curr_frames = int(round(curr_sec * fps))
+
+        s_curr, f_curr = divmod(curr_frames, int(round(fps)))
+        m_curr, s_curr = divmod(s_curr, 60)
+        s_tot, f_tot = divmod(total_frames, int(round(fps)))
+        m_tot, s_tot = divmod(s_tot, 60)
 
         if dur >= 60.0:
             self.lbl_timecode.setText(f"{m_curr:02d}:{s_curr:02d} / {m_tot:02d}:{s_tot:02d}")
@@ -973,12 +1077,24 @@ class TemplatesTab(QWidget):
                         "id": self.active_template.id,
                         "name": self.active_template.name,
                         "category": self.active_template.category,
+                        "tier": (self.active_template.tier.value
+                                 if isinstance(self.active_template.tier, TemplateTier)
+                                 else str(getattr(self.active_template.tier, "value", self.active_template.tier))),
                         "description": self.active_template.description,
+                        "tags": list(getattr(self.active_template, "tags", []) or []),
+                        "aspect_ratios": list(getattr(self.active_template, "aspect_ratios", []) or ["16:9"]),
                         "duration_default": self.active_template.duration_default,
+                        "min_hold": self.active_template.min_hold,
+                        "in_duration": self.active_template.in_duration,
+                        "out_duration": self.active_template.out_duration,
+                        "theme_tokens": dict(getattr(self.active_template, "theme_tokens", {}) or {}),
                         "parameters": [
                             {"id": p.id, "name": p.name, "type": p.type.value, "default": self.active_params.get(p.id, p.default)}
                             for p in self.active_template.parameters
-                        ]
+                        ],
+                        "layers": [l.to_dict() if hasattr(l, "to_dict") else dict(
+                            id=l.id, type=l.type.value if hasattr(l.type, "value") else l.type,
+                            name=l.name, parent_id=l.parent_id, props=dict(l.props)) for l in self.active_template.layers],
                     }
                 for parameter in data.get("parameters", []):
                     parameter_id = parameter.get("id")

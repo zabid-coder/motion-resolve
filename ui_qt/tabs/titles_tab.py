@@ -5,6 +5,7 @@ Displays style presets, captures styles from timeline Text+ clips,
 and provides a word-staging composer with hero word accentuation.
 """
 
+import math
 import os
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel,
@@ -207,16 +208,59 @@ class PresetPreviewCanvas(QWidget):
 
         path = text_path()
         bounds = path.boundingRect()
+
+        # Premium fill geometry (shared by gradient overlay + glow pass)
+        pad_x = max(8.0, float(self.preset_data.get("box_extend_x", 0.04)) * 320.0)
+        pad_y = max(4.0, float(self.preset_data.get("box_extend_y", 0.025)) * 220.0)
+        box_rect = QRectF(center_x - max_line_w / 2 - pad_x, center_y - total_block_h / 2 - pad_y,
+                          max_line_w + 2 * pad_x, total_block_h + 2 * pad_y)
+
+        def line_paths():
+            """Per-line QPainterPaths for the premium gradient/glow passes."""
+            result = []
+            cur_y = center_y - total_block_h / 2.0
+            for i, line_str in enumerate(lines):
+                metric = metrics[i]
+                lp = QPainterPath()
+                lp.addText(QPointF(line_x(line_str, metric),
+                                   cur_y + line_heights[i] - metric.descent()), fonts[i], line_str)
+                result.append(lp)
+                cur_y += line_heights[i] + (line_gaps[i] if i < len(line_gaps) else 0.0)
+            return result
+
+        def paint_gradient_fill(lps):
+            """Premium tier: multi-stop metallic/holographic gradient ink clipped to glyphs."""
+            grad_spec = self.preset_data.get("gradient_overlay") or {}
+            stops = grad_spec.get("colors") or []
+            if not stops:
+                return False
+            try:
+                angle = float(grad_spec.get("angle", 60)) % 360.0
+                rad = math.radians(angle)
+                cx, cy = box_rect.center().x(), box_rect.center().y()
+                half = max(box_rect.width(), box_rect.height()) / 2.0
+                p1 = QPointF(cx - math.cos(rad) * half, cy - math.sin(rad) * half)
+                p2 = QPointF(cx + math.cos(rad) * half, cy + math.sin(rad) * half)
+                qgrad = QLinearGradient(p1, p2)
+                n = max(len(stops), 2)
+                for si, sv in enumerate(stops):
+                    sc = QColor(*(int(max(0.0, min(1.0, float(v)))) for v in
+                                  [sv[0] * 255, sv[1] * 255, sv[2] * 255,
+                                   (sv[3] if len(sv) > 3 else 1.0) * 255]))
+                    qgrad.setColorAt(si / (n - 1), sc)
+                painter.setPen(Qt.PenStyle.NoPen)
+                for lp in lps:
+                    painter.fillPath(lp, QBrush(qgrad))
+                return True
+            except (TypeError, ValueError, IndexError):
+                return False
+
         text_shift_y = 0.0
         if bounds.top() < 7.0:
             text_shift_y = 7.0 - bounds.top()
         elif bounds.bottom() > h - 7.0:
             text_shift_y = h - 7.0 - bounds.bottom()
         path.translate(0.0, text_shift_y)
-        pad_x = max(8.0, float(self.preset_data.get("box_extend_x", 0.04)) * 320.0)
-        pad_y = max(4.0, float(self.preset_data.get("box_extend_y", 0.025)) * 220.0)
-        box_rect = QRectF(center_x - max_line_w / 2 - pad_x, center_y - total_block_h / 2 - pad_y,
-                          max_line_w + 2 * pad_x, total_block_h + 2 * pad_y)
 
         # Element 4: Background Box
         if self.preset_data.get("box_enabled", False):
@@ -285,7 +329,56 @@ class PresetPreviewCanvas(QWidget):
         )
 
         use_2color = bool(self.preset_data.get("use_2color", False))
-        if use_2color and len(lines) > 1:
+        premium_lps = line_paths()
+        for lp in premium_lps:
+            lp.translate(0.0, text_shift_y)
+
+        # Premium pass 0: colored neon bloom behind the glyphs (glow_enabled + accent)
+        if self.preset_data.get("glow_enabled", False):
+            gc = self.preset_data.get("accent_color", [1.0, 0.85, 0.0, 1.0])
+            gcol = QColor(
+                int(max(0.0, min(1.0, float(gc[0]))) * 255),
+                int(max(0.0, min(1.0, float(gc[1]))) * 255),
+                int(max(0.0, min(1.0, float(gc[2]))) * 255),
+            )
+            gamount = max(0.0, min(1.0, float(self.preset_data.get("glow_amount", 0.4))))
+            steps = 4
+            for step in range(steps, 0, -1):
+                radius = (step / steps) * max(2.0, gamount * 26.0)
+                alpha = int(70 * gamount * (0.45 / step) + 14)
+                pen_glow = QPen(QColor(gcol.red(), gcol.green(), gcol.blue(), alpha), radius * 2)
+                pen_glow.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+                painter.setPen(pen_glow)
+                painter.setBrush(Qt.BrushStyle.NoBrush)
+                for lp in premium_lps:
+                    painter.strokePath(lp, pen_glow)
+
+        has_gradient = bool((self.preset_data.get("gradient_overlay") or {}).get("colors"))
+        if has_gradient and paint_gradient_fill(premium_lps):
+            # Gradient ink laid down; keep hero accent + stroke edges on top for depth
+            if use_2color and hero_line_text:
+                ac = self.preset_data.get("accent_color", [1.0, 0.85, 0.0, 1.0])
+                accent_qcolor = QColor(
+                    int(ac[0] * 255), int(ac[1] * 255), int(ac[2] * 255),
+                    int((ac[3] if len(ac) > 3 else 1.0) * 255)
+                )
+                for i, line_str in enumerate(lines):
+                    if line_str.strip().upper() == hero_line_text:
+                        painter.fillPath(premium_lps[i], QBrush(accent_qcolor))
+            if self.preset_data.get("stroke_enabled", False):
+                sc = self.preset_data.get("stroke_color", [0.0, 0.0, 0.0, 1.0])
+                stroke_qcolor = QColor(
+                    int(sc[0] * 255), int(sc[1] * 255), int(sc[2] * 255),
+                    int((sc[3] if len(sc) > 3 else 1.0) * 255)
+                )
+                thickness = float(self.preset_data.get("stroke_thickness", 0.03))
+                pen = QPen(stroke_qcolor, max(0.8, thickness * 28.0))
+                pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+                painter.setPen(pen)
+                painter.setBrush(Qt.BrushStyle.NoBrush)
+                for lp in premium_lps:
+                    painter.strokePath(lp, pen)
+        elif use_2color and len(lines) > 1:
             ac = self.preset_data.get("accent_color", [1.0, 0.85, 0.0, 1.0])
             accent_qcolor = QColor(
                 int(ac[0] * 255),
@@ -351,6 +444,30 @@ class PresetCardWidget(QFrame):
             font-weight: 700;
         """)
         top_row.addWidget(self.lbl_cat)
+
+        # Commercial tier badge (Free / Pro / Premium ★) — mirrors the template gallery
+        tier = str(self.preset_data.get("tier", "free")).strip().lower()
+        if tier in ("premium", "pro+"):
+            tier_label, tier_style = "★ PREMIUM", (
+                "background-image: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
+                " stop:0 #f5c15e, stop:0.5 #d99a2b, stop:1 #8a5a12);"
+                " color: #241503; border-radius: 4px; padding: 2px 7px;"
+                " font-size: 9px; font-weight: 900; letter-spacing: 0.6px;"
+                " border: 1px solid #ffe9a8;"
+            )
+        elif tier == "pro":
+            tier_label, tier_style = "PRO", (
+                "background-color: #2b2440; color: #b79cff;"
+                " border: 1px solid #4d3f73; border-radius: 4px; padding: 2px 7px;"
+                " font-size: 9px; font-weight: 800; letter-spacing: 0.6px;"
+            )
+        else:
+            tier_label, tier_style = "", ""
+        if tier_label:
+            self.lbl_tier = QLabel(tier_label)
+            self.lbl_tier.setStyleSheet(tier_style)
+            top_row.insertWidget(1, self.lbl_tier)
+
         layout.addLayout(top_row)
 
         # Typography Preview Canvas (High-Fidelity Text+ rendering)
@@ -571,6 +688,13 @@ class TitlesTab(QWidget):
         ])
         filter_bar.addWidget(self.combo_category, stretch=1)
 
+        # Commercial tier filter (mirrors the Templates gallery: All / Free / Pro / Premium)
+        self.combo_tier = QComboBox()
+        self.combo_tier.setFixedHeight(26)
+        self.combo_tier.setToolTip("Filter presets by commercial tier")
+        self.combo_tier.addItems(["All Tiers", "Free", "Pro", "Premium ★"])
+        filter_bar.addWidget(self.combo_tier, stretch=0)
+
         layout.addLayout(filter_bar)
 
         # 3. Presets Scrollable Gallery Grid
@@ -758,6 +882,7 @@ class TitlesTab(QWidget):
 
         self.txt_search.textChanged.connect(self._filter_presets)
         self.combo_category.currentTextChanged.connect(self._filter_presets)
+        self.combo_tier.currentTextChanged.connect(self._filter_presets)
 
         self.btn_c_tpl1.clicked.connect(lambda: self._apply_composer_template(1))
         self.btn_c_tpl2.clicked.connect(lambda: self._apply_composer_template(2))
@@ -899,11 +1024,19 @@ class TitlesTab(QWidget):
     def _filter_presets(self):
         query = self.txt_search.text().strip().lower()
         cat = self.combo_category.currentText().strip()
+        tier_sel = self.combo_tier.currentText().strip().lower().replace(" ★", "")
 
         for preset, card in self.preset_cards:
             name_match = query in preset.get("name", "").lower() or query in preset.get("text", "").lower()
             p_cat = preset.get("category", "").strip().lower()
             s_cat = cat.lower()
+
+            # Tier gate (free / pro / premium); custom user presets default to free
+            if tier_sel in ("all tiers", ""):
+                tier_match = True
+            else:
+                p_tier = str(preset.get("tier", "free")).strip().lower()
+                tier_match = (p_tier == tier_sel)
 
             if cat == "All Categories":
                 cat_match = True
@@ -926,7 +1059,7 @@ class TitlesTab(QWidget):
             else:
                 cat_match = False
 
-            card.setVisible(name_match and cat_match)
+            card.setVisible(name_match and cat_match and tier_match)
 
     def select_preset(self, preset_data):
         self.active_style = preset_data

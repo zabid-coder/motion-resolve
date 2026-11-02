@@ -2,6 +2,7 @@
   "id": "pod_talking_about",
   "name": "Now Talking About Pill",
   "category": "Podcast",
+  "tier": "pro",
   "description": "Sleek rounded pill badge with active discussion topic.",
   "tags": [
     "podcast",

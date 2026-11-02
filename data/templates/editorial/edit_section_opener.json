@@ -2,6 +2,7 @@
   "id": "edit_section_opener",
   "name": "Section Opener Title",
   "category": "Editorial / Magazine",
+  "tier": "pro",
   "description": "Roman numeral section opener with fine accent line and serif title.",
   "tags": [
     "editorial",

@@ -156,6 +156,106 @@ class TemplateCanvasArea(QFrame):
             purpose = "editorial"
         return resolve_available_font(requested, purpose)
 
+    def _layer_style_color(self, layer, key, default):
+        """Resolve an optional styling color prop (shadow/glow/stroke color)."""
+        raw = layer.props.get(key) if layer else None
+        if raw is None:
+            return QColor(default)
+        value = self._resolve_val(raw)
+        if isinstance(value, str):
+            return QColor(value)
+        if isinstance(value, (list, tuple)) and len(value) >= 3:
+            rgba = list(value[:4])
+            while len(rgba) < 4:
+                rgba.append(1.0)
+            return QColor(*(int(max(0.0, min(1.0, float(c))) * 255) for c in rgba[:3]),
+                          int(max(0.0, min(1.0, float(rgba[3]))) * 255))
+        return QColor(default)
+
+    def _draw_styled_text(self, painter, layer, rect, align_flag, text, base_color, preview_scale=1.0):
+        """
+        Professional WYSIWYG text renderer honoring authored depth props on the layer:
+          - shadow: {"offset_x": px@1080, "offset_y": ..., "blur": ..., "color": [r,g,b,a] or "#hex"}
+          - stroke / outline: {"width": px@1080, "color": ...} or stroke_color prop
+          - glow: {"radius": px@1080, "color": ..., "intensity": 0..1}
+        Falls back to a subtle soft drop shadow so every template renders with depth.
+        """
+        props = layer.props if layer else {}
+        s = max(0.4, preview_scale)
+
+        # --- Glow (drawn first, behind everything) ---
+        glow = props.get("glow")
+        if isinstance(glow, dict) and glow:
+            radius = float(glow.get("radius", glow.get("size", 6.0))) * s
+            intensity = max(0.05, min(1.0, float(glow.get("intensity", 0.55))))
+            glow_color = self._layer_style_color(layer, "glow_color", "#ffffff")
+            steps = max(3, min(8, int(radius // 1.5) + 3))
+            painter.save()
+            for i in range(steps, 0, -1):
+                alpha = int(255 * intensity * (1.0 - i / (steps + 1)) * 0.5)
+                pen = QPen(QColor(glow_color.red(), glow_color.green(), glow_color.blue(), max(8, alpha)))
+                pen.setWidthF(max(1.0, (radius / steps) * i * 1.6))
+                painter.setPen(pen)
+                painter.drawText(rect, align_flag, text)
+            painter.restore()
+
+        # --- Drop shadow (360° ambient diffusion approximation) ---
+        shadow = props.get("shadow")
+        if isinstance(shadow, dict) and shadow:
+            ox = float(shadow.get("offset_x", 0.0)) * s
+            oy = float(shadow.get("offset_y", 2.5)) * s
+            blur = max(0.0, float(shadow.get("blur", 3.0))) * s
+            shadow_color = self._layer_style_color(layer, "shadow_color", "#000000")
+            base_alpha = float(shadow.get("opacity", shadow_color.alpha() / 255.0))
+            steps = max(1, int(round(blur / 1.5)))
+            painter.save()
+            for i in range(steps, -1, -1):
+                frac = i / steps if steps else 0.0
+                alpha = int(max(0.0, min(1.0, base_alpha * (1.0 - frac * 0.75))) * 255)
+                painter.setPen(QColor(shadow_color.red(), shadow_color.green(), shadow_color.blue(), alpha))
+                painter.drawText(QRectF(rect.x() + ox + frac * blur * 0.35,
+                                        rect.y() + oy + frac * blur * 0.35,
+                                        rect.width(), rect.height()), align_flag, text)
+            painter.restore()
+        elif shadow is None:
+            # Default professional soft shadow when nothing authored
+            painter.save()
+            painter.setPen(QColor(0, 0, 0, 120))
+            painter.drawText(QRectF(rect.x() + 1.2 * s, rect.y() + 1.6 * s, rect.width(), rect.height()),
+                             align_flag, text)
+            painter.restore()
+
+        # --- Stroke / outline under fill ---
+        stroke = props.get("stroke") if isinstance(props.get("stroke"), dict) else None
+        stroke_width = float((stroke or {}).get("width", props.get("stroke_width", props.get("outline_width", 0.0))))
+        stroke_raw = (stroke or {}).get("color") or props.get("stroke_color") or props.get("outline_color")
+        if stroke_width > 0.01 and stroke_raw is not None:
+            if isinstance(stroke_raw, dict):
+                stroke_color = QColor(str(stroke_raw.get("color", "#000000")))
+            else:
+                resolved = self._resolve_val(stroke_raw)
+                if isinstance(resolved, str):
+                    stroke_color = QColor(resolved)
+                elif isinstance(resolved, (list, tuple)) and len(resolved) >= 3:
+                    rgba = list(resolved[:4])
+                    while len(rgba) < 4:
+                        rgba.append(1.0)
+                    stroke_color = QColor(*(int(max(0.0, min(1.0, float(c))) * 255) for c in rgba[:3]),
+                                          int(max(0.0, min(1.0, float(rgba[3]))) * 255))
+                else:
+                    stroke_color = QColor("#000000")
+            pen = QPen(stroke_color)
+            pen.setWidthF(max(0.8, stroke_width * s * 2.0))
+            pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+            painter.save()
+            painter.setPen(pen)
+            painter.drawText(rect, align_flag, text)
+            painter.restore()
+
+        # --- Fill pass ---
+        painter.setPen(base_color)
+        painter.drawText(rect, align_flag, text)
+
     @staticmethod
     def _sample_keyframes(keyframes, phase_time, default_value=0.0):
         if not keyframes:
@@ -439,10 +539,11 @@ class TemplateCanvasArea(QFrame):
                     rect.translate(0.0, dy)
                     content_bounds.translate(0.0, dy)
             painter.setFont(font)
-            painter.setPen(self._layer_color(layer, "text_primary" if index == 0 else "text_secondary"))
+            base_color = self._layer_color(layer, "text_primary" if index == 0 else "text_secondary")
             painter.save()
             self._apply_layer_transform(painter, self._layer_motion_state(layer), rect.center(), w, h)
-            painter.drawText(rect, flags, raw_text)
+            # Professional WYSIWYG depth pass: honors authored shadow/stroke/glow props
+            self._draw_styled_text(painter, layer, rect, flags, raw_text, base_color, max(0.4, h / 260.0))
             painter.restore()
             painted_text_bounds.append((raw_text, content_bounds))
             if "center_y" not in layer.props and "offset_y" not in layer.props:
