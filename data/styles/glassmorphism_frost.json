@@ -1,0 +1,57 @@
+{
+    "id": "glassmorphism_frost",
+    "tier": "premium",
+    "name": "Glassmorphism Frost",
+    "category": "Brand / Corporate",
+    "text": "CLARITY IN MOTION",
+    "font": "Helvetica Neue",
+    "style": "Medium",
+    "size": 0.068,
+    "character_spacing": 1.02,
+    "line_spacing": 0.0,
+    "center_x": 0.5,
+    "center_y": 0.3,
+    "alignment": "center",
+    "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+    ],
+    "accent_color": [
+        0.749,
+        0.831,
+        1.0,
+        1.0
+    ],
+    "use_2color": true,
+    "main_word": "MOTION",
+    "stroke_enabled": false,
+    "shadow_enabled": true,
+    "shadow_color": [
+        0.059,
+        0.09,
+        0.165,
+        0.502
+    ],
+    "shadow_softness": 0.055,
+    "shadow_offset": [
+        0.0,
+        0.0
+    ],
+    "box_enabled": true,
+    "box_color": [
+        1.0,
+        1.0,
+        1.0,
+        0.122
+    ],
+    "box_extend_x": 0.06,
+    "box_extend_y": 0.035,
+    "box_round": 0.45,
+    "box_level": 0,
+    "glow_enabled": false,
+    "animation_in": "scale_fade",
+    "animation_out": "fade_out",
+    "description": "Frosted translucent card with hairline light border — Apple-style glass depth for product films."
+}

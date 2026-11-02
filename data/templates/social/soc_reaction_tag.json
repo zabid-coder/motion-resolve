@@ -1,0 +1,114 @@
+{
+  "id": "soc_reaction_tag",
+  "name": "Reaction Tag & Emoji",
+  "category": "Social / Reels 9:16",
+  "tier": "pro",
+  "description": "Creator reaction pill with high energy bold typography.",
+  "tags": [
+    "social",
+    "reaction",
+    "pill",
+    "energy"
+  ],
+  "duration_default": 3.2,
+  "min_hold": 1.4,
+  "in_duration": 0.5,
+  "out_duration": 0.32,
+  "parameters": [
+    {
+      "id": "reaction",
+      "name": "Reaction Text",
+      "type": "string",
+      "default": "WAIT UNTIL THE END",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.28,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "rx",
+      "type": "text",
+      "name": "Reaction",
+      "props": {
+        "text": "param:reaction",
+        "size": 0.084,
+        "font": "Avenir Next Condensed",
+        "weight": "Bold",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "alignment": "center",
+        "text_width": 0.76
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.015,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.235,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.015,
+              "value": 0.95,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.295,
+              "value": 1.025,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.415,
+              "value": 1,
+              "easing": "softSpring"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

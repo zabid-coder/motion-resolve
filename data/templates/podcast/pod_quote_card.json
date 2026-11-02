@@ -1,0 +1,345 @@
+{
+  "id": "pod_quote_card",
+  "name": "Quote & Clip Card",
+  "category": "Podcast",
+  "tier": "premium",
+  "description": "Oversized quotation mark with staggered quote reveal and attribution hairline.",
+  "tags": [
+    "podcast",
+    "quote",
+    "soundbite",
+    "clip"
+  ],
+  "duration_default": 5.5,
+  "min_hold": 2.5,
+  "in_duration": 0.65,
+  "out_duration": 0.4,
+  "parameters": [
+    {
+      "id": "quote_text",
+      "name": "Quote Text",
+      "type": "string",
+      "default": "SIMPLICITY IS ABOUT SUBTRACTING THE OBVIOUS",
+      "category": "Text"
+    },
+    {
+      "id": "author",
+      "name": "Attribution",
+      "type": "string",
+      "default": "John Maeda \u2022 Laws of Simplicity",
+      "category": "Text"
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Position",
+      "type": "number",
+      "default": 0.5,
+      "min_val": 0.1,
+      "max_val": 0.85,
+      "step": 0.01,
+      "category": "Layout"
+    }
+  ],
+  "layers": [
+    {
+      "id": "quote_rule",
+      "type": "shape_line",
+      "name": "Quote Accent",
+      "props": {
+        "width": 0.003,
+        "height": 0.13,
+        "color": "token:accent",
+        "center_x": 0.115,
+        "center_y": "param:pos_y"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.22,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.08,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quote",
+      "type": "text",
+      "name": "Quote Body",
+      "props": {
+        "text": "param:quote_text",
+        "size": 0.05,
+        "text_width": 0.72,
+        "alignment": "left",
+        "font": "Baskerville",
+        "weight": "Regular",
+        "font_bn": "token:font_heading_bn",
+        "role": "headline",
+        "character_spacing": 1.0,
+        "center_x": 0.18,
+        "center_y": "param:pos_y",
+        "offset_y": 0.015
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.015,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.285,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.015,
+              "value": -0.014,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.395,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "author",
+      "type": "text",
+      "name": "Author",
+      "props": {
+        "text": "param:author",
+        "size": 0.026,
+        "font": "Menlo",
+        "font_bn": "token:font_body_bn",
+        "role": "body",
+        "character_spacing": 1.05,
+        "alignment": "left",
+        "text_width": 0.65,
+        "weight": "Medium",
+        "center_x": 0.18,
+        "center_y": "param:pos_y",
+        "offset_y": -0.07
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": -0.008,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.53,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0.008,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hairline",
+      "type": "shape_line",
+      "name": "Divider",
+      "props": {
+        "width": 0.1,
+        "height": 0.002,
+        "color": "token:accent",
+        "center_x": 0.18,
+        "center_y": "param:pos_y",
+        "offset_y": -0.035
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.22,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.08,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1"
+  ]
+}

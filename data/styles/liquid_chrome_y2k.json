@@ -1,0 +1,77 @@
+{
+    "id": "liquid_chrome_y2k",
+    "tier": "premium",
+    "name": "Liquid Chrome Y2K",
+    "category": "Kinetic / Tech",
+    "text": "THE FUTURE IS NOW",
+    "font": "Avenir Next Condensed",
+    "style": "Bold",
+    "size": 0.085,
+    "character_spacing": 1.06,
+    "line_spacing": 0.0,
+    "center_x": 0.5,
+    "center_y": 0.32,
+    "alignment": "center",
+    "color": [
+        0.933,
+        0.945,
+        0.973,
+        1.0
+    ],
+    "accent_color": [
+        0.616,
+        0.714,
+        1.0,
+        1.0
+    ],
+    "use_2color": false,
+    "stroke_enabled": true,
+    "stroke_color": [
+        0.043,
+        0.063,
+        0.125,
+        1.0
+    ],
+    "stroke_thickness": 0.018,
+    "shadow_enabled": true,
+    "shadow_color": [
+        0.043,
+        0.063,
+        0.125,
+        0.667
+    ],
+    "shadow_softness": 0.02,
+    "shadow_offset": [
+        0.004,
+        -0.006
+    ],
+    "box_enabled": false,
+    "glow_enabled": true,
+    "glow_amount": 0.22,
+    "gradient_overlay": {
+        "colors": [
+            [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            [
+                0.486,
+                0.576,
+                0.788,
+                1.0
+            ],
+            [
+                0.859,
+                0.894,
+                1.0,
+                1.0
+            ]
+        ],
+        "angle": 90
+    },
+    "animation_in": "zoom_punch",
+    "animation_out": "slide_down",
+    "description": "Cold liquid-metal chrome with duotone bevel shading — the trending Y2K revival grade."
+}
