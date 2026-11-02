@@ -1,54 +1,54 @@
 {
-    "id": "retro_vhs",
-    "name": "Retro Title Display",
-    "category": "Cinematic",
-    "tier": "pro",
-    "text": "SIGNAL LOST\n1987",
-    "font": "Futura",
-    "style": "Medium",
-    "size": 0.082,
-    "character_spacing": 1.12,
-    "line_spacing": 0.0,
-    "center_x": 0.5,
-    "center_y": 0.28,
-    "color": [
-        0.92,
-        0.86,
-        0.79,
-        1
-    ],
-    "stroke_enabled": false,
-    "stroke_color": [
-        0.55,
-        0.05,
-        0.45,
-        1.0
-    ],
-    "stroke_thickness": 0.035,
-    "shadow_enabled": true,
-    "shadow_color": [
-        0.1,
-        0.05,
-        0.1,
-        0.42
-    ],
-    "shadow_softness": 0.04,
-    "shadow_offset": [
-        0.003,
-        -0.004
-    ],
-    "box_enabled": false,
-    "animation_in": "scribble",
-    "animation_out": "fade",
-    "accent_color": [
-        0.67,
-        0.48,
-        0.57,
-        1
-    ],
-    "use_2color": true,
-    "main_word": "1987",
-    "hero_font": "Consolas",
-    "hero_style": "Bold",
-    "hero_size_multiplier": 1.0
+  "id": "retro_vhs",
+  "name": "Retro Title Display",
+  "category": "Cinematic",
+  "tier": "pro",
+  "text": "SIGNAL LOST\n1987",
+  "font": "Futura",
+  "style": "Medium",
+  "size": 0.082,
+  "character_spacing": 1.12,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.28,
+  "color": [
+    0.92,
+    0.86,
+    0.79,
+    1
+  ],
+  "stroke_enabled": false,
+  "stroke_color": [
+    0.55,
+    0.05,
+    0.45,
+    1.0
+  ],
+  "stroke_thickness": 0.035,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.1,
+    0.05,
+    0.1,
+    0.42
+  ],
+  "shadow_softness": 0.04,
+  "shadow_offset": [
+    0.003,
+    -0.004
+  ],
+  "box_enabled": false,
+  "animation_in": "scribble",
+  "animation_out": "fade",
+  "accent_color": [
+    0.67,
+    0.48,
+    0.57,
+    1
+  ],
+  "use_2color": true,
+  "main_word": "1987",
+  "hero_font": "Consolas",
+  "hero_style": "Bold",
+  "hero_size_multiplier": 1.0
 }

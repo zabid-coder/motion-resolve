@@ -1,47 +1,47 @@
 {
-    "id": "tutorial_phrase_hero",
-    "name": "Tutorial · Phrase Hero Stack",
-    "category": "Tutorial Inspired",
-    "tier": "pro",
-    "text": "PRESS THIS\nTO SPEED UP",
-    "font": "Avenir Next Condensed",
-    "style": "Heavy Italic",
-    "hero_style": "Bold",
-    "size": 0.086,
-    "hero_size_multiplier": 1.05,
-    "character_spacing": 0.98,
-    "line_spacing": 0.0,
-    "center_x": 0.5,
-    "center_y": 0.3,
-    "color": [
-        0.98,
-        0.96,
-        0.92,
-        1.0
-    ],
-    "accent_color": [
-        1.0,
-        0.78,
-        0.3,
-        1.0
-    ],
-    "stroke_enabled": false,
-    "shadow_enabled": true,
-    "shadow_color": [
-        0.03,
-        0.02,
-        0.01,
-        0.42
-    ],
-    "shadow_softness": 0.04,
-    "shadow_offset": [
-        0.003,
-        -0.004
-    ],
-    "box_enabled": false,
-    "animation_in": "pop_in",
-    "animation_out": "fade",
-    "use_2color": true,
-    "main_word": "SPEED UP",
-    "hero_font": "Avenir Next Condensed"
+  "id": "tutorial_phrase_hero",
+  "name": "Tutorial · Phrase Hero Stack",
+  "category": "Tutorial Inspired",
+  "tier": "pro",
+  "text": "PRESS THIS\nTO SPEED UP",
+  "font": "Avenir Next Condensed",
+  "style": "Heavy Italic",
+  "hero_style": "Bold",
+  "size": 0.086,
+  "hero_size_multiplier": 1.05,
+  "character_spacing": 0.98,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.3,
+  "color": [
+    0.98,
+    0.96,
+    0.92,
+    1.0
+  ],
+  "accent_color": [
+    1.0,
+    0.78,
+    0.3,
+    1.0
+  ],
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.03,
+    0.02,
+    0.01,
+    0.42
+  ],
+  "shadow_softness": 0.04,
+  "shadow_offset": [
+    0.003,
+    -0.004
+  ],
+  "box_enabled": false,
+  "animation_in": "pop_in",
+  "animation_out": "fade",
+  "use_2color": true,
+  "main_word": "SPEED UP",
+  "hero_font": "Avenir Next Condensed"
 }
