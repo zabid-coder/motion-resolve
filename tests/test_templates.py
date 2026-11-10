@@ -116,232 +116,41 @@ class TestTypographyEngine(unittest.TestCase):
         self.assertEqual(val2, theme["accent"])
 
     def test_fusion_compiler_mask_reveal_and_cleanup(self):
-        """Verifies FusionCompiler creates MR_RevealMask, sets parameters, connects EffectMask, and cleans up."""
-        from unittest.mock import MagicMock
+        """Masked-reveal templates get a per-layer clip (MR_Clip_*) on the layer's
+        merge, keyed motion on the layer transform, and a clean recompile."""
+        from tests.fake_fusion import make_item
         from core.templates.fusion_compiler import FusionCompiler
-
-        bridge = MagicMock()
-        bridge.get_timeline_fps.return_value = 24.0
-        compiler = FusionCompiler(bridge=bridge)
-
-        reg = TemplateRegistry()
-        tpl = reg.get_template("pod_lower_third_slate")
-        self.assertIsNotNone(tpl)
-
-        timeline_item = MagicMock()
-        timeline_item.GetFusionCompCount.return_value = 1
-        comp = MagicMock()
-        timeline_item.GetFusionCompByIndex.return_value = comp
-
-        class MockFusionInput:
-            def __init__(self, val=None):
-                self._val = val
-                self.SetExpression = MagicMock()
-                self.ConnectTo = MagicMock()
-
-            def __eq__(self, other):
-                return self._val == other
-
-            def __repr__(self):
-                return f"MockFusionInput({self._val})"
-
-        class MockTool:
-            def __init__(self, tool_type):
-                self.tool_type = tool_type
-                self.attrs = {"TOOLS_RegID": tool_type}
-                self.Center = MockFusionInput()
-                self.Size = MockFusionInput()
-                self.Width = None
-                self.Height = None
-                self.Input = MockFusionInput()
-                self.Output = MockFusionInput()
-                self.EffectMask = MockFusionInput()
-                self.Mask = MockFusionInput()
-                self.Background = MockFusionInput()
-                self.Foreground = MockFusionInput()
-                self.Delete = MagicMock()
-                self.inputs = {}
-
-            def __setattr__(self, name, val):
-                if hasattr(self, name) and isinstance(getattr(self, name), MockFusionInput):
-                    getattr(self, name)._val = val
-                else:
-                    super().__setattr__(name, val)
-
-            def SetInput(self, name, val, frame=None):
-                if frame is not None:
-                    if name not in self.inputs or not isinstance(self.inputs[name], dict):
-                        self.inputs[name] = {}
-                    self.inputs[name][frame] = val
-                else:
-                    self.inputs[name] = val
-                if hasattr(self, name) and isinstance(getattr(self, name), MockFusionInput):
-                    getattr(self, name)._val = val
-                else:
-                    setattr(self, name, val)
-
-            def SetAttrs(self, a):
-                self.attrs.update(a)
-
-            def GetAttrs(self):
-                return self.attrs
-
-        tools = {}
-        tools["Template"] = MockTool("TextPlus")
-        tools["MR_Transform"] = MockTool("Transform")
-        tools["MediaOut1"] = MockTool("MediaOut")
-
-        def mock_find_tool(name):
-            return tools.get(name)
-
-        def mock_add_tool(tool_type, *args):
-            tool = MockTool(tool_type)
-            orig_set_attrs = tool.SetAttrs
-            def wrapped_set_attrs(a):
-                orig_set_attrs(a)
-                name = a.get("TOOLS_Name")
-                if name:
-                    tools[name] = tool
-            tool.SetAttrs = wrapped_set_attrs
-            return tool
-
-        comp.FindTool.side_effect = mock_find_tool
-        comp.AddTool.side_effect = mock_add_tool
-        comp.GetToolList.return_value = tools
-
-        # 1. Compile and apply template
-        success = compiler.compile_and_apply(
-            timeline_item,
-            tpl,
-            param_overrides={"pos_y": 0.25},
-            speed=1.0,
-            intensity=1.0
-        )
-        self.assertTrue(success)
-
-        # 2. Verify MR_RevealMask was created and added to comp
-        self.assertIn("MR_RevealMask", tools)
-        reveal_mask = tools["MR_RevealMask"]
-        self.assertEqual(reveal_mask.tool_type, "RectangleMask")
-
-        # 3. Verify reveal_mask parameters
-        self.assertEqual(reveal_mask.Center, [0.5, 0.25])
-        self.assertEqual(reveal_mask.Width, 0.95)
-        self.assertAlmostEqual(reveal_mask.Height, 0.227, places=2)
-
-        # 4. Verify MR_Transform.EffectMask is connected to reveal_mask.Mask
-        mr_trans = tools["MR_Transform"]
-        mr_trans.EffectMask.ConnectTo.assert_called_with(reveal_mask.Mask)
-
-        # 5. Verify motion tracks entrance, hold, and exit
-        t_info = compiler.calculate_clip_timing(None, tpl.duration_default, tpl.in_duration, tpl.out_duration, 24.0, 1.0)
-        in_frames = t_info["in_frames"]
-        out_frames = t_info["out_frames"]
-        total_frames = t_info["total_frames"]
-        hold_end_frame = t_info["hold_end_frame"]
-
-        # At frame 0: Cy translates from authored track keyframe (-0.025, so 0.5 - 0.025 = 0.475)
-        center_f0 = mr_trans.inputs["Center"][0]
-        self.assertAlmostEqual(center_f0[1], 0.5 - 0.025, places=3)
-
-        # At in_frames: resting position 0.5 (exact 0.0 offset)
-        center_in = mr_trans.inputs["Center"][in_frames]
-        self.assertAlmostEqual(center_in[1], 0.5, places=3)
-
-        # At hold_end_frame: resting position 0.5
-        center_hold = mr_trans.inputs["Center"][hold_end_frame]
-        self.assertAlmostEqual(center_hold[1], 0.5, places=3)
-
-        # At exit (total_frames): Cy slides into mask hiding (-0.045 from center, so 0.455)
-        center_exit = mr_trans.inputs["Center"][total_frames]
-        self.assertAlmostEqual(center_exit[1], 0.5 - 0.045, places=3)
-
-        # 6. Verify _cleanup_previous_tools removes MR_RevealMask
-        compiler._cleanup_previous_tools(comp)
-        reveal_mask.Delete.assert_called_once()
+        tpl = TemplateRegistry().get_template("pod_lower_third_slate")
+        item, comp, bridge = make_item(84)
+        compiler = FusionCompiler(bridge)
+        self.assertTrue(compiler.compile_and_apply(item, tpl, param_overrides={"pos_y": 0.25}))
+        clip = comp.FindTool("MR_Clip_guest_name")
+        self.assertIsNotNone(clip)
+        self.assertEqual(clip.regid, "RectangleMask")
+        self.assertIs(comp.FindTool("MR_Merge_guest_name").connections["EffectMask"].GetTool(), clip)
+        self.assertGreater(clip.GetInput("Width"), 1.0)  # never cuts text horizontally
+        xf = comp.FindTool("MR_XF_guest_name")
+        self.assertLess(xf.GetInput("Center", 1)[0], 0.5)          # slides in from the left
+        self.assertAlmostEqual(xf.GetInput("Center", 40)[0], 0.5, places=4)
+        names = set(comp.tools)
+        self.assertTrue(compiler.compile_and_apply(item, tpl, param_overrides={"pos_y": 0.25}))
+        self.assertEqual(names, set(comp.tools))
 
     def test_kinetic_templates_compilation(self):
-        """Verifies new kinetic templates (kin_split_reveal, kin_word_explosion) load and compile cleanly."""
-        from unittest.mock import MagicMock
+        from tests.fake_fusion import make_item
         from core.templates.fusion_compiler import FusionCompiler
-
-        bridge = MagicMock()
-        bridge.get_timeline_fps.return_value = 24.0
-        compiler = FusionCompiler(bridge=bridge)
-
-        reg = TemplateRegistry()
-        split_tpl = reg.get_template("kin_split_reveal")
-        self.assertIsNotNone(split_tpl)
-        self.assertEqual(len(split_tpl.layers), 3)
-
-        word_tpl = reg.get_template("kin_word_explosion")
-        self.assertIsNotNone(word_tpl)
-        self.assertEqual(len(word_tpl.layers), 3)
-
-        # Mock timeline item and Fusion comp
-        timeline_item = MagicMock()
-        timeline_item.GetFusionCompCount.return_value = 1
-        comp = MagicMock()
-        timeline_item.GetFusionCompByIndex.return_value = comp
-
-        class MockFusionInput:
-            def __init__(self, val=None):
-                self._val = val
-                self.SetExpression = MagicMock()
-                self.ConnectTo = MagicMock()
-
-        class MockTool:
-            def __init__(self, tool_type):
-                self.tool_type = tool_type
-                self.attrs = {"TOOLS_RegID": tool_type}
-                self.Center = MockFusionInput()
-                self.Size = MockFusionInput()
-                self.Width = None
-                self.Height = None
-                self.Input = MockFusionInput()
-                self.Output = MockFusionInput()
-                self.EffectMask = MockFusionInput()
-                self.Mask = MockFusionInput()
-                self.Background = MockFusionInput()
-                self.Foreground = MockFusionInput()
-                self.Delete = MagicMock()
-                self.inputs = {}
-
-            def SetAttrs(self, a):
-                self.attrs.update(a)
-
-            def SetInput(self, name, val, frame=None):
-                if frame is not None:
-                    if name not in self.inputs or not isinstance(self.inputs[name], dict):
-                        self.inputs[name] = {}
-                    self.inputs[name][frame] = val
-                else:
-                    self.inputs[name] = val
-
-        tools = {}
-        tools["Template"] = MockTool("TextPlus")
-        tools["MR_Transform"] = MockTool("Transform")
-        tools["MediaOut1"] = MockTool("MediaOut")
-
-        comp.FindTool.side_effect = lambda n: tools.get(n)
-        def mock_add_tool(tool_type, *args):
-            t = MockTool(tool_type)
-            orig_set = t.SetAttrs
-            def wrapped(a):
-                orig_set(a)
-                name = a.get("TOOLS_Name")
-                if name: tools[name] = t
-            t.SetAttrs = wrapped
-            return t
-        comp.AddTool.side_effect = mock_add_tool
-        comp.GetToolList.return_value = tools
-
-        success1 = compiler.compile_and_apply(timeline_item, split_tpl)
-        self.assertTrue(success1)
-        self.assertIn("MR_RevealMask", tools)
-
-        success2 = compiler.compile_and_apply(timeline_item, word_tpl)
-        self.assertTrue(success2)
+        for tid in ("kin_split_reveal", "kin_word_pop", "kin_masked_line", "kin_dynamic_stack"):
+            with self.subTest(template=tid):
+                tpl = TemplateRegistry().get_template(tid)
+                self.assertIsNotNone(tpl)
+                item, comp, bridge = make_item(60)
+                self.assertTrue(FusionCompiler(bridge).compile_and_apply(item, tpl))
+                merges = [t for n, t in comp.tools.items() if n.startswith("MR_Merge_")]
+                self.assertTrue(merges)
+                from tests.test_fusion_engine import layer_opacity
+                for name in [n for n in comp.tools if n.startswith("MR_Merge_")]:
+                    self.assertAlmostEqual(layer_opacity(comp, name, 0), 0.0, places=3)
+                    self.assertAlmostEqual(layer_opacity(comp, name, 59), 0.0, places=3)
 
 
 if __name__ == "__main__":

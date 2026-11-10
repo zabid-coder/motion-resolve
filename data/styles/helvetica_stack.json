@@ -31,7 +31,7 @@
     -0.004
   ],
   "box_enabled": false,
-  "animation_in": "fade",
+  "animation_in": "char_cascade",
   "animation_out": "fade",
   "use_2color": false,
   "hero_font": "Helvetica Neue",

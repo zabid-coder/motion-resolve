@@ -1,0 +1,433 @@
+{
+  "id": "sig_glass_quote",
+  "name": "Glass Pull Quote",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Smoked-glass card springs up, a Didot quote mark lands, the quote resolves from blur with an accent attribution.",
+  "tags": [
+    "quote",
+    "testimonial",
+    "editorial",
+    "interview",
+    "signature",
+    "premium"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 6.0,
+  "min_hold": 1.5,
+  "in_duration": 1.2,
+  "out_duration": 0.55,
+  "parameters": [
+    {
+      "id": "quote",
+      "name": "Quote",
+      "type": "string",
+      "default": "We didn't move the river. We moved with it.",
+      "category": "Text"
+    },
+    {
+      "id": "author",
+      "name": "Attribution",
+      "type": "string",
+      "default": "Rahima Begum, fisher",
+      "category": "Text"
+    },
+    {
+      "id": "quote_mark",
+      "name": "Quote Mark",
+      "type": "string",
+      "default": "“",
+      "category": "Style"
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent",
+      "type": "color",
+      "default": [
+        0.96,
+        0.71,
+        0.36,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "plate_enabled",
+      "name": "Glass Card",
+      "type": "boolean",
+      "default": true,
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "card",
+      "type": "shape_rect",
+      "name": "Glass Card",
+      "props": {
+        "role": "plate",
+        "width": 0.44,
+        "height": 0.33,
+        "corner_radius": 30,
+        "color": [
+          0.06,
+          0.06,
+          0.07,
+          0.82
+        ],
+        "border_color": [
+          1,
+          1,
+          1,
+          0.14
+        ],
+        "border_width": 1.5,
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.004
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.93,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.65,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -0.025,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.65,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.55,
+              "value": 0.96,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.55,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mark",
+      "type": "text",
+      "name": "Quote Mark",
+      "props": {
+        "text": "param:quote_mark",
+        "font": "Didot",
+        "weight": "Bold",
+        "size": 0.085,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.1,
+        "color": "param:accent_color",
+        "shadow": {
+          "off": true
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.45,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.25,
+              "value": 0.4,
+              "easing": "spring"
+            },
+            {
+              "time": 0.8,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quote",
+      "type": "text",
+      "name": "Quote",
+      "props": {
+        "text": "param:quote",
+        "font": "Hoefler Text",
+        "weight": "Italic",
+        "size": 0.033,
+        "alignment": "center",
+        "text_width": 0.4,
+        "wrap": true,
+        "line_spacing": 1.02,
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.012,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "font_bn": "Tiro Bangla",
+        "shadow": {
+          "off": true
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.35,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.9,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.35,
+              "value": 8.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 1.05,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.35,
+              "value": -0.012,
+              "easing": "quintOut"
+            },
+            {
+              "time": 1.05,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.35,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "author",
+      "type": "text",
+      "name": "Attribution",
+      "props": {
+        "text": "param:author",
+        "font": "Avenir Next",
+        "weight": "Demi Bold",
+        "size": 0.0165,
+        "uppercase": true,
+        "character_spacing": 1.2,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.098,
+        "color": "param:accent_color",
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "off": true
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.7,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 1.15,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.7,
+              "value": -0.01,
+              "easing": "quintOut"
+            },
+            {
+              "time": 1.2,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

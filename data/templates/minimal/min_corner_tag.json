@@ -40,7 +40,7 @@
       "name": "Tag",
       "props": {
         "text": "param:tag_text",
-        "font": "Menlo",
+        "font": "Avenir Next",
         "size": 0.03,
         "weight": "Medium",
         "color": [
@@ -55,7 +55,8 @@
         "alignment": "left",
         "text_width": 0.42,
         "center_x": 0.11,
-        "center_y": "param:pos_y"
+        "center_y": "param:pos_y",
+        "clip": true
       },
       "motion_tracks": [
         {
@@ -63,14 +64,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.045,
+              "time": 0.1,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.305,
+              "time": 0.22,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "linear"
             }
           ]
         },
@@ -79,13 +80,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.045,
-              "value": 0.012,
-              "easing": "expoOut"
+              "time": 0.1,
+              "value": -0.05066666666666666,
+              "easing": "quintOut"
             },
             {
-              "time": 0.425,
+              "time": 0.8,
               "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.4,
+              "value": -0.05066666666666666,
               "easing": "expoOut"
             }
           ]
@@ -95,30 +112,14 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.34,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "linear"
             },
             {
-              "time": 0.3,
+              "time": 0.4,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.01,
-              "easing": "cubicIn"
+              "easing": "linear"
             }
           ]
         }

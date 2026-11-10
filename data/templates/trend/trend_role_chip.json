@@ -1,0 +1,282 @@
+{
+  "id": "trend_role_chip",
+  "name": "Name + Role Chip",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Clean name that cascades in letter by letter, with a coloured role chip that pops beside it.",
+  "tags": [
+    "lower third",
+    "trend",
+    "podcast",
+    "minimal",
+    "interview",
+    "premium",
+    "trend 2026"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 4.0,
+  "min_hold": 1.5,
+  "in_duration": 0.9,
+  "out_duration": 0.4,
+  "parameters": [
+    {
+      "id": "name",
+      "name": "Name",
+      "type": "string",
+      "default": "Nusrat Jahan",
+      "category": "Text"
+    },
+    {
+      "id": "role",
+      "name": "Role",
+      "type": "string",
+      "default": "DIRECTOR",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Chip",
+      "type": "color",
+      "default": [
+        0.36,
+        0.55,
+        1.0,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.07,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.18,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "name",
+      "type": "text",
+      "name": "Name",
+      "props": {
+        "text": "param:name",
+        "font": "Inter",
+        "weight": "SemiBold",
+        "size": 0.034,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.024,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "stagger": {
+          "delay": 1.0
+        },
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.4,
+          "softness": 0.03,
+          "offset": [
+            0,
+            -0.003
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -0.018,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 5.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.4,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chip",
+      "type": "shape_rect",
+      "name": "Role Chip",
+      "props": {
+        "fit_to": "role",
+        "color": "param:accent_color",
+        "pad_x": 0.55,
+        "pad_y": 0.32,
+        "round": 0.5
+      },
+      "motion_tracks": []
+    },
+    {
+      "id": "role",
+      "type": "text",
+      "name": "Role",
+      "props": {
+        "text": "param:role",
+        "font": "Inter",
+        "weight": "Bold",
+        "size": 0.0165,
+        "uppercase": true,
+        "character_spacing": 1.12,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "offset_x": 0.006,
+        "center_y": "param:pos_y",
+        "offset_y": -0.03,
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.5,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.45,
+              "value": 0.5,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.9,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0.8,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.05,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

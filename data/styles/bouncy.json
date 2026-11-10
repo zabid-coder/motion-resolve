@@ -31,7 +31,7 @@
     -0.004
   ],
   "box_enabled": false,
-  "animation_in": "bounce_pop",
+  "animation_in": "char_pop",
   "animation_out": "fade",
   "use_2color": false,
   "hero_font": "Avenir Next Condensed",

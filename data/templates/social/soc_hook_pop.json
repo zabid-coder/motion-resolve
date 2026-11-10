@@ -73,29 +73,45 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.12,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.34,
+              "time": 0.18,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
         {
-          "property": "scale_x",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.96,
-              "easing": "quartInOut"
+              "time": 0.12,
+              "value": 0.6,
+              "easing": "softSpring"
             },
             {
-              "time": 0.5,
+              "time": 0.6,
               "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0.85,
               "easing": "expoOut"
             }
           ]
@@ -105,12 +121,12 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.08,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.32,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -140,7 +156,10 @@
         "role": "headline",
         "character_spacing": 1.0,
         "alignment": "center",
-        "text_width": 0.76
+        "text_width": 0.76,
+        "stagger": {
+          "delay": 1.0
+        }
       },
       "motion_tracks": [
         {
@@ -148,14 +167,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.0,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.235,
+              "time": 0.08,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -164,19 +183,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": 0.95,
-              "easing": "softSpring"
+              "time": 0.0,
+              "value": 0.3,
+              "easing": "spring"
             },
             {
-              "time": 0.295,
-              "value": 1.025,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.415,
-              "value": 1,
-              "easing": "softSpring"
+              "time": 0.5,
+              "value": 1.0,
+              "easing": "expoOut"
             }
           ]
         },
@@ -185,14 +199,30 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.05,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.26,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0.8,
+              "easing": "expoOut"
             }
           ]
         }
@@ -215,7 +245,8 @@
         "role": "body",
         "character_spacing": 1.0,
         "alignment": "center",
-        "text_width": 0.76
+        "text_width": 0.76,
+        "clip": true
       },
       "motion_tracks": [
         {
@@ -223,14 +254,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
+              "time": 0.35,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
               "time": 0.41,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "linear"
             }
           ]
         },
@@ -239,12 +270,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
-              "value": 0.018,
-              "easing": "expoOut"
+              "time": 0.35,
+              "value": -0.06417777777777776,
+              "easing": "quintOut"
             },
             {
-              "time": 0.53,
+              "time": 0.8,
               "value": 0,
               "easing": "expoOut"
             }
@@ -255,30 +286,30 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.05,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "out",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
+              "value": 1,
+              "easing": "expoIn"
             },
             {
-              "time": 0.3,
-              "value": -0.01,
-              "easing": "cubicIn"
+              "time": 0.25,
+              "value": 0.85,
+              "easing": "expoOut"
             }
           ]
         }

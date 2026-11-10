@@ -1,0 +1,359 @@
+{
+  "id": "sig_editorial_lower_third",
+  "name": "Editorial Name Plate",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Amber hairline draws in, the name rises from behind an invisible mask and the role settles out of a soft blur.",
+  "tags": [
+    "lower third",
+    "interview",
+    "documentary",
+    "name",
+    "signature",
+    "premium"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 4.5,
+  "min_hold": 1.5,
+  "in_duration": 0.95,
+  "out_duration": 0.5,
+  "parameters": [
+    {
+      "id": "name",
+      "name": "Name",
+      "type": "string",
+      "default": "Zara Khan",
+      "category": "Text"
+    },
+    {
+      "id": "role",
+      "name": "Role",
+      "type": "string",
+      "default": "Creative Director · Studio North",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent",
+      "type": "color",
+      "default": [
+        0.96,
+        0.71,
+        0.36,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.075,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.19,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "rule",
+      "type": "shape_line",
+      "name": "Accent Hairline",
+      "props": {
+        "width": 0.05,
+        "height": 0.0042,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "offset_x": 0.025,
+        "center_y": "param:pos_y",
+        "offset_y": 0.058,
+        "origin": "left"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.08,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoInOut"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.4,
+              "value": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "name",
+      "type": "text",
+      "name": "Name",
+      "props": {
+        "text": "param:name",
+        "font": "Avenir Next",
+        "weight": "Demi Bold",
+        "size": 0.036,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.014,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "clip": true,
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.32,
+          "softness": 0.03,
+          "offset": [
+            0,
+            -0.003
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.12,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.3,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.12,
+              "value": -0.072,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.8,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.42,
+              "value": -0.072,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.36,
+              "value": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 0.42,
+              "value": 0,
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "role",
+      "type": "text",
+      "name": "Role",
+      "props": {
+        "text": "param:role",
+        "font": "Avenir Next",
+        "weight": "Medium",
+        "size": 0.0185,
+        "character_spacing": 1.14,
+        "uppercase": true,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.036,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          0.72
+        ],
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.38,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.85,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.38,
+              "value": 7.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.95,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.38,
+              "value": -0.012,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.95,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 5.0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

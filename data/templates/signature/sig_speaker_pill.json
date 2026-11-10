@@ -1,0 +1,383 @@
+{
+  "id": "sig_speaker_pill",
+  "name": "Live Speaker Pill",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Podcast / panel speaker pill: the capsule unrolls from its live dot, which pops with a spring before the name lands.",
+  "tags": [
+    "podcast",
+    "speaker",
+    "panel",
+    "live",
+    "social",
+    "signature",
+    "premium"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 4.0,
+  "min_hold": 1.5,
+  "in_duration": 0.85,
+  "out_duration": 0.4,
+  "parameters": [
+    {
+      "id": "name",
+      "name": "Name",
+      "type": "string",
+      "default": "Nusrat Jahan",
+      "category": "Text"
+    },
+    {
+      "id": "detail",
+      "name": "Detail",
+      "type": "string",
+      "default": "Host · The Long Table",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Live Dot",
+      "type": "color",
+      "default": [
+        0.24,
+        0.86,
+        0.52,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.06,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.15,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "pill",
+      "type": "shape_pill",
+      "name": "Capsule",
+      "props": {
+        "width": 0.25,
+        "height": 0.082,
+        "color": [
+          0.08,
+          0.08,
+          0.09,
+          0.9
+        ],
+        "border_color": [
+          1,
+          1,
+          1,
+          0.12
+        ],
+        "border_width": 1.5,
+        "center_x": "param:pos_x",
+        "offset_x": 0.125,
+        "center_y": "param:pos_y",
+        "origin": "left"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.12,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.17,
+              "easing": "expoInOut"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.05,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.4,
+              "value": 0.17,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.25,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.4,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dot",
+      "type": "shape_pill",
+      "name": "Live Dot",
+      "props": {
+        "width": 0.0115,
+        "height": 0.0204,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "offset_x": 0.03,
+        "center_y": "param:pos_y"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.05,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.05,
+              "value": 0,
+              "easing": "spring"
+            },
+            {
+              "time": 0.5,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.2,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.35,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "name",
+      "type": "text",
+      "name": "Name",
+      "props": {
+        "text": "param:name",
+        "font": "Inter",
+        "weight": "SemiBold",
+        "size": 0.023,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "offset_x": 0.05,
+        "center_y": "param:pos_y",
+        "offset_y": 0.011,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.28,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.28,
+              "value": -0.01,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.75,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.2,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "type": "text",
+      "name": "Detail",
+      "props": {
+        "text": "param:detail",
+        "font": "Inter",
+        "weight": "Medium",
+        "size": 0.0155,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "offset_x": 0.05,
+        "center_y": "param:pos_y",
+        "offset_y": -0.015,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          0.52
+        ],
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.4,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.8,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.4,
+              "value": -0.01,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.85,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.2,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

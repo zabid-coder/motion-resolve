@@ -49,7 +49,7 @@
   "box_extend_y": 0.024,
   "box_round": 0.22,
   "box_level": 1,
-  "animation_in": "fade",
+  "animation_in": "slide_up_blur",
   "animation_out": "fade",
   "use_2color": true,
   "main_word": "EVIDENCE",

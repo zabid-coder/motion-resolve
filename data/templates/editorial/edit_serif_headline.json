@@ -39,7 +39,7 @@
       "id": "tag",
       "name": "Issue / Tag",
       "type": "string",
-      "default": "ISSUE NO. 04 \u2022 OCTOBER 2026",
+      "default": "ISSUE NO. 04 • OCTOBER 2026",
       "category": "Text"
     },
     {
@@ -68,7 +68,10 @@
         "role": "eyebrow",
         "character_spacing": 1.08,
         "alignment": "left",
-        "text_width": 0.64
+        "text_width": 0.64,
+        "stagger": {
+          "delay": 1.3
+        }
       },
       "motion_tracks": [
         {
@@ -76,12 +79,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.045,
+              "time": 0.0,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.425,
+              "time": 0.35,
               "value": 1,
               "easing": "quartInOut"
             }
@@ -92,12 +95,28 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.045,
-              "value": -0.012,
+              "time": 0.0,
+              "value": -0.02,
               "easing": "expoOut"
             },
             {
-              "time": 0.545,
+              "time": 0.5,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 6.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.45,
               "value": 0,
               "easing": "expoOut"
             }
@@ -113,24 +132,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.34,
+              "time": 0.3,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.34,
-              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -159,30 +162,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.035,
+              "time": 0.57,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.415,
+              "time": 1.02,
               "value": 1,
               "easing": "quartInOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.035,
-              "value": -0.012,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.535,
-              "value": 0,
-              "easing": "expoOut"
             }
           ]
         },
@@ -196,24 +183,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.34,
+              "time": 0.25,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.34,
-              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -242,30 +213,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.055,
+              "time": 0.69,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.435,
+              "time": 1.14,
               "value": 1,
               "easing": "quartInOut"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "in",
-          "keyframes": [
-            {
-              "time": 0.055,
-              "value": -0.012,
-              "easing": "expoOut"
-            },
-            {
-              "time": 0.555,
-              "value": 0,
-              "easing": "expoOut"
             }
           ]
         },
@@ -279,24 +234,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.34,
+              "time": 0.25,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.34,
-              "value": 0.008,
               "easing": "cubicIn"
             }
           ]

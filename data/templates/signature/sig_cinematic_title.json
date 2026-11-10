@@ -1,0 +1,343 @@
+{
+  "id": "sig_cinematic_title",
+  "name": "Cinematic Title",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Film-title treatment: a Didot headline condenses out of a wide, blurred spread while a hairline opens beneath it.",
+  "tags": [
+    "title",
+    "film",
+    "opener",
+    "cinematic",
+    "trailer",
+    "signature",
+    "premium"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 6.0,
+  "min_hold": 1.5,
+  "in_duration": 2.0,
+  "out_duration": 1.0,
+  "parameters": [
+    {
+      "id": "title",
+      "name": "Title",
+      "type": "string",
+      "default": "The Long Road Home",
+      "category": "Text"
+    },
+    {
+      "id": "credit",
+      "name": "Credit",
+      "type": "string",
+      "default": "A film by Tapash",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Hairline",
+      "type": "color",
+      "default": [
+        1.0,
+        1.0,
+        1.0,
+        0.55
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "title",
+      "type": "text",
+      "name": "Title",
+      "props": {
+        "text": "param:title",
+        "font": "Didot",
+        "weight": "Regular",
+        "size": 0.058,
+        "uppercase": true,
+        "character_spacing": 1.16,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.018,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "font_bn": "Tiro Bangla",
+        "shadow": {
+          "opacity": 0.35,
+          "softness": 0.05,
+          "offset": [
+            0,
+            0
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 1.0,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 16.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 1.4,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "tracking",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.62,
+              "easing": "expoOut"
+            },
+            {
+              "time": 2.0,
+              "value": 1.16,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.9,
+              "value": 0,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.9,
+              "value": 12.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "tracking",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.16,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 1.0,
+              "value": 1.3,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hairline",
+      "type": "shape_line",
+      "name": "Hairline",
+      "props": {
+        "width": 0.14,
+        "height": 0.0016,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.036
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.8,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "expoInOut"
+            },
+            {
+              "time": 1.6,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "credit",
+      "type": "text",
+      "name": "Credit",
+      "props": {
+        "text": "param:credit",
+        "font": "Avenir Next",
+        "weight": "Medium",
+        "size": 0.0165,
+        "uppercase": true,
+        "character_spacing": 1.45,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.07,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          0.72
+        ],
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 1.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 1.7,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 1.0,
+              "value": -0.01,
+              "easing": "quintOut"
+            },
+            {
+              "time": 1.9,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.5,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

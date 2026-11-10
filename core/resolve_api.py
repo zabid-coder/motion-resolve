@@ -93,6 +93,28 @@ class ResolveBridge:
     def is_connected(self):
         return self.resolve is not None
 
+    def is_alive(self):
+        """True only if Resolve actually answers (a cached handle goes stale when Resolve restarts)."""
+        if self.resolve is None:
+            return False
+        try:
+            return self.resolve.GetProjectManager() is not None
+        except Exception:
+            return False
+
+    def reconnect(self):
+        """Drop any cached handle and connect again. Returns True when Resolve answers."""
+        global _RESOLVE_INSTANCE, _FUSION_INSTANCE
+        _RESOLVE_INSTANCE = None
+        _FUSION_INSTANCE = None
+        self.resolve = get_resolve()
+        self.fusion = get_fusion() if self.resolve else None
+        if self.resolve is not None and not self.is_alive():
+            self.resolve = None
+            self.fusion = None
+            _RESOLVE_INSTANCE = None
+        return self.resolve is not None
+
     def get_project_manager(self):
         if not self.resolve:
             return None
@@ -426,10 +448,8 @@ class ResolveBridge:
         """Return the first selected clip that is a Text+ title, or None."""
         selected = self.get_selected_video_items()
         for item in selected:
-            if item.GetFusionCompCount() > 0:
-                comp = item.GetFusionCompByIndex(1)
-                if comp and comp.FindTool("Template"):
-                    return item
+            if self.is_text_plus_item(item):
+                return item
         return None
 
     def insert_text_plus_title(self, start_frame=None, end_frame=None, snap_to_footage=False):
@@ -547,11 +567,17 @@ class ResolveBridge:
             names_before = list(timeline_item.GetFusionCompNameList() or [])
             if original_name not in names_before:
                 return False
+            count_before = timeline_item.GetFusionCompCount() if hasattr(timeline_item, "GetFusionCompCount") else len(names_before)
             imported = timeline_item.ImportFusionComp(snapshot["path"])
             if not imported:
                 return False
             names_after = list(timeline_item.GetFusionCompNameList() or [])
             added_names = [name for name in names_after if name not in names_before]
+            count_after = timeline_item.GetFusionCompCount() if hasattr(timeline_item, "GetFusionCompCount") else len(names_after)
+            if not added_names and count_after == count_before and names_after == names_before:
+                # Resolve 21: ImportFusionComp replaces the active comp in place
+                # (verified) - the snapshot is already restored.
+                return True
             imported_name = added_names[-1] if added_names else None
             if not imported_name or not timeline_item.LoadFusionCompByName(imported_name):
                 if imported_name:

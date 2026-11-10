@@ -48,7 +48,7 @@
   ],
   "use_2color": true,
   "main_word": "1987",
-  "hero_font": "Consolas",
+  "hero_font": "JetBrains Mono",
   "hero_style": "Bold",
   "hero_size_multiplier": 1.0
 }

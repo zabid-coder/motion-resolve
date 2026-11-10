@@ -48,6 +48,28 @@ class TextPlusBuilder:
         self.bridge = bridge or ResolveBridge()
         self._clipboard = None
 
+    @staticmethod
+    def _style_for(weight, family):
+        try:
+            from core.font_catalog import resolve_font_style
+            return resolve_font_style(str(weight), str(family))
+        except Exception:
+            from core.font_catalog import normalize_font_style
+            return normalize_font_style(str(weight), str(family))
+
+    @staticmethod
+    def _set_element_color(tool, idx, rgba, default_alpha=1.0):
+        """Text+ shading colours are not premultiplied: a white box at alpha
+        0.12 renders as solid white. Use the element Opacity like the
+        Inspector does (verified in Resolve 21)."""
+        c = list(rgba or [1.0, 1.0, 1.0, default_alpha])
+        a = float(c[3]) if len(c) > 3 else float(default_alpha)
+        tool.SetInput(f"Red{idx}", float(c[0]))
+        tool.SetInput(f"Green{idx}", float(c[1]))
+        tool.SetInput(f"Blue{idx}", float(c[2]))
+        tool.SetInput(f"Alpha{idx}", 1.0)
+        tool.SetInput(f"Opacity{idx}", a)
+
     def get_template_tool(self, timeline_item):
         if not timeline_item:
             return None
@@ -81,6 +103,21 @@ class TextPlusBuilder:
         return [tool for tool in (primary, hero) if tool]
 
     def update_text(self, timeline_item, text):
+        """Update title text; a running count-up is rebuilt for the new number."""
+        counting = False
+        for tool in self.get_text_layers(timeline_item):
+            try:
+                if tool.StyledText.GetExpression():
+                    counting = True
+                tool.StyledText.SetExpression(None)  # an expression would ignore new text
+            except Exception:
+                pass
+        ok = self._update_text_plain(timeline_item, text)
+        if ok and counting:
+            self._apply_count_up(timeline_item, {"count_up": True})
+        return ok
+
+    def _update_text_plain(self, timeline_item, text):
         """Update title text while keeping a generated two-color hero line in sync."""
         primary = self.get_template_tool(timeline_item)
         if not primary:
@@ -137,7 +174,7 @@ class TextPlusBuilder:
             # 2. Typography
             target_font = str(style.get("font", "Avenir Next"))
             try:
-                from core.font_catalog import resolve_available_font, normalize_font_style
+                from core.font_catalog import resolve_available_font
                 from core.templates.bengali_engine import contains_bengali, resolve_font_for_script
                 if contains_bengali(str(final_text)):
                     bn_font = style.get("font_bn") or "Kohinoor Bangla"
@@ -148,7 +185,9 @@ class TextPlusBuilder:
                 pass
             tool.SetInput("Font", target_font)
             if "style" in style:
-                tool.SetInput("Style", normalize_font_style(str(style["style"]), target_font))
+                # Text+ renders NOTHING when the style name does not exist in the
+                # family (e.g. "Regular" on Charter, whose face is "Roman").
+                tool.SetInput("Style", self._style_for(style["style"], target_font))
             # Aspect ratio adaptation (16:9 Landscape vs. 9:16 Vertical vs. 1:1 Square)
             frame_w, frame_h = (1920, 1080)
             if self.bridge:
@@ -161,12 +200,10 @@ class TextPlusBuilder:
             is_vertical = ar < 0.85
             is_square = 0.85 <= ar < 1.4
 
-            scale_font = 1.0
-            scale_h = (1080.0 / float(frame_h)) if frame_h > 0 else 1.0
-            if is_vertical:
-                scale_font = scale_h * 1.15
-            elif is_square:
-                scale_font = scale_h * 0.90
+            # Text+ Size is relative to frame WIDTH (measured in Resolve 21), so a
+            # narrow 9:16 frame needs LARGER sizes for the same on-phone weight.
+            scale_font = 1.35 if is_vertical else (1.12 if is_square else 1.0)
+            scale_h = 1.0
 
             if "size" in style:
                 tool.SetInput("Size", float(style["size"]) * scale_font)
@@ -199,13 +236,13 @@ class TextPlusBuilder:
                 cy = max(0.26, cy + 0.04)
             tool.SetInput("Center", [cx, cy])
 
-            # Auto-wrap so captions never clip the phone screen
-            wrap_w = 0.88 if is_vertical else 0.84 if is_square else 0.80
-            try:
-                tool.SetInput("WrapWidth", wrap_w)
-                tool.SetInput("WordWrap", 1)
-            except Exception:
-                pass
+            # Auto-wrap so captions never run off a phone screen. (Text+ has no
+            # "WrapWidth"/"WordWrap" inputs in point layout, so wrap explicitly.)
+            wrap_w = 0.86 if is_vertical else 0.84 if is_square else 0.80
+            if "\n" not in str(final_text):
+                from core.templates.scene import _wrap
+                final_text = _wrap(str(final_text), float(style.get("size", 0.072)) * scale_font,
+                                   float(style.get("character_spacing", 1.0)), wrap_w)
 
             # Dual-color text split if 2-Color is active
             comp = None
@@ -232,24 +269,19 @@ class TextPlusBuilder:
 
                 tool.SetInput("StyledText", "\n".join(base_lines))
 
-                # Resolve can collapse leading/trailing empty lines in a
-                # Text+ node. Place the two-color hero and remaining text
-                # block using the original line indices so neither layer
-                # collapses onto the other's baseline.
+                # Both Text+ tools carry the SAME line structure (whitespace stands
+                # in for the other tool's lines; Resolve 21 does not collapse them)
+                # and share one Center, so lines align exactly. Only a larger hero
+                # size needs compensating, because its blank lines grow too.
                 primary_center_y = cy
                 hero_center_y = cy
-                if len(lines) > 1:
+                hero_scale = max(1.0, min(1.5, float(style.get("hero_size_multiplier", 1.0))))
+                if len(lines) > 1 and hero_scale != 1.0:
                     size = float(style.get("size", 0.075)) * scale_font
-                    raw_spacing = float(style.get("line_spacing", 0.0))
-                    spacing = 1.0 if abs(raw_spacing) < 0.05 else (raw_spacing if raw_spacing > 0.3 else max(0.4, 1.0 + raw_spacing))
-                    hero_scale = max(1.0, min(1.5, float(style.get("hero_size_multiplier", 1.0))))
-                    line_step = max(0.045, size * 1.15 * spacing * min(1.25, hero_scale))
-                    remaining_indices = [i for i in range(len(lines)) if i != hero_idx]
-                    primary_mid = (remaining_indices[0] + remaining_indices[-1]) * 0.5
+                    pitch = size * (float(frame_w) / float(frame_h or 1)) * eff_line_spacing * 0.79
                     block_mid = (len(lines) - 1) * 0.5
-                    primary_center_y = cy + (block_mid - primary_mid) * line_step
-                    hero_center_y = cy + (block_mid - hero_idx) * line_step
-                    tool.SetInput("Center", [cx, primary_center_y])
+                    hero_center_y = cy + (block_mid - hero_idx) * pitch * (1.0 - hero_scale)
+                tool.SetInput("Center", [cx, primary_center_y])
 
                 hero_tool = comp.FindTool("HeroText")
                 if not hero_tool:
@@ -295,18 +327,13 @@ class TextPlusBuilder:
                     hero_font = target_font
                 hero_tool.SetInput("Font", hero_font)
                 if "style" in style:
-                    hero_tool.SetInput("Style", str(style["style"]))
+                    hero_tool.SetInput("Style", self._style_for(style["style"], hero_font))
                 if "size" in style:
                     hero_tool.SetInput("Size", float(style["size"]) * scale_font * max(1.0, min(1.5, float(style.get("hero_size_multiplier", 1.0)))))
                 if style.get("hero_style"):
-                    hero_tool.SetInput("Style", str(style["hero_style"]))
+                    hero_tool.SetInput("Style", self._style_for(style["hero_style"], hero_font))
                 hero_tool.SetInput("CharacterSpacingClone", float(style.get("character_spacing", 1.0)))
                 hero_tool.SetInput("LineSpacingClone", float(eff_line_spacing))
-                try:
-                    hero_tool.SetInput("WrapWidth", wrap_w)
-                    hero_tool.SetInput("WordWrap", 1)
-                except Exception:
-                    pass
                 # Optical alignment compensation for script typefaces
                 optical_offset_y = 0.0
                 try:
@@ -437,24 +464,11 @@ class TextPlusBuilder:
             if style.get("box_enabled", False):
                 tool.SetInput("Enabled4", 1)
                 bc = style.get("box_color", [0.95, 0.25, 0.15, 0.85])
-                tool.SetInput("Red4", float(bc[0]))
-                tool.SetInput("Green4", float(bc[1]))
-                tool.SetInput("Blue4", float(bc[2]))
-                tool.SetInput("Alpha4", float(bc[3]) if len(bc) > 3 else 0.85)
-                base_ext_x = float(style.get("box_extend_x", 0.04))
-                base_ext_y = float(style.get("box_extend_y", 0.025))
-                if is_vertical:
-                    ext_x = base_ext_x * 1.35
-                    ext_y = base_ext_y * scale_h * 1.15
-                    round_r = float(style.get("box_round", 0.25)) * 0.85
-                elif is_square:
-                    ext_x = base_ext_x * 1.10
-                    ext_y = base_ext_y * scale_h
-                    round_r = float(style.get("box_round", 0.25))
-                else:
-                    ext_x = base_ext_x
-                    ext_y = base_ext_y
-                    round_r = float(style.get("box_round", 0.25))
+                self._set_element_color(tool, 4, bc, 0.85)
+                # Box padding is relative to the text, so it already scales with it.
+                ext_x = float(style.get("box_extend_x", 0.04))
+                ext_y = float(style.get("box_extend_y", 0.025))
+                round_r = float(style.get("box_round", 0.25))
                 tool.SetInput("ExtendHorizontal4", ext_x)
                 tool.SetInput("ExtendVertical4", ext_y)
                 tool.SetInput("Round4", round_r)
@@ -464,10 +478,43 @@ class TextPlusBuilder:
             else:
                 tool.SetInput("Enabled4", 0)
 
+            self._apply_count_up(timeline_item, style)
             return True
         except Exception as e:
             print(f"[CaptionForge] Error applying style: {e}")
             return False
+
+    def _apply_count_up(self, timeline_item, style):
+        """Count the caption's number up from 0 (e.g. "+142%", "100 HOURS")."""
+        try:
+            comp = timeline_item.GetFusionCompByIndex(1)
+        except Exception:
+            return
+        from core.templates.counter import parse_count, lua_count_expression
+        fps = 24.0
+        try:
+            fps = float(self.bridge.get_timeline_fps() or 24.0)
+        except Exception:
+            pass
+        for name in ("Template", "HeroText"):
+            tool = comp.FindTool(name) if comp else None
+            if not tool:
+                continue
+            try:
+                tool.StyledText.SetExpression(None)
+            except Exception:
+                pass
+            if not style.get("count_up"):
+                continue
+            text = str(tool.GetInput("StyledText") or "")
+            spec = parse_count(text)
+            if spec is None:
+                continue
+            frames = max(6.0, float(style.get("count_duration", 1.2)) * fps)
+            try:
+                tool.StyledText.SetExpression(lua_count_expression(spec, "comp.RenderStart + 2", frames))
+            except Exception as exc:
+                print(f"[CaptionForge] Count-up unavailable: {exc}")
 
     def extract_style_from_clip(self, timeline_item):
         tool = self.get_template_tool(timeline_item)

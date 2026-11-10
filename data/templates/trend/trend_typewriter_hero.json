@@ -1,0 +1,248 @@
+{
+  "id": "trend_typewriter_hero",
+  "name": "Typewriter + Hero",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "The first line types itself on; then the hero line rises in accent from behind a mask.",
+  "tags": [
+    "typewriter",
+    "title",
+    "trend",
+    "documentary",
+    "hook",
+    "premium",
+    "trend 2026"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 4.8,
+  "min_hold": 1.5,
+  "in_duration": 2.0,
+  "out_duration": 0.45,
+  "parameters": [
+    {
+      "id": "line",
+      "name": "Typed Line",
+      "type": "string",
+      "default": "The future is",
+      "category": "Text"
+    },
+    {
+      "id": "hero",
+      "name": "Hero Line",
+      "type": "string",
+      "default": "already here",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Hero Colour",
+      "type": "color",
+      "default": [
+        0.74,
+        1.0,
+        0.36,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "line",
+      "type": "text",
+      "name": "Typed Line",
+      "props": {
+        "text": "param:line",
+        "font": "Inter",
+        "weight": "Medium",
+        "size": 0.04,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.04,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.35,
+          "softness": 0.03,
+          "offset": [
+            0,
+            -0.003
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.04,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "write_on",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.0,
+              "easing": "linear"
+            },
+            {
+              "time": 1.1,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "text",
+      "name": "Hero Line",
+      "props": {
+        "text": "param:hero",
+        "font": "Inter",
+        "weight": "ExtraBold",
+        "size": 0.052,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.04,
+        "color": "param:accent_color",
+        "clip": true,
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.35,
+          "softness": 0.03,
+          "offset": [
+            0,
+            -0.003
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 1.15,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 1.2,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 1.15,
+              "value": -0.1,
+              "easing": "quintOut"
+            },
+            {
+              "time": 1.75,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.4,
+              "value": -0.1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.34,
+              "value": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 0.4,
+              "value": 0,
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

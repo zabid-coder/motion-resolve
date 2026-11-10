@@ -38,8 +38,8 @@
     -0.004
   ],
   "box_enabled": false,
-  "animation_in": "pop_in",
-  "animation_out": "fade",
+  "animation_in": "slam_drop",
+  "animation_out": "scale_out",
   "accent_color": [
     0.85,
     0.35,
@@ -50,5 +50,7 @@
   "main_word": "100 HOURS",
   "hero_font": "Avenir Next Condensed",
   "hero_style": "Bold",
-  "hero_size_multiplier": 1.0
+  "hero_size_multiplier": 1.0,
+  "count_up": true,
+  "count_duration": 1.2
 }

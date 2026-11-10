@@ -46,7 +46,10 @@
         "font": "Avenir",
         "font_bn": "token:font_body_bn",
         "role": "body",
-        "character_spacing": 1.0
+        "character_spacing": 1.0,
+        "stagger": {
+          "delay": 1.0
+        }
       },
       "motion_tracks": [
         {
@@ -54,29 +57,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.13,
+              "time": 0.0,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.4,
+              "time": 0.08,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "linear"
             }
           ]
         },
         {
-          "property": "translate_x",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.13,
-              "value": -0.008,
-              "easing": "expoOut"
+              "time": 0.0,
+              "value": 0.3,
+              "easing": "spring"
             },
             {
-              "time": 0.51,
-              "value": 0,
+              "time": 0.5,
+              "value": 1.0,
               "easing": "expoOut"
             }
           ]
@@ -86,30 +89,30 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.05,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
             }
           ]
         },
         {
-          "property": "translate_x",
+          "property": "scale",
           "phase": "out",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
+              "value": 1,
+              "easing": "expoIn"
             },
             {
-              "time": 0.3,
-              "value": 0.008,
-              "easing": "cubicIn"
+              "time": 0.25,
+              "value": 0.8,
+              "easing": "expoOut"
             }
           ]
         }

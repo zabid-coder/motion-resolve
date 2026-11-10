@@ -39,7 +39,7 @@
       "id": "location",
       "name": "Location / Date",
       "type": "string",
-      "default": "Dhaka, Bangladesh \u2022 2026",
+      "default": "Dhaka, Bangladesh • 2026",
       "category": "Text"
     },
     {
@@ -63,7 +63,8 @@
         "height": 0.08,
         "color": "token:accent",
         "center_x": 0.125,
-        "center_y": "param:pos_y"
+        "center_y": "param:pos_y",
+        "origin": "bottom"
       },
       "motion_tracks": [
         {
@@ -71,14 +72,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.05,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.22,
+              "time": 0.1,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -87,13 +88,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.08,
-              "easing": "quartInOut"
+              "time": 0.05,
+              "value": 0,
+              "easing": "expoInOut"
             },
             {
-              "time": 0.42,
+              "time": 0.5,
               "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.4,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
@@ -103,14 +120,14 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.36,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "linear"
             },
             {
-              "time": 0.26,
+              "time": 0.4,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "linear"
             }
           ]
         }
@@ -141,14 +158,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.18,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.285,
+              "time": 0.58,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "quartInOut"
             }
           ]
         },
@@ -157,12 +174,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": -0.014,
-              "easing": "expoOut"
+              "time": 0.18,
+              "value": -0.022,
+              "easing": "quintOut"
             },
             {
-              "time": 0.395,
+              "time": 0.78,
               "value": 0,
               "easing": "expoOut"
             }
@@ -178,7 +195,7 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.22,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -191,12 +208,12 @@
             {
               "time": 0.0,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "expoIn"
             },
             {
-              "time": 0.3,
-              "value": 0.008,
-              "easing": "cubicIn"
+              "time": 0.25,
+              "value": -0.015,
+              "easing": "expoOut"
             }
           ]
         }
@@ -227,14 +244,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
+              "time": 0.28,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.42,
+              "time": 0.68,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "quartInOut"
             }
           ]
         },
@@ -243,12 +260,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
-              "value": -0.008,
-              "easing": "expoOut"
+              "time": 0.28,
+              "value": -0.022,
+              "easing": "quintOut"
             },
             {
-              "time": 0.53,
+              "time": 0.88,
               "value": 0,
               "easing": "expoOut"
             }
@@ -264,7 +281,7 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.22,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -277,12 +294,12 @@
             {
               "time": 0.0,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "expoIn"
             },
             {
-              "time": 0.3,
-              "value": 0.008,
-              "easing": "cubicIn"
+              "time": 0.25,
+              "value": -0.015,
+              "easing": "expoOut"
             }
           ]
         }

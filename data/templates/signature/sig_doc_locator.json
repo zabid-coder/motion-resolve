@@ -1,0 +1,352 @@
+{
+  "id": "sig_doc_locator",
+  "name": "Documentary Locator",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Place and time super for field documentaries: a rule grows upward while the location breathes into its tracking.",
+  "tags": [
+    "documentary",
+    "location",
+    "date",
+    "news",
+    "ngo",
+    "signature",
+    "premium"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 5.0,
+  "min_hold": 1.5,
+  "in_duration": 1.2,
+  "out_duration": 0.6,
+  "parameters": [
+    {
+      "id": "place",
+      "name": "Location",
+      "type": "string",
+      "default": "Kurigram, Bangladesh",
+      "category": "Text"
+    },
+    {
+      "id": "detail",
+      "name": "Date / Detail",
+      "type": "string",
+      "default": "14 July 2024  ·  06:42",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent",
+      "type": "color",
+      "default": [
+        0.98,
+        0.8,
+        0.42,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.07,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.78,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "rule",
+      "type": "shape_line",
+      "name": "Vertical Rule",
+      "props": {
+        "width": 0.0021,
+        "height": 0.082,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "offset_x": -0.014,
+        "center_y": "param:pos_y",
+        "offset_y": -0.002,
+        "origin": "bottom"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoInOut"
+            },
+            {
+              "time": 0.7,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.55,
+              "value": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "place",
+      "type": "text",
+      "name": "Location",
+      "props": {
+        "text": "param:place",
+        "font": "Avenir Next",
+        "weight": "Demi Bold",
+        "size": 0.03,
+        "uppercase": true,
+        "character_spacing": 1.08,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.017,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.45,
+          "softness": 0.035,
+          "offset": [
+            0,
+            -0.003
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 9.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.9,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "tracking",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 1.55,
+              "easing": "expoOut"
+            },
+            {
+              "time": 1.2,
+              "value": 1.08,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.4,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "tracking",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.08,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.4,
+              "value": 1.3,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "type": "text",
+      "name": "Date / Detail",
+      "props": {
+        "text": "param:detail",
+        "font": "Avenir Next",
+        "weight": "Medium",
+        "size": 0.019,
+        "character_spacing": 1.06,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.026,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          0.72
+        ],
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.45,
+          "softness": 0.03,
+          "offset": [
+            0,
+            -0.002
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.5,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.95,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.5,
+              "value": -0.012,
+              "easing": "quintOut"
+            },
+            {
+              "time": 1.1,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.32,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

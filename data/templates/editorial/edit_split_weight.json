@@ -54,7 +54,8 @@
         "role": "headline",
         "character_spacing": 1.0,
         "alignment": "left",
-        "text_width": 0.76
+        "text_width": 0.76,
+        "clip": true
       },
       "motion_tracks": [
         {
@@ -62,14 +63,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.1,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.395,
+              "time": 0.22,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -78,13 +79,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": -0.012,
-              "easing": "expoOut"
+              "time": 0.1,
+              "value": -0.12666666666666665,
+              "easing": "quintOut"
             },
             {
-              "time": 0.515,
+              "time": 0.8,
               "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.4,
+              "value": -0.12666666666666665,
               "easing": "expoOut"
             }
           ]
@@ -94,30 +111,14 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.34,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "linear"
             },
             {
-              "time": 0.34,
+              "time": 0.4,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.34,
-              "value": 0.008,
-              "easing": "cubicIn"
+              "easing": "linear"
             }
           ]
         }
@@ -144,14 +145,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.035,
+              "time": 0.42,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.415,
+              "time": 0.87,
               "value": 1,
               "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.42,
+              "value": 6.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.97,
+              "value": 0,
+              "easing": "expoOut"
             }
           ]
         },
@@ -160,12 +177,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.035,
-              "value": -0.012,
+              "time": 0.42,
+              "value": -0.01,
               "easing": "expoOut"
             },
             {
-              "time": 0.535,
+              "time": 1.02,
               "value": 0,
               "easing": "expoOut"
             }
@@ -181,24 +198,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.34,
+              "time": 0.28,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.34,
-              "value": 0.008,
               "easing": "cubicIn"
             }
           ]

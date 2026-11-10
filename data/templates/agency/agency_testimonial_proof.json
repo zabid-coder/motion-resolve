@@ -1,6 +1,6 @@
 {
   "id": "agency_testimonial_proof",
-  "name": "Social Proof \u2014 Dual-Font Quote & Verified Badge",
+  "name": "Social Proof — Dual-Font Quote & Verified Badge",
   "category": "Agency / Social",
   "tier": "pro",
   "description": "Authentic testimonial quote with Pinyon Script hero emphasis and verified badge container.",
@@ -26,14 +26,14 @@
       "id": "quote",
       "name": "Quote Statement",
       "type": "string",
-      "default": "\u201cThis completely elevated our retention rate.\u201d",
+      "default": "“This completely elevated our retention rate.”",
       "category": "Text"
     },
     {
       "id": "author",
       "name": "Author & Title",
       "type": "string",
-      "default": "ALEX RIVERA \u00b7 FOUNDER & CEO",
+      "default": "ALEX RIVERA · FOUNDER & CEO",
       "category": "Text"
     },
     {
@@ -76,7 +76,8 @@
         "height": 0.11,
         "color": "token:accent",
         "center_x": 0.12,
-        "center_y": "param:pos_y"
+        "center_y": "param:pos_y",
+        "origin": "bottom"
       },
       "motion_tracks": [
         {
@@ -84,14 +85,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.5,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.22,
+              "time": 0.6,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -100,12 +101,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.08,
-              "easing": "quartInOut"
+              "time": 0.5,
+              "value": 0,
+              "easing": "expoInOut"
             },
             {
-              "time": 0.42,
+              "time": 1.4,
               "value": 1,
               "easing": "expoOut"
             }
@@ -121,7 +122,7 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.26,
+              "time": 0.5,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -142,7 +143,8 @@
         "center_x": 0.5,
         "center_y": "param:pos_y",
         "border_color": "token:border",
-        "border_width": 0.7
+        "border_width": 0.7,
+        "origin": "center"
       },
       "motion_tracks": [
         {
@@ -150,14 +152,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.5,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.34,
+              "time": 0.6,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -166,12 +168,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.96,
-              "easing": "quartInOut"
+              "time": 0.5,
+              "value": 0,
+              "easing": "expoInOut"
             },
             {
-              "time": 0.5,
+              "time": 1.4,
               "value": 1,
               "easing": "expoOut"
             }
@@ -187,7 +189,7 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.32,
+              "time": 0.5,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -220,29 +222,45 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.13,
+              "time": 0.0,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.39,
+              "time": 0.9,
               "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 12.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 1.2,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "tracking",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.13,
-              "value": 0.018,
+              "time": 0.0,
+              "value": 1.35,
               "easing": "expoOut"
             },
             {
-              "time": 0.51,
-              "value": 0,
+              "time": 1.6,
+              "value": 1.0,
               "easing": "expoOut"
             }
           ]
@@ -254,28 +272,28 @@
             {
               "time": 0.0,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "quartInOut"
             },
             {
-              "time": 0.3,
+              "time": 0.7,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "blur",
           "phase": "out",
           "keyframes": [
             {
               "time": 0.0,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "expoIn"
             },
             {
-              "time": 0.3,
-              "value": -0.01,
-              "easing": "cubicIn"
+              "time": 0.7,
+              "value": 8.0,
+              "easing": "expoOut"
             }
           ]
         }
@@ -306,14 +324,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
+              "time": 0.85,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.41,
+              "time": 1.45,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "quartInOut"
             }
           ]
         },
@@ -322,12 +340,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
-              "value": 0.018,
+              "time": 0.85,
+              "value": -0.01,
               "easing": "expoOut"
             },
             {
-              "time": 0.53,
+              "time": 1.65,
               "value": 0,
               "easing": "expoOut"
             }
@@ -343,24 +361,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.5,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

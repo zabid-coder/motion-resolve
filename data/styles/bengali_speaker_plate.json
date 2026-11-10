@@ -30,8 +30,8 @@
   "box_extend_x": 0.045,
   "box_extend_y": 0.03,
   "box_round": 0.12,
-  "animation_in": "fade",
-  "animation_out": "fade",
+  "animation_in": "scale_fade",
+  "animation_out": "scale_out",
   "shadow_color": [
     0.03,
     0.05,

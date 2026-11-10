@@ -1,68 +1,68 @@
 {
-    "id": "sunset_vaporwave",
-    "tier": "premium",
-    "name": "Sunset Vaporwave",
-    "category": "Kinetic / Tech",
-    "text": "NIGHT DRIVE RADIO",
-    "font": "Baskerville",
-    "style": "Bold",
-    "size": 0.075,
-    "character_spacing": 1.12,
-    "line_spacing": 0.0,
-    "center_x": 0.5,
-    "center_y": 0.3,
-    "alignment": "center",
-    "color": [
-        1.0,
-        0.914,
-        0.957,
-        1.0
-    ],
-    "accent_color": [
+  "id": "sunset_vaporwave",
+  "tier": "premium",
+  "name": "Sunset Vaporwave",
+  "category": "Kinetic / Tech",
+  "text": "NIGHT DRIVE RADIO",
+  "font": "Baskerville",
+  "style": "Bold",
+  "size": 0.075,
+  "character_spacing": 1.12,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.3,
+  "alignment": "center",
+  "color": [
+    1.0,
+    0.914,
+    0.957,
+    1.0
+  ],
+  "accent_color": [
+    1.0,
+    0.443,
+    0.808,
+    1.0
+  ],
+  "use_2color": true,
+  "main_word": "RADIO",
+  "hero_font": "Pinyon Script",
+  "hero_style": "Regular",
+  "hero_size_multiplier": 1.2,
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.169,
+    0.059,
+    0.239,
+    0.878
+  ],
+  "shadow_softness": 0.05,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ],
+  "box_enabled": false,
+  "glow_enabled": true,
+  "glow_amount": 0.45,
+  "gradient_overlay": {
+    "colors": [
+      [
         1.0,
         0.443,
         0.808,
         1.0
+      ],
+      [
+        0.004,
+        0.804,
+        0.996,
+        1.0
+      ]
     ],
-    "use_2color": true,
-    "main_word": "RADIO",
-    "hero_font": "Pinyon Script",
-    "hero_style": "Regular",
-    "hero_size_multiplier": 1.2,
-    "stroke_enabled": false,
-    "shadow_enabled": true,
-    "shadow_color": [
-        0.169,
-        0.059,
-        0.239,
-        0.878
-    ],
-    "shadow_softness": 0.05,
-    "shadow_offset": [
-        0.0,
-        0.0
-    ],
-    "box_enabled": false,
-    "glow_enabled": true,
-    "glow_amount": 0.45,
-    "gradient_overlay": {
-        "colors": [
-            [
-                1.0,
-                0.443,
-                0.808,
-                1.0
-            ],
-            [
-                0.004,
-                0.804,
-                0.996,
-                1.0
-            ]
-        ],
-        "angle": 15
-    },
-    "animation_in": "bounce_up",
-    "animation_out": "fade_out",
-    "description": "Pink-cyan neon sunset with script hero accent — retro-futuristic late-night energy."
+    "angle": 15
+  },
+  "animation_in": "bounce_up",
+  "animation_out": "fade",
+  "description": "Pink-cyan neon sunset with script hero accent — retro-futuristic late-night energy."
 }

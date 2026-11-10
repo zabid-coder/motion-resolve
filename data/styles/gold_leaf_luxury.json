@@ -1,77 +1,77 @@
 {
-    "id": "gold_leaf_luxury",
-    "tier": "premium",
-    "name": "Gold Leaf Luxury",
-    "category": "Cinematic",
-    "text": "PRIVATE COLLECTION",
-    "font": "Baskerville",
-    "style": "Bold",
-    "size": 0.062,
-    "character_spacing": 1.35,
-    "line_spacing": 0.0,
-    "center_x": 0.5,
-    "center_y": 0.32,
-    "alignment": "center",
-    "color": [
-        0.969,
-        0.906,
-        0.753,
+  "id": "gold_leaf_luxury",
+  "tier": "premium",
+  "name": "Gold Leaf Luxury",
+  "category": "Cinematic",
+  "text": "PRIVATE COLLECTION",
+  "font": "Baskerville",
+  "style": "Bold",
+  "size": 0.062,
+  "character_spacing": 1.35,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.32,
+  "alignment": "center",
+  "color": [
+    0.969,
+    0.906,
+    0.753,
+    1.0
+  ],
+  "accent_color": [
+    0.788,
+    0.635,
+    0.294,
+    1.0
+  ],
+  "use_2color": false,
+  "stroke_enabled": true,
+  "stroke_color": [
+    0.227,
+    0.165,
+    0.063,
+    1.0
+  ],
+  "stroke_thickness": 0.008,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.078,
+    0.051,
+    0.02,
+    0.8
+  ],
+  "shadow_softness": 0.03,
+  "shadow_offset": [
+    0.002,
+    -0.003
+  ],
+  "box_enabled": false,
+  "glow_enabled": true,
+  "glow_amount": 0.18,
+  "gradient_overlay": {
+    "colors": [
+      [
+        0.976,
+        0.929,
+        0.784,
         1.0
-    ],
-    "accent_color": [
+      ],
+      [
         0.788,
         0.635,
         0.294,
         1.0
-    ],
-    "use_2color": false,
-    "stroke_enabled": true,
-    "stroke_color": [
-        0.227,
-        0.165,
-        0.063,
+      ],
+      [
+        0.541,
+        0.392,
+        0.125,
         1.0
+      ]
     ],
-    "stroke_thickness": 0.008,
-    "shadow_enabled": true,
-    "shadow_color": [
-        0.078,
-        0.051,
-        0.02,
-        0.8
-    ],
-    "shadow_softness": 0.03,
-    "shadow_offset": [
-        0.002,
-        -0.003
-    ],
-    "box_enabled": false,
-    "glow_enabled": true,
-    "glow_amount": 0.18,
-    "gradient_overlay": {
-        "colors": [
-            [
-                0.976,
-                0.929,
-                0.784,
-                1.0
-            ],
-            [
-                0.788,
-                0.635,
-                0.294,
-                1.0
-            ],
-            [
-                0.541,
-                0.392,
-                0.125,
-                1.0
-            ]
-        ],
-        "angle": 90
-    },
-    "animation_in": "write_on",
-    "animation_out": "fade_out",
-    "description": "Pressed gold-leaf serif with wide tracking and warm rim glow — heritage luxury branding."
+    "angle": 90
+  },
+  "animation_in": "char_blur",
+  "animation_out": "blur_out",
+  "description": "Pressed gold-leaf serif with wide tracking and warm rim glow — heritage luxury branding."
 }

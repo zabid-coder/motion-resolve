@@ -1,0 +1,364 @@
+{
+  "id": "sig_social_hook",
+  "name": "Viral Hook Punch",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Retention hook for Reels / Shorts: the first line springs in with a tilt, a highlighter wipes, the payoff rises inside it.",
+  "tags": [
+    "social",
+    "hook",
+    "reels",
+    "shorts",
+    "tiktok",
+    "kinetic",
+    "signature",
+    "premium"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 2.8,
+  "min_hold": 1.5,
+  "in_duration": 0.75,
+  "out_duration": 0.3,
+  "parameters": [
+    {
+      "id": "line1",
+      "name": "Setup",
+      "type": "string",
+      "default": "Wait for",
+      "category": "Text"
+    },
+    {
+      "id": "line2",
+      "name": "Payoff",
+      "type": "string",
+      "default": "The Twist",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Highlighter",
+      "type": "color",
+      "default": [
+        1.0,
+        0.86,
+        0.12,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.52,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "marker",
+      "type": "shape_rect",
+      "name": "Highlighter",
+      "props": {
+        "width": 0.36,
+        "height": 0.118,
+        "corner_radius": 10,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.04,
+        "origin": "left"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.16,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.5,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.85,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line1",
+      "type": "text",
+      "name": "Setup",
+      "props": {
+        "text": "param:line1",
+        "font": "Montserrat",
+        "weight": "Black",
+        "size": 0.046,
+        "uppercase": true,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.058,
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "shadow": {
+          "opacity": 0.55,
+          "softness": 0.04,
+          "offset": [
+            0,
+            -0.004
+          ]
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.06,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.55,
+              "easing": "spring"
+            },
+            {
+              "time": 0.55,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "rotation",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -7.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.5,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0.8,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.08,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.26,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line2",
+      "type": "text",
+      "name": "Payoff",
+      "props": {
+        "text": "param:line2",
+        "font": "Montserrat",
+        "weight": "Black",
+        "size": 0.066,
+        "uppercase": true,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.04,
+        "color": [
+          0.05,
+          0.05,
+          0.06,
+          1.0
+        ],
+        "clip": true,
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.24,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.3,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.24,
+              "value": -0.12,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.72,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0.85,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.28,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

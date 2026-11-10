@@ -190,7 +190,7 @@ class TestCore(unittest.TestCase):
 
         # Verify true off-screen displacement expression
         center_expr = mr_trans.Center.SetExpression.call_args[0][0]
-        self.assertIn("0.55", center_expr)
+        self.assertIn("0.650", center_expr)  # true off-screen travel
 
         # Verify pop_in scales smoothly from zero
         engine.apply_motion_preset(timeline_item, effect_in="pop_in")
@@ -200,13 +200,13 @@ class TestCore(unittest.TestCase):
         # Verify slide_left displacement is true off-screen (0.65)
         engine.apply_motion_preset(timeline_item, effect_in="slide_left", effect_out="slide_right")
         center_expr_lr = mr_trans.Center.SetExpression.call_args[0][0]
-        self.assertIn("0.65", center_expr_lr)
+        self.assertIn("0.750", center_expr_lr)  # true off-screen horizontal travel
         self.assertNotIn("0.4", center_expr_lr)
 
         # Verify bounce_up displacement is 0.35
         engine.apply_motion_preset(timeline_item, effect_in="bounce_up")
         bounce_expr = mr_trans.Center.SetExpression.call_args[0][0]
-        self.assertIn("0.35", bounce_expr)
+        self.assertIn("0.450", bounce_expr)
 
         # Verify remove_effects deletes MR_Mask
         engine.remove_effects(timeline_item)

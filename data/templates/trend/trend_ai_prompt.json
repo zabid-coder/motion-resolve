@@ -1,0 +1,395 @@
+{
+  "id": "trend_ai_prompt",
+  "name": "AI Prompt Bar",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "A rounded prompt bar springs up, the question types itself in, and the send button lights up.",
+  "tags": [
+    "ai",
+    "prompt",
+    "search",
+    "trend",
+    "tech",
+    "social",
+    "premium",
+    "trend 2026"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 5.0,
+  "min_hold": 1.5,
+  "in_duration": 2.2,
+  "out_duration": 0.45,
+  "parameters": [
+    {
+      "id": "prompt",
+      "name": "Prompt",
+      "type": "string",
+      "default": "How do floods change a village?",
+      "category": "Text"
+    },
+    {
+      "id": "send_icon",
+      "name": "Send Icon",
+      "type": "string",
+      "default": "↑",
+      "category": "Style"
+    },
+    {
+      "id": "accent_color",
+      "name": "Send Button",
+      "type": "color",
+      "default": [
+        0.55,
+        0.42,
+        1.0,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "bar",
+      "type": "shape_pill",
+      "name": "Prompt Bar",
+      "props": {
+        "width": 0.56,
+        "height": 0.1,
+        "color": [
+          0.09,
+          0.09,
+          0.11,
+          0.95
+        ],
+        "border_color": [
+          1,
+          1,
+          1,
+          0.16
+        ],
+        "border_width": 1.5,
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.25,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.9,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -0.02,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.45,
+              "value": 0.94,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prompt",
+      "type": "text",
+      "name": "Prompt",
+      "props": {
+        "text": "param:prompt",
+        "font": "Inter",
+        "weight": "Medium",
+        "size": 0.025,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "offset_x": -0.25,
+        "center_y": "param:pos_y",
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.34,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "write_on",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.35,
+              "value": 0.0,
+              "easing": "linear"
+            },
+            {
+              "time": 2.0,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "send",
+      "type": "shape_pill",
+      "name": "Send Button",
+      "props": {
+        "width": 0.034,
+        "height": 0.0604,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "offset_x": 0.245,
+        "center_y": "param:pos_y"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 1.9,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 1.95,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 1.9,
+              "value": 0.3,
+              "easing": "spring"
+            },
+            {
+              "time": 2.2,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.05,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arrow",
+      "type": "text",
+      "name": "Send Arrow",
+      "props": {
+        "text": "param:send_icon",
+        "font": "Inter",
+        "weight": "Bold",
+        "size": 0.024,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "offset_x": 0.245,
+        "center_y": "param:pos_y",
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "shadow": {
+          "off": true
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 2.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 2.1,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 2.0,
+              "value": -0.01,
+              "easing": "quintOut"
+            },
+            {
+              "time": 2.2,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.2,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

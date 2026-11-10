@@ -32,8 +32,8 @@
   "box_extend_y": 0.022,
   "box_round": 0.25,
   "box_level": 1,
-  "animation_in": "fade",
-  "animation_out": "fade",
+  "animation_in": "scale_fade",
+  "animation_out": "scale_out",
   "shadow_color": [
     0.02,
     0.06,
@@ -47,5 +47,7 @@
   "shadow_offset": [
     0.003,
     -0.004
-  ]
+  ],
+  "count_up": true,
+  "count_duration": 1.2
 }

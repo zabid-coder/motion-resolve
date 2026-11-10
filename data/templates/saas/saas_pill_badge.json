@@ -67,29 +67,45 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.12,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.34,
+              "time": 0.18,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
         {
-          "property": "scale_x",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.96,
-              "easing": "quartInOut"
+              "time": 0.12,
+              "value": 0.6,
+              "easing": "softSpring"
             },
             {
-              "time": 0.5,
+              "time": 0.6,
               "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0.85,
               "easing": "expoOut"
             }
           ]
@@ -99,12 +115,12 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.08,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.32,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -126,7 +142,10 @@
         "text_width": 0.58,
         "font_bn": "token:font_heading_bn",
         "role": "eyebrow",
-        "alignment": "center"
+        "alignment": "center",
+        "stagger": {
+          "delay": 1.0
+        }
       },
       "motion_tracks": [
         {
@@ -134,29 +153,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.045,
+              "time": 0.0,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.325,
+              "time": 0.08,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "linear"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.045,
-              "value": 0.008,
-              "easing": "expoOut"
+              "time": 0.0,
+              "value": 0.3,
+              "easing": "spring"
             },
             {
-              "time": 0.405,
-              "value": 0,
+              "time": 0.5,
+              "value": 1.0,
               "easing": "expoOut"
             }
           ]
@@ -166,14 +185,30 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.05,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0.8,
+              "easing": "expoOut"
             }
           ]
         }
@@ -193,7 +228,8 @@
         "text_width": 0.58,
         "font_bn": "token:font_body_bn",
         "role": "body",
-        "alignment": "center"
+        "alignment": "center",
+        "clip": true
       },
       "motion_tracks": [
         {
@@ -201,14 +237,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
+              "time": 0.35,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
               "time": 0.41,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "linear"
             }
           ]
         },
@@ -217,12 +253,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
-              "value": 0.018,
-              "easing": "expoOut"
+              "time": 0.35,
+              "value": -0.04391111111111111,
+              "easing": "quintOut"
             },
             {
-              "time": 0.53,
+              "time": 0.8,
               "value": 0,
               "easing": "expoOut"
             }
@@ -233,30 +269,30 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.05,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "out",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
+              "value": 1,
+              "easing": "expoIn"
             },
             {
-              "time": 0.3,
-              "value": -0.01,
-              "easing": "cubicIn"
+              "time": 0.25,
+              "value": 0.85,
+              "easing": "expoOut"
             }
           ]
         }
@@ -277,29 +313,45 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.12,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.22,
+              "time": 0.18,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
         {
-          "property": "scale_x",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.08,
-              "easing": "quartInOut"
+              "time": 0.12,
+              "value": 0.6,
+              "easing": "softSpring"
             },
             {
-              "time": 0.42,
+              "time": 0.6,
               "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0.85,
               "easing": "expoOut"
             }
           ]
@@ -309,12 +361,12 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.08,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.26,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
             }
