@@ -42,9 +42,10 @@ def launch_detached_companion():
     env = os.environ.copy()
     env["PYTHONPATH"] = APP_DIR + os.pathsep + env.get("PYTHONPATH", "")
 
-    progdata = os.environ.get("PROGRAMDATA", r"C:\ProgramData")
+    from core.paths import get_resolve_developer_dir
     if "RESOLVE_SCRIPT_API" not in env:
-        env["RESOLVE_SCRIPT_API"] = os.path.join(progdata, "Blackmagic Design", "DaVinci Resolve", "Support", "Developer", "Scripting")
+        # platform-aware (was hard-coded to C:\ProgramData on every OS)
+        env["RESOLVE_SCRIPT_API"] = get_resolve_developer_dir()
     if "RESOLVE_SCRIPT_LIB" not in env and sys.platform == "win32":
         env["RESOLVE_SCRIPT_LIB"] = r"C:\Program Files\Blackmagic Design\DaVinci Resolve\fusionscript.dll"
 

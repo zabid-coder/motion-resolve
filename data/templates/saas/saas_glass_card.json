@@ -74,24 +74,56 @@
               "easing": "quartInOut"
             },
             {
-              "time": 0.34,
+              "time": 0.3,
               "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "scale_x",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.96,
-              "easing": "quartInOut"
+              "value": 0.92,
+              "easing": "softSpring"
             },
             {
-              "time": 0.5,
+              "time": 0.6,
               "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -0.02,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.45,
+              "value": 0.96,
               "easing": "expoOut"
             }
           ]
@@ -101,12 +133,12 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.15,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.32,
+              "time": 0.45,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -130,7 +162,10 @@
         "color": "token:text_primary",
         "font_bn": "token:font_heading_bn",
         "role": "headline",
-        "character_spacing": 1.0
+        "character_spacing": 1.0,
+        "stagger": {
+          "delay": 0.9
+        }
       },
       "motion_tracks": [
         {
@@ -138,14 +173,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.15,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.275,
+              "time": 0.45,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "quartInOut"
             }
           ]
         },
@@ -154,12 +189,28 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": 0.012,
+              "time": 0.15,
+              "value": -0.015,
               "easing": "expoOut"
             },
             {
-              "time": 0.395,
+              "time": 0.6,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 5.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.55,
               "value": 0,
               "easing": "expoOut"
             }
@@ -175,24 +226,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.25,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -223,14 +258,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
+              "time": 0.52,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.41,
+              "time": 0.92,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "quartInOut"
             }
           ]
         },
@@ -239,12 +274,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
-              "value": 0.018,
+              "time": 0.52,
+              "value": -0.01,
               "easing": "expoOut"
             },
             {
-              "time": 0.53,
+              "time": 1.07,
               "value": 0,
               "easing": "expoOut"
             }
@@ -260,24 +295,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.25,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.01,
               "easing": "cubicIn"
             }
           ]
@@ -293,7 +312,8 @@
         "height": 0.003,
         "color": "token:accent",
         "center_x": 0.5,
-        "center_y": 0.49
+        "center_y": 0.49,
+        "origin": "left"
       },
       "motion_tracks": [
         {
@@ -301,14 +321,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.35,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.22,
+              "time": 0.4,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -317,12 +337,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
-              "value": 0.08,
-              "easing": "quartInOut"
+              "time": 0.35,
+              "value": 0,
+              "easing": "expoInOut"
             },
             {
-              "time": 0.42,
+              "time": 0.9,
               "value": 1,
               "easing": "expoOut"
             }
@@ -338,7 +358,7 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.26,
+              "time": 0.3,
               "value": 0,
               "easing": "cubicIn"
             }

@@ -46,8 +46,8 @@
     -0.004
   ],
   "box_enabled": false,
-  "animation_in": "bounce_pop",
-  "animation_out": "fade",
+  "animation_in": "zoom_punch",
+  "animation_out": "scale_out",
   "use_2color": true,
   "main_word": "অবিশ্বাস্য",
   "hero_font": "Kohinoor Bangla"

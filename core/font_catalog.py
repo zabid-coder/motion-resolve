@@ -17,7 +17,7 @@ FONT_FALLBACKS = {
     "serif": ("DM Serif Display", "Instrument Serif", "Playfair Display", "Baskerville", "Didot", "Georgia"),
     "script": ("Pinyon Script", "Snell Roundhand", "Zapfino", "Brush Script MT", "Baskerville", "Georgia"),
     "sans": ("Inter", "Montserrat", "Manrope", "League Spartan", "Avenir Next", "Helvetica Neue", "Arial"),
-    "mono": ("Menlo", "Monaco", "Andale Mono", "Courier New"),
+    "mono": ("JetBrains Mono", "Menlo", "Monaco", "Consolas", "Andale Mono", "Courier New"),
     # Prefer Noto's Unicode-complete families: Resolve may show tofu with some
     # other locally installed Bengali fonts even though Qt lists them.
     "bengali": ("Noto Sans Bengali", "Noto Serif Bengali", "Nirmala UI", "Vrinda", "Shonar Bangla", "Hind Siliguri", "Kalpurush", "SolaimanLipi", "Kohinoor Bangla", "Bangla Sangam MN", "Bangla MN", "Arial Unicode MS"),
@@ -151,3 +151,95 @@ def normalize_font_style(weight: str, font_family: str = "") -> str:
         return "Regular"
     return "Regular"
 
+
+
+_WEIGHT_PREFERENCES = {
+    "thin": ["Thin", "Hairline", "Ultra Light", "UltraLight", "Extra Light", "ExtraLight", "Light"],
+    "ultralight": ["Ultra Light", "UltraLight", "Extra Light", "ExtraLight", "Thin", "Light"],
+    "light": ["Light", "Book", "Ultra Light", "UltraLight", "Regular"],
+    "regular": ["Regular", "Roman", "Book", "Normal", "Medium"],
+    "medium": ["Medium", "Demi Bold", "DemiBold", "Semibold", "SemiBold", "Regular"],
+    "semibold": ["Semibold", "SemiBold", "Demi Bold", "DemiBold", "Demi", "Medium", "Bold"],
+    "bold": ["Bold", "Demi Bold", "DemiBold", "Semibold", "Heavy"],
+    "heavy": ["Heavy", "Black", "Extra Bold", "ExtraBold", "Ultra Bold", "Bold"],
+    "black": ["Black", "Heavy", "Ultra Black", "Extra Bold", "ExtraBold", "Bold"],
+}
+_WEIGHT_ALIASES = {
+    "hairline": "thin", "extralight": "ultralight", "ultra light": "ultralight", "ultra-light": "ultralight",
+    "book": "regular", "roman": "regular", "normal": "regular", "": "regular",
+    "demibold": "semibold", "demi bold": "semibold", "semi bold": "semibold", "semi-bold": "semibold", "demi": "semibold",
+    "extrabold": "heavy", "extra bold": "heavy", "ultrabold": "heavy", "ultra bold": "heavy",
+}
+
+
+def resolve_font_style(weight: str, font_family: str = "") -> str:
+    """Pick the closest REAL style name the installed family offers (e.g. 'Demi Bold').
+
+    Text+ needs the exact style string of the font. Falls back to the
+    conservative Regular/Bold mapping when the font database is unavailable.
+    """
+    raw = str(weight or "").strip()
+    italic = "italic" in raw.lower() or "oblique" in raw.lower()
+    key = raw.lower().replace("italic", "").replace("oblique", "").strip()
+    key = _WEIGHT_ALIASES.get(key, key)
+    # Resolve's own font list wins: it can differ from macOS (e.g. Qt lists
+    # "Futura Heavy" but Resolve does not), and Text+ renders NOTHING for a
+    # style it does not know.
+    styles = resolve_font_styles(str(font_family))
+    if not styles:
+        try:
+            from PyQt6.QtGui import QGuiApplication
+            if QGuiApplication.instance() is None:
+                raise RuntimeError("no Qt app")
+            styles = list(QFontDatabase.styles(str(font_family)))
+        except Exception:
+            styles = []
+    if not styles:
+        return normalize_font_style(weight, font_family)
+    by_cf = {s.casefold(): s for s in styles}
+    if raw.casefold() in by_cf:
+        return by_cf[raw.casefold()]
+    for cand in _WEIGHT_PREFERENCES.get(key, [raw.title()]):
+        names = [cand + " Italic", cand + " Oblique"] if italic else [cand]
+        if italic and cand == "Regular":
+            names = ["Italic", "Oblique"] + names
+        for n in names:
+            if n.casefold() in by_cf:
+                return by_cf[n.casefold()]
+    if italic:
+        for s in styles:
+            if "italic" in s.casefold():
+                return s
+    for fallback in ("Regular", "Roman", "Book", "Medium"):
+        if fallback.casefold() in by_cf:
+            return by_cf[fallback.casefold()]
+    return styles[0]
+
+
+_RESOLVE_FONTS = None
+
+
+def resolve_font_styles(family: str):
+    """Style names Resolve's Fusion FontManager knows for a family ([] if unknown/offline)."""
+    global _RESOLVE_FONTS
+    if _RESOLVE_FONTS is None:
+        _RESOLVE_FONTS = {}
+        try:
+            # Only reuse a connection the app already made: opening one here can
+            # block (tests, offline use, or a busy Resolve).
+            import core.resolve_api as _ra
+            if _ra._RESOLVE_INSTANCE is None:
+                _RESOLVE_FONTS = None
+                return []
+            fu = _ra.get_fusion()
+            fl = fu.FontManager.GetFontList() if fu else None
+            if isinstance(fl, dict):
+                _RESOLVE_FONTS = {str(k): list(v.keys()) if isinstance(v, dict) else [] for k, v in fl.items()}
+        except Exception:
+            _RESOLVE_FONTS = {}
+    return list(_RESOLVE_FONTS.get(family, []))
+
+
+def refresh_resolve_fonts():
+    global _RESOLVE_FONTS
+    _RESOLVE_FONTS = None

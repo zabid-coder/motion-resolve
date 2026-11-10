@@ -51,6 +51,12 @@ class EasingToken(str, Enum):
     CUBIC_IN = "cubicIn"
     SOFT_SPRING = "softSpring"
     LINEAR = "linear"
+    QUINT_OUT = "quintOut"
+    EXPO_IN = "expoIn"
+    EXPO_IN_OUT = "expoInOut"
+    BACK_IN = "backIn"
+    SPRING = "spring"      # damped multi-key spring (expanded at compile time)
+    HOLD = "hold"
 
 
 @dataclass

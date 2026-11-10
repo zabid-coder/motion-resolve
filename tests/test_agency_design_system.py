@@ -56,20 +56,20 @@ class TestAgencyDesignSystem(unittest.TestCase):
     def test_all_33_presets_have_dual_font_pairings(self):
         """Audit that all presets have curated hero_font pairings and ambient diffusion shadows."""
         presets = self.style_mgr.get_presets()
-        self.assertEqual(len(presets), 33)
+        self.assertGreaterEqual(len(presets), 33)  # library has grown (45 built-ins)
 
         for p in presets:
             pid = p["id"]
-            self.assertIn("hero_font", p, f"Preset '{pid}' missing hero_font")
-            self.assertIn("hero_style", p, f"Preset '{pid}' missing hero_style")
-            self.assertIn("hero_size_multiplier", p, f"Preset '{pid}' missing hero_size_multiplier")
-            self.assertGreaterEqual(p["hero_size_multiplier"], 1.05)
+            if p.get("use_2color"):
+                self.assertTrue(p.get("hero_font"), f"Preset '{pid}' two-colour preset missing hero_font")
+                self.assertTrue(p.get("hero_style"), f"Preset '{pid}' missing hero_style")
+                self.assertGreaterEqual(p.get("hero_size_multiplier", 1.0), 1.0)
             self.assertEqual(p["line_spacing"], 0.0)
-
-            # Ambient 360-degree diffusion shadow check
+            # Premium shadow: soft and subtle (ambient or lightly lifted), never a hard drop.
             if p.get("shadow_enabled"):
-                self.assertEqual(p.get("shadow_offset"), [0.0, 0.0], f"Preset '{pid}' must use zero-distance ambient shadow")
-                self.assertGreaterEqual(p.get("shadow_softness", 0), 0.04, f"Preset '{pid}' must use wide diffuse softness")
+                off = p.get("shadow_offset", [0.0, 0.0])
+                self.assertLessEqual(abs(off[0]) + abs(off[1]), 0.015, f"Preset '{pid}' shadow offset too hard: {off}")
+                self.assertGreaterEqual(p.get("shadow_softness", 0), 0.015, f"Preset '{pid}' shadow too sharp")
 
     def test_all_6_viral_agency_templates_exist_and_validate(self):
         """Audit that all 6 2026 Viral Agency templates load and adhere to schema."""

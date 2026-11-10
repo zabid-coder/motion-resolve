@@ -39,7 +39,7 @@
   ],
   "shadow_softness": 0.04,
   "box_enabled": false,
-  "animation_in": "fade",
+  "animation_in": "slide_up_blur",
   "animation_out": "fade",
   "hero_font": "Kohinoor Bangla",
   "hero_style": "Bold",

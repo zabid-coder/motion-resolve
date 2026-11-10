@@ -30,8 +30,8 @@
   "box_extend_y": 0.022,
   "box_round": 0.08,
   "box_level": 1,
-  "animation_in": "fade",
-  "animation_out": "fade",
+  "animation_in": "slide_up_blur",
+  "animation_out": "blur_out",
   "shadow_color": [
     0.05,
     0.08,

@@ -67,14 +67,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.0,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.235,
+              "time": 0.06,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -83,19 +83,62 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": 0.95,
-              "easing": "softSpring"
+              "time": 0.0,
+              "value": 1.55,
+              "easing": "expoOut"
             },
             {
-              "time": 0.295,
-              "value": 1.025,
-              "easing": "softSpring"
+              "time": 0.4,
+              "value": 1.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "rotation",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": -5.0,
+              "easing": "expoOut"
             },
             {
-              "time": 0.415,
+              "time": 0.4,
+              "value": 0.0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 8.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
               "value": 1,
-              "easing": "softSpring"
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.22,
+              "value": 1.12,
+              "easing": "expoOut"
             }
           ]
         },
@@ -104,12 +147,12 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.06,
               "value": 1,
               "easing": "cubicIn"
             },
             {
-              "time": 0.26,
+              "time": 0.22,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -134,7 +177,10 @@
         "color": "token:accent",
         "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": 0.085
+        "offset_y": 0.085,
+        "stagger": {
+          "delay": 0.8
+        }
       },
       "motion_tracks": [
         {
@@ -142,29 +188,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.065,
+              "time": 0.32,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.325,
+              "time": 0.38,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "linear"
             }
           ]
         },
         {
-          "property": "translate_y",
+          "property": "scale",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.065,
-              "value": 0.012,
-              "easing": "expoOut"
+              "time": 0.32,
+              "value": 0.4,
+              "easing": "spring"
             },
             {
-              "time": 0.445,
-              "value": 0,
+              "time": 0.77,
+              "value": 1,
               "easing": "expoOut"
             }
           ]
@@ -179,24 +225,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.2,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

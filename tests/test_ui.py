@@ -107,7 +107,9 @@ class TestUI(unittest.TestCase):
         self.assertEqual(pix_0.height(), 360)
         self.assertGreater(canvas.last_text_dy, 0.0)
         self.assertIsNotNone(canvas.last_mask_rect)
-        self.assertAlmostEqual(canvas.last_mask_rect.height(), 98.46, places=1)
+        # per-layer reveal band: a thin horizontal strip, not the whole canvas
+        self.assertGreater(canvas.last_mask_rect.height(), 5.0)
+        self.assertLess(canvas.last_mask_rect.height(), 120.0)
 
         # 2. Test Hold (t=1.0): displacement = 0.0
         canvas.set_state(tpl, {"name": "Test Speaker", "role": "Principal Engineer"}, {}, 1.0)

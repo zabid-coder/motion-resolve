@@ -1,84 +1,87 @@
 {
-    "id": "holo_prism_shine",
-    "tier": "premium",
-    "name": "Holographic Prism",
-    "category": "Bold Social",
-    "text": "LIMITED DROP 001",
-    "font": "Avenir Next",
-    "style": "Heavy",
-    "size": 0.08,
-    "character_spacing": 1.0,
-    "line_spacing": 0.0,
-    "center_x": 0.5,
-    "center_y": 0.3,
-    "alignment": "center",
-    "color": [
-        0.992,
-        0.992,
+  "id": "holo_prism_shine",
+  "tier": "premium",
+  "name": "Holographic Prism",
+  "category": "Bold Social",
+  "text": "LIMITED DROP 001",
+  "font": "Avenir Next",
+  "style": "Heavy",
+  "size": 0.08,
+  "character_spacing": 1.0,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.3,
+  "alignment": "center",
+  "color": [
+    0.992,
+    0.992,
+    1.0,
+    1.0
+  ],
+  "accent_color": [
+    0.655,
+    0.953,
+    0.816,
+    1.0
+  ],
+  "use_2color": true,
+  "main_word": "DROP",
+  "stroke_enabled": true,
+  "stroke_color": [
+    0.075,
+    0.039,
+    0.18,
+    0.867
+  ],
+  "stroke_thickness": 0.02,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.075,
+    0.039,
+    0.18,
+    0.702
+  ],
+  "shadow_softness": 0.04,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ],
+  "box_enabled": false,
+  "glow_enabled": true,
+  "glow_amount": 0.4,
+  "gradient_overlay": {
+    "colors": [
+      [
+        1.0,
+        0.624,
+        0.953,
+        1.0
+      ],
+      [
+        0.329,
+        0.627,
         1.0,
         1.0
-    ],
-    "accent_color": [
-        0.655,
-        0.953,
-        0.816,
+      ],
+      [
+        0.114,
+        0.827,
+        0.69,
         1.0
+      ],
+      [
+        0.996,
+        0.792,
+        0.341,
+        1.0
+      ]
     ],
-    "use_2color": true,
-    "main_word": "DROP",
-    "stroke_enabled": true,
-    "stroke_color": [
-        0.075,
-        0.039,
-        0.18,
-        0.867
-    ],
-    "stroke_thickness": 0.02,
-    "shadow_enabled": true,
-    "shadow_color": [
-        0.075,
-        0.039,
-        0.18,
-        0.702
-    ],
-    "shadow_softness": 0.04,
-    "shadow_offset": [
-        0.0,
-        0.0
-    ],
-    "box_enabled": false,
-    "glow_enabled": true,
-    "glow_amount": 0.4,
-    "gradient_overlay": {
-        "colors": [
-            [
-                1.0,
-                0.624,
-                0.953,
-                1.0
-            ],
-            [
-                0.329,
-                0.627,
-                1.0,
-                1.0
-            ],
-            [
-                0.114,
-                0.827,
-                0.69,
-                1.0
-            ],
-            [
-                0.996,
-                0.792,
-                0.341,
-                1.0
-            ]
-        ],
-        "angle": 60
-    },
-    "animation_in": "zoom_punch",
-    "animation_out": "slide_down",
-    "description": "Iridescent four-stop holographic sweep over hard punch type — streetwear drop energy."
+    "angle": 60
+  },
+  "animation_in": "zoom_punch",
+  "animation_out": "slide_down",
+  "description": "Iridescent four-stop holographic sweep over hard punch type — streetwear drop energy.",
+  "hero_font": "Avenir Next",
+  "hero_style": "Heavy",
+  "hero_size_multiplier": 1.08
 }

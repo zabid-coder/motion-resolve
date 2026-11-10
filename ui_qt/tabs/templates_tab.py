@@ -41,6 +41,8 @@ COLOR_MUTED = COLOR_TEXT_SECONDARY
 def get_template_pill_category_key(category: str) -> str:
     """Map any category name to one of the 8 canonical pill categories."""
     c = str(category or "").lower()
+    if "signature" in c:
+        return "signature"
     if "agency" in c or "viral" in c:
         return "viral_agency"
     if "saas" in c or "tech" in c:
@@ -60,6 +62,7 @@ def get_template_pill_category_key(category: str) -> str:
 
 CATEGORY_PILLS = [
     ("all", "All"),
+    ("signature", "★ Signature"),
     ("viral_agency", "Viral Agency"),
     ("saas_tech", "SaaS & Tech"),
     ("cinematic_doc", "Cinematic Documentary"),

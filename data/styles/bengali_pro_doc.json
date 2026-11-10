@@ -49,8 +49,8 @@
   "box_extend_y": 0.025,
   "box_round": 0.25,
   "box_level": 1,
-  "animation_in": "fade",
-  "animation_out": "fade",
+  "animation_in": "fade_in_slow",
+  "animation_out": "blur_out",
   "use_2color": true,
   "main_word": "ইতিহাসের",
   "hero_font": "Kohinoor Bangla"

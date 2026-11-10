@@ -39,8 +39,8 @@
     -0.004
   ],
   "box_enabled": false,
-  "animation_in": "fade",
-  "animation_out": "fade",
+  "animation_in": "char_cascade",
+  "animation_out": "char_cascade_out",
   "use_2color": true,
   "main_word": "TIMELESS",
   "hero_font": "Playfair Display"

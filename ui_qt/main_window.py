@@ -59,6 +59,14 @@ class MainWindow(QMainWindow):
         self.sync_timer.timeout.connect(self._on_sync_timer_tick)
         self.sync_timer.start()
 
+        # Auto-reconnect: Resolve may start after this app, be restarted, or
+        # refuse scripting for a while. Keep checking so PREVIEW turns LIVE.
+        self._was_live = None
+        self.conn_timer = QTimer(self)
+        self.conn_timer.setInterval(2500)
+        self.conn_timer.timeout.connect(self._poll_connection)
+        self.conn_timer.start()
+
         # Immediate Initial Sync
         self.tab_workspace.sync_from_timeline()
 
@@ -261,6 +269,16 @@ class MainWindow(QMainWindow):
         except Exception:
             pass
 
+    def _poll_connection(self):
+        live = self.bridge.is_alive() if hasattr(self.bridge, "is_alive") else self.bridge.is_connected()
+        if not live and hasattr(self.bridge, "reconnect"):
+            live = self.bridge.reconnect()
+        if not live:
+            self.bridge.resolve = None
+        if live != self._was_live:
+            self._was_live = live
+            self._check_resolve_connection()
+
     def _check_resolve_connection(self):
         if self.bridge.is_connected():
             tl = self.bridge.get_current_timeline()
@@ -287,7 +305,52 @@ class MainWindow(QMainWindow):
                 font-weight: 800;
                 padding: 2px 5px;
             """)
-            self.set_status("DaVinci Resolve not detected. Running in preview mode.")
+            conflict = self._resolve_port_conflict()
+            if conflict:
+                self.set_status(f"Resolve's scripting port {conflict[0]} is taken by '{conflict[1]}'. "
+                                f"Quit and reopen {conflict[1]} - Motion Resolve reconnects automatically.")
+            elif self._resolve_process_running():
+                self.set_status("Resolve is open but refuses scripts: Preferences > System > General > "
+                                "External scripting using = Local (needs DaVinci Resolve Studio), then restart Resolve.")
+            else:
+                self.set_status("DaVinci Resolve is not running. Running in preview mode.")
+
+    @staticmethod
+    def _resolve_port_conflict():
+        """macOS/Linux: another app bound to 127.0.0.1 on Resolve's scripting port
+        steals every script connection (seen with the Ollama menu-bar app).
+        Returns (port, app_name) or None."""
+        import subprocess, platform
+        if platform.system() == "Windows":
+            return None
+        try:
+            pid = subprocess.run(["pgrep", "-x", "Resolve"], capture_output=True, text=True, timeout=3).stdout.split()
+            if not pid:
+                return None
+            out = subprocess.run(["lsof", "-nP", "-a", "-p", pid[0], "-iTCP", "-sTCP:LISTEN"],
+                                 capture_output=True, text=True, timeout=5).stdout
+            ports = {line.split()[8].rsplit(":", 1)[-1] for line in out.splitlines()[1:] if len(line.split()) > 8}
+            for port in ports:
+                out = subprocess.run(["lsof", "-nP", f"-iTCP@127.0.0.1:{port}", "-sTCP:LISTEN"],
+                                     capture_output=True, text=True, timeout=5).stdout
+                for line in out.splitlines()[1:]:
+                    cols = line.split()
+                    if cols and cols[0] not in ("Resolve", "fuscript"):
+                        return port, cols[0]
+        except Exception:
+            return None
+        return None
+
+    @staticmethod
+    def _resolve_process_running():
+        import subprocess, platform
+        try:
+            if platform.system() == "Windows":
+                out = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Resolve.exe"], capture_output=True, text=True, timeout=3).stdout
+                return "Resolve.exe" in out
+            return subprocess.run(["pgrep", "-x", "Resolve"], capture_output=True, timeout=3).returncode == 0
+        except Exception:
+            return False
 
     def keyPressEvent(self, event):
         from PyQt6.QtGui import QKeySequence
@@ -438,7 +501,7 @@ class MainWindow(QMainWindow):
             self,
             "About Motion Resolve",
             "<b>Motion Resolve for DaVinci Resolve Studio</b><br>"
-            "Version 2.0.0 (Clean-room Reconstruction)<br><br>"
+            "Version 2.1.0 (Premium Motion Engine)<br><br>"
             "A high-performance desktop companion app for DaVinci Resolve Studio.<br>"
             "Automate animated viral subtitles, customize typography, and apply procedural motion physics."
         )
@@ -451,7 +514,23 @@ def launch():
     if not app:
         app = QApplication(sys.argv)
     app.setFont(QFont("Arial", 10))
+    fonts_note = ""
+    try:
+        from core.font_installer import install_bundled_fonts, register_app_fonts
+        new_fonts = install_bundled_fonts()   # user font folder only, never overwrites
+        register_app_fonts()                  # preview can use them right away
+        if new_fonts:
+            fonts_note = (f"Installed {len(new_fonts)} bundled font(s). "
+                          "Restart DaVinci Resolve once so Text+ can use them.")
+            print("[Motion Resolve] " + fonts_note)
+    except Exception as exc:
+        print(f"[Motion Resolve] Bundled font setup skipped: {exc}")
     window = MainWindow()
+    if fonts_note:
+        try:
+            window.statusBar().showMessage(fonts_note, 15000)
+        except Exception:
+            pass
 
     # Position on right side of primary screen near Resolve viewer
     screen = app.primaryScreen()

@@ -53,7 +53,10 @@
         "font_bn": "token:font_heading_bn",
         "role": "headline",
         "alignment": "center",
-        "text_width": 0.76
+        "text_width": 0.76,
+        "stagger": {
+          "delay": 1.3
+        }
       },
       "motion_tracks": [
         {
@@ -61,14 +64,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.0,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.275,
+              "time": 0.35,
               "value": 1,
-              "easing": "expoOut"
+              "easing": "quartInOut"
             }
           ]
         },
@@ -77,12 +80,28 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": 0.012,
+              "time": 0.0,
+              "value": -0.02,
               "easing": "expoOut"
             },
             {
-              "time": 0.395,
+              "time": 0.5,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 6.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.45,
               "value": 0,
               "easing": "expoOut"
             }
@@ -100,22 +119,6 @@
             {
               "time": 0.3,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

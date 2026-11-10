@@ -38,6 +38,23 @@
       "max_val": 0.85,
       "step": 0.01,
       "category": "Layout"
+    },
+    {
+      "id": "count_up",
+      "name": "Count Up Number",
+      "type": "boolean",
+      "default": true,
+      "category": "Motion"
+    },
+    {
+      "id": "count_duration",
+      "name": "Count Duration (s)",
+      "type": "number",
+      "default": 1.4,
+      "min_val": 0.4,
+      "max_val": 4.0,
+      "step": 0.1,
+      "category": "Motion"
     }
   ],
   "layers": [
@@ -58,7 +75,8 @@
         "color": "token:text_primary",
         "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": 0.0
+        "offset_y": 0.0,
+        "count": true
       },
       "motion_tracks": [
         {
@@ -66,35 +84,30 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.52,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.235,
+              "time": 0.92,
               "value": 1,
               "easing": "quartInOut"
             }
           ]
         },
         {
-          "property": "scale",
+          "property": "translate_y",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": 0.95,
-              "easing": "softSpring"
+              "time": 0.52,
+              "value": -0.01,
+              "easing": "expoOut"
             },
             {
-              "time": 0.295,
-              "value": 1.025,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.415,
-              "value": 1,
-              "easing": "softSpring"
+              "time": 1.07,
+              "value": 0,
+              "easing": "expoOut"
             }
           ]
         },
@@ -108,7 +121,7 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.26,
+              "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
             }
@@ -133,7 +146,10 @@
         "color": "token:accent",
         "center_x": 0.5,
         "center_y": "param:pos_y",
-        "offset_y": 0.09
+        "offset_y": 0.09,
+        "stagger": {
+          "delay": 0.8
+        }
       },
       "motion_tracks": [
         {
@@ -141,14 +157,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.035,
+              "time": 0.32,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.255,
+              "time": 0.38,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -157,19 +173,14 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.035,
-              "value": 0.95,
-              "easing": "softSpring"
+              "time": 0.32,
+              "value": 0.4,
+              "easing": "spring"
             },
             {
-              "time": 0.315,
-              "value": 1.025,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.435,
+              "time": 0.77,
               "value": 1,
-              "easing": "softSpring"
+              "easing": "expoOut"
             }
           ]
         },
@@ -183,7 +194,7 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.26,
+              "time": 0.2,
               "value": 0,
               "easing": "cubicIn"
             }

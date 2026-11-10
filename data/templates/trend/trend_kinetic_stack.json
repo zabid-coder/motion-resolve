@@ -1,0 +1,439 @@
+{
+  "id": "trend_kinetic_stack",
+  "name": "Kinetic Stack + Underline",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Three heavy lines: the first slams, the second pops letter by letter, the third lands in accent with a marker underline.",
+  "tags": [
+    "kinetic",
+    "social",
+    "hook",
+    "trend",
+    "reels",
+    "bold",
+    "premium",
+    "trend 2026"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 3.2,
+  "min_hold": 1.5,
+  "in_duration": 1.1,
+  "out_duration": 0.3,
+  "parameters": [
+    {
+      "id": "line1",
+      "name": "Line 1",
+      "type": "string",
+      "default": "Fastest",
+      "category": "Text"
+    },
+    {
+      "id": "line2",
+      "name": "Line 2",
+      "type": "string",
+      "default": "Way to",
+      "category": "Text"
+    },
+    {
+      "id": "line3",
+      "name": "Line 3",
+      "type": "string",
+      "default": "Grow",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent",
+      "type": "color",
+      "default": [
+        1.0,
+        0.24,
+        0.24,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "line1",
+      "type": "text",
+      "name": "Line 1",
+      "props": {
+        "text": "param:line1",
+        "font": "Montserrat",
+        "weight": "Black",
+        "size": 0.06,
+        "uppercase": true,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.105,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.5,
+          "softness": 0.04,
+          "offset": [
+            0,
+            -0.004
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.05,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1.6,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.35,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 8.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.2,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.22,
+              "value": 1.12,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.06,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.22,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line2",
+      "type": "text",
+      "name": "Line 2",
+      "props": {
+        "text": "param:line2",
+        "font": "Montserrat",
+        "weight": "Black",
+        "size": 0.06,
+        "uppercase": true,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.0,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "stagger": {
+          "delay": 1.2
+        },
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.5,
+          "softness": 0.04,
+          "offset": [
+            0,
+            -0.004
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.3,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.25,
+              "value": 0.2,
+              "easing": "spring"
+            },
+            {
+              "time": 0.7,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.18,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "line3",
+      "type": "text",
+      "name": "Line 3",
+      "props": {
+        "text": "param:line3",
+        "font": "Montserrat",
+        "weight": "Black",
+        "size": 0.075,
+        "uppercase": true,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.12,
+        "color": "param:accent_color",
+        "clip": true,
+        "font_bn": "Hind Siliguri",
+        "shadow": {
+          "opacity": 0.5,
+          "softness": 0.04,
+          "offset": [
+            0,
+            -0.004
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.55,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.55,
+              "value": -0.14,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.95,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.18,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "underline",
+      "type": "shape_rect",
+      "name": "Marker Underline",
+      "props": {
+        "width": 0.24,
+        "height": 0.014,
+        "corner_radius": 8,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.205,
+        "origin": "left"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.85,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.89,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.85,
+              "value": 0,
+              "easing": "expoInOut"
+            },
+            {
+              "time": 1.1,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.22,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.18,
+              "value": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 0.22,
+              "value": 0,
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

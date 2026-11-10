@@ -1302,12 +1302,22 @@ class TitlesTab(QWidget):
 
         self.builder.apply_style(item, style, text_override=formatted)
 
-        # Apply AUTO continuity motion
-        next_dir = self.animator.get_auto_next_direction()
-        self.animator.apply_motion_preset(item, effect_in=f"bounce_{next_dir}", effect_out="slide_down", options={"motion_blur": True})
+        # The preset's own motion (it used to be ignored: every insert got the
+        # same bounce). AUTO continuity only when the preset defines none.
+        anim_in = style.get("animation_in")
+        anim_out = style.get("animation_out")
+        if anim_in:
+            self.animator.apply_motion_preset(item, effect_in=anim_in, effect_out=anim_out or "fade",
+                                              options={"duration": 10})
+            how = f"{anim_in.replace('_', ' ')} motion"
+        else:
+            next_dir = self.animator.get_auto_next_direction()
+            self.animator.apply_motion_preset(item, effect_in=f"bounce_{next_dir}", effect_out="slide_down",
+                                              options={"motion_blur": True})
+            how = "AUTO continuity motion"
         self.bridge.push_undo_snapshot([item], "Insert Composed Title")
 
-        self.statusMessage.emit(f"Inserted title '{txt}' with AUTO continuity motion!")
+        self.statusMessage.emit(f"Inserted title '{txt}' with {how}!")
 
     def _on_edit_in_auto_clicked(self):
         if self.active_style:

@@ -1,57 +1,57 @@
 {
-    "id": "mint_matrix_hud",
-    "tier": "pro",
-    "name": "Mint Matrix HUD",
-    "category": "Kinetic / Tech",
-    "text": "SYSTEM ONLINE",
-    "font": "Avenir Next Condensed",
-    "style": "Demi",
-    "size": 0.06,
-    "character_spacing": 1.4,
-    "line_spacing": 0.0,
-    "center_x": 0.5,
-    "center_y": 0.3,
-    "alignment": "center",
-    "color": [
-        0.851,
-        1.0,
-        0.937,
-        1.0
-    ],
-    "accent_color": [
-        0.0,
-        1.0,
-        0.616,
-        1.0
-    ],
-    "use_2color": false,
-    "stroke_enabled": false,
-    "shadow_enabled": true,
-    "shadow_color": [
-        0.0,
-        0.2,
-        0.122,
-        0.851
-    ],
-    "shadow_softness": 0.05,
-    "shadow_offset": [
-        0.0,
-        0.0
-    ],
-    "box_enabled": true,
-    "box_color": [
-        0.016,
-        0.071,
-        0.043,
-        0.878
-    ],
-    "box_extend_x": 0.05,
-    "box_extend_y": 0.022,
-    "box_round": 0.1,
-    "box_level": 0,
-    "glow_enabled": true,
-    "glow_amount": 0.25,
-    "animation_in": "write_on",
-    "animation_out": "fade_out",
-    "description": "Terminal-green HUD plate with scanline glow — telemetry and dashboard overlays."
+  "id": "mint_matrix_hud",
+  "tier": "pro",
+  "name": "Mint Matrix HUD",
+  "category": "Kinetic / Tech",
+  "text": "SYSTEM ONLINE",
+  "font": "Avenir Next Condensed",
+  "style": "Demi",
+  "size": 0.06,
+  "character_spacing": 1.4,
+  "line_spacing": 0.0,
+  "center_x": 0.5,
+  "center_y": 0.3,
+  "alignment": "center",
+  "color": [
+    0.851,
+    1.0,
+    0.937,
+    1.0
+  ],
+  "accent_color": [
+    0.0,
+    1.0,
+    0.616,
+    1.0
+  ],
+  "use_2color": false,
+  "stroke_enabled": false,
+  "shadow_enabled": true,
+  "shadow_color": [
+    0.0,
+    0.2,
+    0.122,
+    0.851
+  ],
+  "shadow_softness": 0.05,
+  "shadow_offset": [
+    0.0,
+    0.0
+  ],
+  "box_enabled": true,
+  "box_color": [
+    0.016,
+    0.071,
+    0.043,
+    0.878
+  ],
+  "box_extend_x": 0.05,
+  "box_extend_y": 0.022,
+  "box_round": 0.1,
+  "box_level": 0,
+  "glow_enabled": true,
+  "glow_amount": 0.25,
+  "animation_in": "write_on",
+  "animation_out": "fade",
+  "description": "Terminal-green HUD plate with scanline glow — telemetry and dashboard overlays."
 }

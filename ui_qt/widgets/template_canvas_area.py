@@ -344,209 +344,261 @@ class TemplateCanvasArea(QFrame):
             return QFont.Weight.Bold
         return fallback
 
+    # ------------------------------------------------------------------
+    # WYSIWYG rendering: the preview draws from the SAME scene resolver and
+    # motion plan the Fusion compiler writes to DaVinci Resolve.
+    # ------------------------------------------------------------------
+    PREVIEW_FPS = 30.0
+
+    def _preview_timing(self):
+        from core.templates.motion_curves import plan_timing
+        fps = self.PREVIEW_FPS
+        total = max(0.5, float(getattr(self.template, "duration_default", 3.0) or 3.0))
+        return plan_timing(self.template, int(round(total * fps)) - 1, fps, 1.0)
+
+    @staticmethod
+    def _qcolor(rgba, opacity=1.0):
+        c = (list(rgba) + [1.0] * 4)[:4]
+        return QColor(*(int(max(0.0, min(1.0, float(v))) * 255) for v in c[:3]),
+                      int(max(0.0, min(1.0, float(c[3]) * opacity)) * 255))
+
     def paintEvent(self, event):
-        super().paintEvent(event)
+        QFrame.paintEvent(self, event)
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setRenderHint(QPainter.RenderHint.TextAntialiasing)
+        w, h = float(self.width()), float(self.height())
+        self.last_text_dy = 0.0
 
-        w = self.width()
-        h = self.height()
-
-        # Guides are useful while adjusting a layout, but should never contaminate
-        # the artwork preview or its screenshots.
         if self.params.get("preview_guides", False):
             pen_guide = QPen(QColor(255, 255, 255, 38), 1, Qt.PenStyle.DashLine)
             painter.setPen(pen_guide)
-            painter.drawLine(int(w * 0.5), 0, int(w * 0.5), h)
-            painter.drawLine(0, int(h * 0.5), w, int(h * 0.5))
+            painter.drawLine(int(w * 0.5), 0, int(w * 0.5), int(h))
+            painter.drawLine(0, int(h * 0.5), int(w), int(h * 0.5))
 
         if not self.template:
             painter.setPen(QColor("#5d5677"))
             painter.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, "Select a template to preview")
             return
 
-        in_dur = max(0.1, getattr(self.template, "in_duration", 0.5))
-        out_dur = max(0.1, getattr(self.template, "out_duration", 0.5))
-        total_dur = max(in_dur + out_dur, getattr(self.template, "duration_default", 3.0))
+        from core.templates.scene import resolve_scene, resolve_params
+        from core.templates.motion_curves import layer_channel_plan, evaluate_keys
+        from core.font_catalog import resolve_available_font, infer_font_purpose
 
-        try:
-            pos_y_norm = float(self._resolve_val("param:pos_y"))
-        except (TypeError, ValueError):
-            pos_y_norm = 0.28
-        try:
-            pos_x_norm = float(self._resolve_val("param:pos_x"))
-        except (TypeError, ValueError):
-            pos_x_norm = 0.5
-        center_x = w * pos_x_norm
-        base_center_y = h * (1.0 - pos_y_norm)
-        text_layers = [l for l in self.template.layers if l.type == LayerType.TEXT]
-        line_layers = [l for l in self.template.layers if l.type == LayerType.SHAPE_LINE]
-        box_layers = [l for l in self.template.layers if l.type in (LayerType.SHAPE_RECT, LayerType.SHAPE_PILL)]
-        plate_layers = [l for l in box_layers if l.props.get("role") == "plate"]
+        def font_resolver(requested, purpose):
+            p = purpose if purpose == "bengali" else infer_font_purpose(requested, purpose)
+            return resolve_available_font(requested, p)
 
-        # Reveal mask calculation
-        mask_top, mask_bottom = pos_y_norm - 0.08, pos_y_norm + 0.08
-        for layer in text_layers:
-            try:
-                layer_y = float(self._resolve_val(layer.props.get("center_y", pos_y_norm)))
-            except (TypeError, ValueError):
-                layer_y = pos_y_norm
-            try:
-                layer_y += float(self._resolve_val(layer.props.get("offset_y", 0.0)))
-            except (TypeError, ValueError):
-                pass
-            try:
-                size = float(self._resolve_val(layer.props.get("size", 0.075)))
-            except (TypeError, ValueError):
-                size = 0.075
-            mask_top = min(mask_top, layer_y - size * 0.75)
-            mask_bottom = max(mask_bottom, layer_y + size * 0.75)
-        for layer in box_layers:
-            try:
-                layer_y = float(self._resolve_val(layer.props.get("center_y", pos_y_norm)))
-            except (TypeError, ValueError):
-                layer_y = pos_y_norm
-            try:
-                layer_y += float(self._resolve_val(layer.props.get("offset_y", 0.0)))
-            except (TypeError, ValueError):
-                pass
-            try:
-                height = float(self._resolve_val(layer.props.get("height", 0.1)))
-            except (TypeError, ValueError):
-                height = 0.1
-            mask_top = min(mask_top, layer_y - height * 0.55)
-            mask_bottom = max(mask_bottom, layer_y + height * 0.55)
-        mask_height = max(0.22, min(0.85, mask_bottom - mask_top + 0.04))
-        mask_center_y = (mask_top + mask_bottom) * 0.5
-        if abs(mask_center_y - pos_y_norm) < 0.025:
-            mask_center_y = pos_y_norm
-        mask_rect = QRectF(center_x - w * 0.475, h * (1.0 - mask_center_y - mask_height * 0.5), w * 0.95, h * mask_height)
-        if h < 200:
-            mask_rect = QRectF(0, 0, w, h)
-        self.last_mask_rect = mask_rect
+        params = resolve_params(self.template, self.params)
+        scene, fit = resolve_scene(self.template, params, self.theme or {}, int(w), int(h), font_resolver)
+        self._last_fit = fit
+        timing = self._preview_timing()
+        frame = max(0.0, min(timing["last_frame"], float(self.current_time) * self.PREVIEW_FPS))
+        if not params.get("plate_enabled", True):
+            scene = [l for l in scene if not l.is_plate]
 
-        # Motion is evaluated per layer so authored stagger, direction and
-        # easing remain visible in the preview instead of collapsing into one
-        # global transform shared by the whole composition.
-        ease_in = 1.0
-        self.last_text_dy = 0.0
+        def ch(plan, name, rest):
+            keys = plan.get(name)
+            return evaluate_keys(keys, frame, rest) if keys else rest
 
-        # Draw authored geometry in layer order using normalized template dimensions.
-        if self.params.get("plate_enabled", True):
-            for shape in box_layers:
-                try:
-                    shape_w = w * max(0.0, float(self._resolve_val(shape.props.get("width", 0.15))))
-                    shape_h = h * max(0.0, float(self._resolve_val(shape.props.get("height", 0.04))))
-                    shape_x, shape_y = self._layer_center_px(shape, w, h, center_x, base_center_y)
-                    corner = max(0.0, float(self._resolve_val(shape.props.get("corner_radius", 4))))
-                except (TypeError, ValueError):
-                    continue
-                fallback = "bg_plate" if shape in plate_layers or shape.props.get("role") == "plate" else "accent"
-                border_value = self._resolve_val(shape.props.get("border_color"))
-                try:
-                    border_width = max(0.0, float(self._resolve_val(shape.props.get("border_width", 0.0))))
-                except (TypeError, ValueError):
-                    border_width = 0.0
-                if isinstance(border_value, (list, tuple)) and len(border_value) >= 3 and border_width > 0:
-                    rgba = list(border_value[:4])
-                    while len(rgba) < 4:
-                        rgba.append(1.0)
-                    border_color = QColor(*(int(max(0.0, min(1.0, float(c))) * 255) for c in rgba[:3]), int(max(0.0, min(1.0, float(rgba[3]))) * 255))
-                    painter.setPen(QPen(border_color, border_width))
-                else:
-                    painter.setPen(Qt.PenStyle.NoPen)
-                painter.setBrush(QBrush(self._layer_color(shape, fallback)))
-                rect = QRectF(shape_x - shape_w / 2, shape_y - shape_h / 2, shape_w, shape_h)
-                painter.save()
-                self._apply_layer_transform(painter, self._layer_motion_state(shape), rect.center(), w, h)
-                if shape.type == LayerType.SHAPE_PILL or corner > 0:
-                    painter.drawRoundedRect(rect, min(corner, shape_w / 2), min(corner, shape_h / 2))
-                else:
-                    painter.drawRect(rect)
-                painter.restore()
-
-        # Accents stay behind the text.
-        for line in line_layers:
-            try:
-                line_w = w * max(0.0, float(self._resolve_val(line.props.get("width", 0.22)))) * ease_in
-                line_h = max(1.0, h * float(self._resolve_val(line.props.get("height", 0.003))))
-                primary_size = float(self._resolve_val(text_layers[0].props.get("size", 0.075))) if text_layers else 0.075
-                default_line_y = base_center_y + h * primary_size * 0.62
-                line_x, line_y = self._layer_center_px(line, w, h, center_x, default_line_y)
-                if text_layers and line_w >= line_h * 2:
-                    primary_x, primary_y = self._layer_center_px(text_layers[0], w, h, center_x, base_center_y)
-                    if abs(line_y - primary_y) < h * primary_size * 0.42:
-                        line_y = primary_y + h * primary_size * 0.72
-            except (TypeError, ValueError):
+        self.last_mask_rect = None
+        ordered = sorted(scene, key=lambda l: (0 if l.is_plate else 1, l.index))
+        for sl in ordered:
+            if sl.kind == "shape" and sl.text_box:
                 continue
-            line_rect = QRectF(line_x - line_w / 2, line_y - line_h / 2, line_w, line_h)
+            plan = layer_channel_plan(sl.spec, timing, 1.0)
+            opacity = ch(plan, "opacity", 1.0)
+            dx = fit.dx(ch(plan, "translate_x", 0.0)) * w
+            dy = fit.dy(ch(plan, "translate_y", 0.0)) * h
+            if sl.kind == "text":
+                self.last_text_dy = max(self.last_text_dy, abs(dy), abs(dx))
+            if sl.clip and self.last_mask_rect is None:
+                band = (sl.line_h * 1.18 if sl.kind == "text" else sl.height * 1.02) * h
+                self.last_mask_rect = QRectF(0.0, (1.0 - sl.cy) * h - band / 2.0, w, band)
+            if opacity <= 0.001:
+                continue
+            scale = ch(plan, "scale", 1.0)
             painter.save()
-            self._apply_layer_transform(painter, self._layer_motion_state(line), line_rect.center(), w, h)
+            if sl.clip:
+                band_h = (sl.line_h * 1.18 if sl.kind == "text" else sl.height * 1.02) * h
+                clip_rect = QRectF(0.0, (1.0 - sl.cy) * h - band_h / 2.0, w, band_h)
+                painter.setClipRect(clip_rect)
+                if self.last_mask_rect is None:
+                    self.last_mask_rect = clip_rect
+            if sl.kind == "shape":
+                self._paint_shape(painter, sl, plan, ch, opacity, dx, dy, scale, w, h)
+            else:
+                self._paint_text(painter, sl, plan, ch, opacity, dx, dy, scale, w, h)
+            painter.restore()
+        if self.last_mask_rect is None:
+            self.last_mask_rect = QRectF(0.0, 0.0, w, h)
+        painter.end()
+
+    def _paint_shape(self, painter, sl, plan, ch, opacity, dx, dy, scale, w, h):
+        sx = ch(plan, "scale_x", scale) if plan.get("scale_x") else scale
+        sy = ch(plan, "scale_y", scale) if plan.get("scale_y") else scale
+        bw, bh = sl.width * w, sl.height * h
+        cw, chh = max(0.0, bw * sx), max(0.0, bh * sy)
+        cx = sl.cx * w + dx
+        cy = (1.0 - sl.cy) * h - dy
+        if sl.origin == "left":
+            cx -= (bw - cw) / 2.0
+        elif sl.origin == "right":
+            cx += (bw - cw) / 2.0
+        elif sl.origin == "bottom":
+            cy += (bh - chh) / 2.0
+        elif sl.origin == "top":
+            cy -= (bh - chh) / 2.0
+        if cw < 0.5 or chh < 0.5:
+            return
+        rect = QRectF(cx - cw / 2.0, cy - chh / 2.0, cw, chh)
+        radius = sl.corner * min(bw, bh) / 2.0
+        radius = min(radius, cw / 2.0, chh / 2.0)
+        painter.setOpacity(max(0.0, min(1.0, opacity)))
+        if sl.border:
+            px = max(1.0, float(sl.border.get("px", 1.0)) * w / 1920.0)
+            painter.setPen(QPen(self._qcolor(sl.border["color"]), px))
+        else:
             painter.setPen(Qt.PenStyle.NoPen)
-            painter.setBrush(QBrush(self._layer_color(line, "accent")))
-            painter.drawRect(line_rect)
-            painter.restore()
+        if sl.gradient:
+            from PyQt6.QtGui import QLinearGradient
+            grad = QLinearGradient(rect.left(), 0, rect.right(), 0)
+            grad.setColorAt(0.0, self._qcolor(sl.gradient[0]))
+            grad.setColorAt(1.0, self._qcolor(sl.gradient[1]))
+            painter.setBrush(QBrush(grad))
+        else:
+            painter.setBrush(QBrush(self._qcolor(sl.color)))
+        painter.drawRoundedRect(rect, radius, radius)
 
-        # Draw every authored text layer. Normalized font sizes scale with canvas
-        # height, keeping titles legible in both landscape and portrait previews.
-        painter.save()
-        painter.setClipRect(self.rect())
-        string_params = [p.id for p in self.template.parameters if p.type == ParameterType.STRING]
-        implicit_stack_px = 0.0
-        previous_line_height = 0.0
-        painted_text_bounds = []
-        for index, layer in enumerate(text_layers):
-            raw_text = str(self._resolve_val(layer.props.get("text", "")))
-            if not raw_text and index < len(string_params):
-                raw_text = str(self.params.get(string_params[index], ""))
-            if not raw_text:
-                continue
-            if self.params.get("bengali_digits", False):
-                raw_text = to_bengali_numerals(raw_text)
-            is_bn = contains_bengali(raw_text)
-            role = str(layer.props.get("role", "")).lower()
-            purpose = "bengali" if is_bn else ("mono" if "tag" in role or "eyebrow" in role else ("display" if index == 0 else "body"))
-            font_token = ("font_heading_bn" if index == 0 else "font_body_bn") if is_bn else ("font_heading" if index == 0 else "font_body")
-            fallback_font = self.theme.get(font_token, "Arial")
-            font_name = self._layer_font_name(layer, fallback_font, purpose)
-            try:
-                normalized_size = float(self._resolve_val(layer.props.get("size", 0.045)))
-                tracking = float(self._resolve_val(layer.props.get("character_spacing", 1.0)))
-            except (TypeError, ValueError):
-                normalized_size, tracking = 0.045, 1.0
-            optical = get_optical_scale(raw_text) if is_bn else 1.0
-            point_size = max(8, round(normalized_size * h * optical))
-            font = QFont(font_name, point_size, self._font_weight(layer, QFont.Weight.Bold if index == 0 else QFont.Weight.Medium))
-            font.setPixelSize(point_size)
-            font.setLetterSpacing(QFont.SpacingType.PercentageSpacing, max(80.0, tracking * 100.0))
-            default_y = base_center_y + implicit_stack_px
-            rect, alignment_name = self._layer_text_rect(layer, w, h, center_x, default_y, max(point_size * 2.0, h * 0.055))
-            margin = max(4.0, w * 0.025)
-            rect.setLeft(max(margin, rect.left()))
-            rect.setRight(min(w - margin, rect.right()))
-            flags = {"left": Qt.AlignmentFlag.AlignLeft, "right": Qt.AlignmentFlag.AlignRight}.get(alignment_name, Qt.AlignmentFlag.AlignHCenter)
-            flags |= Qt.AlignmentFlag.AlignVCenter | Qt.TextFlag.TextWordWrap
-            metrics = QFontMetricsF(font)
-            while point_size > 8 and metrics.horizontalAdvance(raw_text.splitlines()[0]) > rect.width() * 0.96:
-                point_size -= 1
-                font.setPixelSize(point_size)
-                metrics = QFontMetricsF(font)
-            content_bounds = metrics.boundingRect(rect, int(flags), raw_text)
-            for prior_text, prior_bounds in painted_text_bounds:
-                if raw_text != prior_text and content_bounds.intersects(prior_bounds):
-                    dy = prior_bounds.bottom() - content_bounds.top() + max(3.0, h * 0.008)
-                    rect.translate(0.0, dy)
-                    content_bounds.translate(0.0, dy)
-            painter.setFont(font)
-            base_color = self._layer_color(layer, "text_primary" if index == 0 else "text_secondary")
-            painter.save()
-            self._apply_layer_transform(painter, self._layer_motion_state(layer), rect.center(), w, h)
-            # Professional WYSIWYG depth pass: honors authored shadow/stroke/glow props
-            self._draw_styled_text(painter, layer, rect, flags, raw_text, base_color, max(0.4, h / 260.0))
-            painter.restore()
-            painted_text_bounds.append((raw_text, content_bounds))
-            if "center_y" not in layer.props and "offset_y" not in layer.props:
-                implicit_stack_px += (previous_line_height + metrics.height()) * 0.72 + h * 0.01
-            previous_line_height = metrics.height()
-        painter.restore()
+    def _paint_text(self, painter, sl, plan, ch, opacity, dx, dy, scale, w, h):
+        if not sl.text:
+            return
+        if getattr(sl, "count", False):
+            from core.templates.counter import parse_count, count_window, eased_progress
+            spec = parse_count(sl.text)
+            if spec is not None:
+                timing = self._preview_timing()
+                c0, c1 = count_window(plan, timing, sl.count_seconds)
+                frame = float(self.current_time) * self.PREVIEW_FPS
+                sl.text = spec.render(eased_progress(frame, c0, c1))
+        blur = max(0.0, ch(plan, "blur", 0.0))
+        tracking = ch(plan, "tracking", sl.tracking) if plan.get("tracking") else sl.tracking
+        rotation = ch(plan, "rotation", 0.0)
+        line_box_px = sl.size * w
+        em_px = max(6, int(round(line_box_px / 1.2)))
+        font = QFont(sl.font)
+        font.setPixelSize(em_px)
+        style = str(sl.style or "").lower()
+        if "italic" in style or "oblique" in style:
+            font.setItalic(True)
+        weight_map = [("black", QFont.Weight.Black), ("heavy", QFont.Weight.Black), ("extrabold", QFont.Weight.ExtraBold),
+                      ("bold", QFont.Weight.Bold), ("semi", QFont.Weight.DemiBold), ("demi", QFont.Weight.DemiBold),
+                      ("medium", QFont.Weight.Medium), ("light", QFont.Weight.Light), ("thin", QFont.Weight.Thin)]
+        weight = QFont.Weight.Normal
+        for key, val in weight_map:
+            if key in style.replace(" ", ""):
+                weight = val
+                break
+        font.setWeight(weight)
+        try:
+            from core.font_catalog import resolve_font_style
+            font.setStyleName(resolve_font_style(sl.style, sl.font))  # exact face, e.g. "Demi Bold"
+        except Exception:
+            pass
+        font.setLetterSpacing(QFont.SpacingType.PercentageSpacing, max(50.0, tracking * 100.0))
+        painter.setFont(font)
+        metrics = QFontMetricsF(font)
+        lines = sl.text.split("\n")
+        line_step = metrics.height() * max(0.6, sl.line_spacing)
+        block_h = line_step * len(lines)
+        text_w = max(metrics.horizontalAdvance(l) for l in lines) if lines else 0.0
+        ax_px, ay_px = sl.cx * w, (1.0 - sl.cy) * h
+        if sl.align < 0:
+            left = ax_px
+        elif sl.align > 0:
+            left = ax_px - text_w
+        else:
+            left = ax_px - text_w / 2.0
+        rect = QRectF(left, ay_px - block_h / 2.0, text_w, block_h)
+        flag = {-1.0: Qt.AlignmentFlag.AlignLeft, 1.0: Qt.AlignmentFlag.AlignRight}.get(sl.align, Qt.AlignmentFlag.AlignHCenter)
+
+        if sl.stagger and not getattr(sl, "count", False):
+            self._paint_stagger(painter, sl, plan, font, metrics, lines, line_step, block_h, ax_px, ay_px, w, h)
+            return
+
+        painter.translate(ax_px + dx, ay_px - dy)
+        painter.rotate(-rotation)
+        painter.scale(scale, scale)
+        painter.translate(-ax_px, -ay_px)
+        # Approximate Fusion's blur-in: softer opacity while blurred.
+        alpha = max(0.0, min(1.0, opacity / (1.0 + blur * 0.09)))
+        painter.setOpacity(alpha)
+        if sl.text_box and "color" in sl.text_box:
+            pad_x = em_px * float(sl.text_box.get("pad_x", 0.35))
+            pad_y = em_px * float(sl.text_box.get("pad_y", 0.12))
+            box = rect.adjusted(-pad_x, -pad_y, pad_x, pad_y)
+            r = min(box.height() / 2.0, em_px * float(sl.text_box.get("round", 0.35)))
+            painter.setPen(Qt.PenStyle.NoPen)
+            painter.setBrush(QBrush(self._qcolor(sl.text_box["color"])))
+            painter.drawRoundedRect(box, r, r)
+        shadow = sl.shadow or {}
+        if not shadow.get("off") and shadow.get("enabled", True):
+            painter.setPen(QColor(0, 0, 0, int(255 * float(shadow.get("opacity", 0.38)) * 0.6)))
+            painter.drawText(rect.translated(0, max(1.0, h * 0.003)), int(flag | Qt.AlignmentFlag.AlignVCenter), sl.text)
+        if sl.stroke:
+            sw = max(1.0, em_px * float(sl.stroke.get("width", 0.04)))
+            painter.setPen(self._qcolor(sl.stroke["color"]))
+            for ox, oy in ((sw, 0), (-sw, 0), (0, sw), (0, -sw)):
+                painter.drawText(rect.translated(ox, oy), int(flag | Qt.AlignmentFlag.AlignVCenter), sl.text)
+        painter.setPen(self._qcolor(sl.color))
+        painter.drawText(rect, int(flag | Qt.AlignmentFlag.AlignVCenter), sl.text)
+
+    def _paint_stagger(self, painter, sl, plan, font, metrics, lines, line_step, block_h, ax_px, ay_px, w, h):
+        """Per-character cascade exactly like the Text+ Follower: character i
+        plays the (exit-shifted) layer plan i*delay frames later."""
+        from core.templates.motion_curves import stagger_delay, stagger_plan, evaluate_keys
+        from core.templates.scene import resolve_scene  # noqa: F401 (fit lives on self)
+        timing = self._preview_timing()
+        delay = stagger_delay(sl.stagger, sl.text, timing)
+        sp = stagger_plan(plan, sl.text, delay, timing)
+        frame = float(self.current_time) * self.PREVIEW_FPS
+        fit = getattr(self, "_last_fit", None)
+        def val(name, f, rest):
+            keys = sp.get(name)
+            return evaluate_keys(keys, f, rest) if keys else rest
+        idx = 0
+        top = ay_px - block_h / 2.0
+        for li, line in enumerate(lines):
+            lw = metrics.horizontalAdvance(line)
+            if sl.align < 0:
+                x0 = ax_px
+            elif sl.align > 0:
+                x0 = ax_px - lw
+            else:
+                x0 = ax_px - lw / 2.0
+            base_y = top + li * line_step + line_step / 2.0
+            for ci, chr_ in enumerate(line):
+                f = frame - idx * delay
+                idx += 1
+                op = max(0.0, min(1.0, val("opacity", f, 1.0)))
+                blur = max(0.0, val("blur", f, 0.0))
+                if op <= 0.001 or not chr_.strip():
+                    continue
+                cx = x0 + metrics.horizontalAdvance(line[:ci]) + metrics.horizontalAdvance(chr_) / 2.0
+                tx = val("translate_x", f, 0.0)
+                ty = val("translate_y", f, 0.0)
+                if fit is not None:
+                    tx, ty = fit.dx(tx) * w, fit.dy(ty) * h
+                else:
+                    tx, ty = tx * w, ty * h
+                s = val("scale", f, 1.0)
+                rot = val("rotation", f, 0.0)
+                painter.save()
+                painter.translate(cx + tx, base_y - ty)
+                painter.rotate(-rot)
+                painter.scale(s, s)
+                painter.setOpacity(op / (1.0 + blur * 0.09))
+                painter.setPen(self._qcolor(sl.color))
+                r = QRectF(-metrics.horizontalAdvance(chr_), -line_step / 2.0, metrics.horizontalAdvance(chr_) * 2, line_step)
+                painter.drawText(r, int(Qt.AlignmentFlag.AlignCenter), chr_)
+                painter.restore()

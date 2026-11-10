@@ -38,8 +38,8 @@
     -0.004
   ],
   "box_enabled": false,
-  "animation_in": "fade",
-  "animation_out": "fade",
+  "animation_in": "char_blur",
+  "animation_out": "char_fade_out",
   "accent_color": [
     0.72,
     0.54,

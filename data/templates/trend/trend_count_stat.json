@@ -1,0 +1,522 @@
+{
+  "id": "trend_count_stat",
+  "name": "Count-Up Stat Card",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "The figure counts up while a progress bar fills in sync; label and source follow.",
+  "tags": [
+    "stat",
+    "counter",
+    "number",
+    "data",
+    "trend",
+    "report",
+    "premium",
+    "trend 2026"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 5.0,
+  "min_hold": 1.5,
+  "in_duration": 1.8,
+  "out_duration": 0.45,
+  "parameters": [
+    {
+      "id": "figure",
+      "name": "Figure",
+      "type": "string",
+      "default": "2,450",
+      "category": "Text"
+    },
+    {
+      "id": "label",
+      "name": "Label",
+      "type": "string",
+      "default": "families reached this year",
+      "category": "Text"
+    },
+    {
+      "id": "source",
+      "name": "Source",
+      "type": "string",
+      "default": "Field data, 2026",
+      "category": "Text"
+    },
+    {
+      "id": "count_up",
+      "name": "Count Up Number",
+      "type": "boolean",
+      "default": true,
+      "category": "Motion"
+    },
+    {
+      "id": "count_duration",
+      "name": "Count Duration (s)",
+      "type": "number",
+      "default": 1.6,
+      "category": "Motion",
+      "min_val": 0.4,
+      "max_val": 4.0,
+      "step": 0.1
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent",
+      "type": "color",
+      "default": [
+        0.29,
+        0.87,
+        0.6,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.5,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.52,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "card",
+      "type": "shape_rect",
+      "name": "Card",
+      "props": {
+        "role": "plate",
+        "width": 0.4,
+        "height": 0.3,
+        "corner_radius": 26,
+        "color": [
+          0.06,
+          0.06,
+          0.07,
+          0.86
+        ],
+        "border_color": [
+          1,
+          1,
+          1,
+          0.1
+        ],
+        "border_width": 1.5,
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.01
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.3,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0.94,
+              "easing": "softSpring"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.45,
+              "value": 0.96,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "figure",
+      "type": "text",
+      "name": "Figure",
+      "props": {
+        "text": "param:figure",
+        "font": "Montserrat",
+        "weight": "ExtraBold",
+        "size": 0.075,
+        "count": true,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.055,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.4,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": -0.015,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.6,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "track",
+      "type": "shape_rect",
+      "name": "Bar Track",
+      "props": {
+        "width": 0.3,
+        "height": 0.008,
+        "corner_radius": 4,
+        "color": [
+          1,
+          1,
+          1,
+          0.12
+        ],
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.02
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.35,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bar",
+      "type": "shape_rect",
+      "name": "Progress Bar",
+      "props": {
+        "width": 0.3,
+        "height": 0.008,
+        "corner_radius": 4,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.02,
+        "origin": "left"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.2,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.15,
+              "value": 0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 1.75,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "label",
+      "type": "text",
+      "name": "Label",
+      "props": {
+        "text": "param:label",
+        "font": "Inter",
+        "weight": "Medium",
+        "size": 0.021,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.068,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          0.72
+        ],
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.55,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.95,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.55,
+              "value": -0.01,
+              "easing": "quintOut"
+            },
+            {
+              "time": 1.0,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.22,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "source",
+      "type": "text",
+      "name": "Source",
+      "props": {
+        "text": "param:source",
+        "font": "Inter",
+        "weight": "Regular",
+        "size": 0.0145,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.112,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          0.52
+        ],
+        "shadow": {
+          "off": true
+        },
+        "font_bn": "Hind Siliguri"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.9,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 1.2,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.2,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

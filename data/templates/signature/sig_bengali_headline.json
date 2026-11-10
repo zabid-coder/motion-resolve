@@ -1,0 +1,419 @@
+{
+  "id": "sig_bengali_headline",
+  "name": "বাংলা শিরোনাম · Bengali Headline",
+  "category": "Signature",
+  "tier": "premium",
+  "description": "Bengali-first headline super set in Hind Siliguri with conjunct-safe masks, an accent tag and Bengali numerals.",
+  "tags": [
+    "bengali",
+    "bangla",
+    "news",
+    "headline",
+    "lower third",
+    "signature",
+    "premium"
+  ],
+  "aspect_ratios": [
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:5"
+  ],
+  "duration_default": 5.0,
+  "min_hold": 1.5,
+  "in_duration": 1.0,
+  "out_duration": 0.45,
+  "parameters": [
+    {
+      "id": "tag",
+      "name": "Tag",
+      "type": "string",
+      "default": "বিশেষ প্রতিবেদন",
+      "category": "Text"
+    },
+    {
+      "id": "headline",
+      "name": "Headline",
+      "type": "string",
+      "default": "নদীভাঙনে ঘরহারা হাজারো পরিবার",
+      "category": "Text"
+    },
+    {
+      "id": "detail",
+      "name": "Detail",
+      "type": "string",
+      "default": "কুড়িগ্রাম  ·  ১৪ জুলাই ২০২৪",
+      "category": "Text"
+    },
+    {
+      "id": "accent_color",
+      "name": "Accent",
+      "type": "color",
+      "default": [
+        0.98,
+        0.33,
+        0.27,
+        1.0
+      ],
+      "category": "Style"
+    },
+    {
+      "id": "pos_x",
+      "name": "Horizontal Anchor",
+      "type": "number",
+      "default": 0.07,
+      "category": "Layout",
+      "min_val": 0.04,
+      "max_val": 0.96,
+      "step": 0.005
+    },
+    {
+      "id": "pos_y",
+      "name": "Vertical Anchor",
+      "type": "number",
+      "default": 0.2,
+      "category": "Layout",
+      "min_val": 0.08,
+      "max_val": 0.92,
+      "step": 0.005
+    }
+  ],
+  "layers": [
+    {
+      "id": "tag_block",
+      "type": "shape_rect",
+      "name": "Tag Block",
+      "props": {
+        "width": 0.135,
+        "height": 0.054,
+        "corner_radius": 5,
+        "color": "param:accent_color",
+        "center_x": "param:pos_x",
+        "offset_x": 0.0675,
+        "center_y": "param:pos_y",
+        "offset_y": 0.084,
+        "origin": "left"
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.04,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.35,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.42,
+              "value": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 0.45,
+              "value": 0,
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tag",
+      "type": "text",
+      "name": "Tag",
+      "props": {
+        "text": "param:tag",
+        "font": "Hind Siliguri",
+        "font_bn": "Hind Siliguri",
+        "weight": "SemiBold",
+        "size": 0.021,
+        "alignment": "center",
+        "center_x": "param:pos_x",
+        "offset_x": 0.0675,
+        "center_y": "param:pos_y",
+        "offset_y": 0.082,
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "clip": true,
+        "shadow": {
+          "off": true
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.2,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.14,
+              "value": -0.045,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.55,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.2,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "headline",
+      "type": "text",
+      "name": "Headline",
+      "props": {
+        "text": "param:headline",
+        "font": "Hind Siliguri",
+        "font_bn": "Hind Siliguri",
+        "weight": "Bold",
+        "size": 0.04,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": 0.012,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          1.0
+        ],
+        "clip": true,
+        "shadow": {
+          "opacity": 0.4,
+          "softness": 0.035,
+          "offset": [
+            0,
+            -0.003
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.25,
+              "value": 0,
+              "easing": "linear"
+            },
+            {
+              "time": 0.4,
+              "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.25,
+              "value": -0.08,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.9,
+              "value": 0,
+              "easing": "quintOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.42,
+              "value": -0.08,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.36,
+              "value": 1,
+              "easing": "linear"
+            },
+            {
+              "time": 0.42,
+              "value": 0,
+              "easing": "linear"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "detail",
+      "type": "text",
+      "name": "Detail",
+      "props": {
+        "text": "param:detail",
+        "font": "Hind Siliguri",
+        "font_bn": "Hind Siliguri",
+        "weight": "Medium",
+        "size": 0.021,
+        "alignment": "left",
+        "center_x": "param:pos_x",
+        "center_y": "param:pos_y",
+        "offset_y": -0.05,
+        "color": [
+          0.98,
+          0.97,
+          0.95,
+          0.72
+        ],
+        "shadow": {
+          "opacity": 0.4,
+          "softness": 0.03,
+          "offset": [
+            0,
+            -0.002
+          ]
+        }
+      },
+      "motion_tracks": [
+        {
+          "property": "opacity",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.55,
+              "value": 0,
+              "easing": "quartInOut"
+            },
+            {
+              "time": 0.95,
+              "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.55,
+              "value": 6.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 1.0,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "opacity",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "cubicIn"
+            },
+            {
+              "time": 0.3,
+              "value": 0,
+              "easing": "cubicIn"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

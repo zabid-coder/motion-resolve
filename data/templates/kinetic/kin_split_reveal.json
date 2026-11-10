@@ -69,7 +69,8 @@
         "height": 0.003,
         "color": "param:accent_color",
         "center_x": 0.5,
-        "center_y": "param:pos_y"
+        "center_y": "param:pos_y",
+        "origin": "left"
       },
       "motion_tracks": [
         {
@@ -79,12 +80,12 @@
             {
               "time": 0.0,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.22,
+              "time": 0.06,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -94,12 +95,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.08,
-              "easing": "quartInOut"
+              "value": 0,
+              "easing": "expoInOut"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
             },
             {
               "time": 0.42,
-              "value": 1,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
@@ -109,14 +126,14 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.38,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "linear"
             },
             {
-              "time": 0.26,
+              "time": 0.42,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "linear"
             }
           ]
         }
@@ -139,7 +156,8 @@
         "offset_y": 0.048,
         "role": "headline",
         "character_spacing": 1.0,
-        "text_width": 0.76
+        "text_width": 0.76,
+        "clip": true
       },
       "motion_tracks": [
         {
@@ -147,35 +165,46 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.1,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.2,
+              "time": 0.22,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
         {
-          "property": "scale",
+          "property": "translate_y",
           "phase": "in",
           "keyframes": [
             {
+              "time": 0.1,
+              "value": -0.12835555555555553,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.8,
+              "value": 0,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "out",
+          "keyframes": [
+            {
               "time": 0.0,
-              "value": 0.9,
-              "easing": "softSpring"
+              "value": 0,
+              "easing": "expoIn"
             },
             {
-              "time": 0.24,
-              "value": 1.045,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.42,
-              "value": 1,
-              "easing": "softSpring"
+              "time": 0.4,
+              "value": -0.12835555555555553,
+              "easing": "expoOut"
             }
           ]
         },
@@ -184,14 +213,14 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.34,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "linear"
             },
             {
-              "time": 0.25,
+              "time": 0.4,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "linear"
             }
           ]
         }
@@ -222,13 +251,29 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
+              "time": 0.42,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.41,
+              "time": 0.87,
               "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.42,
+              "value": 6.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.97,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
@@ -238,12 +283,12 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
-              "value": 0.018,
+              "time": 0.42,
+              "value": -0.01,
               "easing": "expoOut"
             },
             {
-              "time": 0.53,
+              "time": 1.02,
               "value": 0,
               "easing": "expoOut"
             }
@@ -259,24 +304,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.28,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_y",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": -0.01,
               "easing": "cubicIn"
             }
           ]

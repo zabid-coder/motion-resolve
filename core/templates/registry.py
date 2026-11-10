@@ -123,7 +123,10 @@ class TemplateRegistry:
                         {"time": start_time + duration, "value": m.get("to_val", 1.0), "easing": easing},
                     ]
                 for k in raw_keyframes:
-                    ease = EasingToken(k.get("easing", "expoOut"))
+                    try:
+                        ease = EasingToken(k.get("easing", "expoOut"))
+                    except ValueError:
+                        ease = EasingToken.EXPO_OUT
                     kfs.append(KeyframeSpec(
                         time=float(k.get("time", 0.0)),
                         value=k.get("value"),

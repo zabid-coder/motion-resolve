@@ -29,7 +29,7 @@
   "stroke_thickness": 0.02,
   "shadow_enabled": true,
   "box_enabled": false,
-  "animation_in": "bounce_pop",
+  "animation_in": "flicker",
   "animation_out": "fade",
   "accent_color": [
     0.43,
@@ -46,7 +46,7 @@
   ],
   "shadow_softness": 0.04,
   "main_word": "CYBERPUNK",
-  "hero_font": "Bahnschrift",
+  "hero_font": "Barlow",
   "hero_style": "Bold",
   "hero_size_multiplier": 1.0,
   "shadow_offset": [

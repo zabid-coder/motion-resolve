@@ -18,6 +18,18 @@ def install():
     print("=" * 60)
 
     app_dir = get_app_dir()
+
+    # Fonts used by presets/templates (OFL, see resources/fonts/licenses).
+    try:
+        from core.font_installer import install_bundled_fonts, user_font_dir
+        new_fonts = install_bundled_fonts()
+        if new_fonts:
+            print(f"[+] Installed {len(new_fonts)} font(s) into {user_font_dir()} - restart DaVinci Resolve once.")
+        else:
+            print("[=] Bundled fonts already installed.")
+    except Exception as exc:
+        print(f"[!] Could not install bundled fonts: {exc}")
+
     targets = [
         # User Support Directory (macOS / Windows Local)
         get_scripts_comp_dir(),

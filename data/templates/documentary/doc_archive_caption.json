@@ -57,7 +57,8 @@
         "font_bn": "token:font_heading_bn",
         "role": "headline",
         "center_x": 0.15,
-        "center_y": 0.2
+        "center_y": 0.2,
+        "clip": true
       },
       "motion_tracks": [
         {
@@ -65,29 +66,45 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.015,
+              "time": 0.1,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.285,
+              "time": 0.22,
               "value": 1,
+              "easing": "linear"
+            }
+          ]
+        },
+        {
+          "property": "translate_y",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": -0.06417777777777776,
+              "easing": "quintOut"
+            },
+            {
+              "time": 0.8,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "translate_x",
-          "phase": "in",
+          "property": "translate_y",
+          "phase": "out",
           "keyframes": [
             {
-              "time": 0.015,
-              "value": -0.014,
-              "easing": "expoOut"
+              "time": 0.0,
+              "value": 0,
+              "easing": "expoIn"
             },
             {
-              "time": 0.395,
-              "value": 0,
+              "time": 0.4,
+              "value": -0.06417777777777776,
               "easing": "expoOut"
             }
           ]
@@ -97,30 +114,14 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.34,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "linear"
             },
             {
-              "time": 0.3,
+              "time": 0.4,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_x",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.008,
-              "easing": "cubicIn"
+              "easing": "linear"
             }
           ]
         }
@@ -150,28 +151,44 @@
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
+              "time": 0.42,
               "value": 0,
               "easing": "quartInOut"
             },
             {
-              "time": 0.42,
+              "time": 0.87,
               "value": 1,
+              "easing": "quartInOut"
+            }
+          ]
+        },
+        {
+          "property": "blur",
+          "phase": "in",
+          "keyframes": [
+            {
+              "time": 0.42,
+              "value": 6.0,
+              "easing": "expoOut"
+            },
+            {
+              "time": 0.97,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
         },
         {
-          "property": "translate_x",
+          "property": "translate_y",
           "phase": "in",
           "keyframes": [
             {
-              "time": 0.15,
-              "value": -0.008,
+              "time": 0.42,
+              "value": -0.01,
               "easing": "expoOut"
             },
             {
-              "time": 0.53,
+              "time": 1.02,
               "value": 0,
               "easing": "expoOut"
             }
@@ -187,24 +204,8 @@
               "easing": "cubicIn"
             },
             {
-              "time": 0.3,
+              "time": 0.28,
               "value": 0,
-              "easing": "cubicIn"
-            }
-          ]
-        },
-        {
-          "property": "translate_x",
-          "phase": "out",
-          "keyframes": [
-            {
-              "time": 0.0,
-              "value": 0,
-              "easing": "cubicIn"
-            },
-            {
-              "time": 0.3,
-              "value": 0.008,
               "easing": "cubicIn"
             }
           ]
@@ -220,7 +221,8 @@
         "height": 0.002,
         "color": "token:accent",
         "center_x": 0.15,
-        "center_y": 0.17
+        "center_y": 0.17,
+        "origin": "left"
       },
       "motion_tracks": [
         {
@@ -230,12 +232,12 @@
             {
               "time": 0.0,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.22,
+              "time": 0.06,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -245,12 +247,28 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.08,
-              "easing": "quartInOut"
+              "value": 0,
+              "easing": "expoInOut"
+            },
+            {
+              "time": 0.6,
+              "value": 1,
+              "easing": "expoOut"
+            }
+          ]
+        },
+        {
+          "property": "scale_x",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.1,
+              "value": 1,
+              "easing": "expoIn"
             },
             {
               "time": 0.42,
-              "value": 1,
+              "value": 0,
               "easing": "expoOut"
             }
           ]
@@ -260,14 +278,14 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.38,
               "value": 1,
-              "easing": "cubicIn"
+              "easing": "linear"
             },
             {
-              "time": 0.26,
+              "time": 0.42,
               "value": 0,
-              "easing": "cubicIn"
+              "easing": "linear"
             }
           ]
         }

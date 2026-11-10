@@ -522,10 +522,13 @@ class TestAuditFixes(unittest.TestCase):
 
         # 2. Template Compiler line spacing mapping
         compiler = FusionCompiler(bridge=mock_bridge)
-        self.assertEqual(compiler._layer_line_spacing(None), 0.0)
-        self.assertEqual(compiler._layer_line_spacing(LayerSpec(id="t0", type="text", name="T0", props={})), 0.0)
-        self.assertEqual(compiler._layer_line_spacing(LayerSpec(id="t0", type="text", name="T0", props={"line_spacing": 1.0})), 0.0)
-        self.assertAlmostEqual(compiler._layer_line_spacing(LayerSpec(id="t0", type="text", name="T0", props={"line_spacing": 1.25})), 0.25, places=2)
+        # Text+ LineSpacing is a multiplier (1.0 = normal, measured in Resolve 21);
+        # legacy "0.0 = normal" offsets are converted.
+        self.assertEqual(compiler._layer_line_spacing(None), 1.0)
+        self.assertEqual(compiler._layer_line_spacing(LayerSpec(id="t0", type="text", name="T0", props={})), 1.0)
+        self.assertEqual(compiler._layer_line_spacing(LayerSpec(id="t0", type="text", name="T0", props={"line_spacing": 1.0})), 1.0)
+        self.assertAlmostEqual(compiler._layer_line_spacing(LayerSpec(id="t0", type="text", name="T0", props={"line_spacing": 1.25})), 1.25, places=2)
+        self.assertAlmostEqual(compiler._layer_line_spacing(LayerSpec(id="t0", type="text", name="T0", props={"line_spacing": 0.25})), 1.25, places=2)
 
     def test_extract_style_with_hero_text_attributes(self):
         from core.text_plus_builder import TextPlusBuilder

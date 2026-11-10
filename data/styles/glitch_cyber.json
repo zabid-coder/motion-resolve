@@ -4,7 +4,7 @@
   "category": "Kinetic / Tech",
   "tier": "pro",
   "text": "SYSTEM CRITICAL",
-  "font": "Consolas",
+  "font": "JetBrains Mono",
   "style": "Bold",
   "size": 0.082,
   "character_spacing": 1.1,
@@ -38,9 +38,9 @@
     0.42
   ],
   "shadow_softness": 0.04,
-  "hero_font": "Consolas",
+  "hero_font": "JetBrains Mono",
   "hero_style": "Bold",
-  "hero_size_multiplier": 1.0,
+  "hero_size_multiplier": 1.12,
   "shadow_offset": [
     0.003,
     -0.004

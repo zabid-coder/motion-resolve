@@ -127,8 +127,10 @@ class TestFullAppAudit(unittest.TestCase):
         self.assertEqual(gadzhi["main_word"], "FOCUS")
         self.assertFalse(gadzhi["stroke_enabled"])
         self.assertGreater(gadzhi["shadow_softness"], 0.03)
-        self.assertEqual(gadzhi["animation_in"], "slide_up")
-        self.assertEqual(gadzhi["animation_out"], "slide_down")
+        # Luxury preset uses a restrained fade (true Merge opacity since the fade fix).
+        # Luxury preset: letters resolve out of blur one by one (Follower motion).
+        self.assertEqual(gadzhi["animation_in"], "char_blur")
+        self.assertEqual(gadzhi["animation_out"], "char_fade_out")
 
         vox = preset_map["vox_documentary"]
         self.assertEqual(vox["font"], "Avenir Next")

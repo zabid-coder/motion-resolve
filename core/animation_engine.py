@@ -8,6 +8,8 @@ class AnimationEngine:
     """Manages motion effects and directional continuity matching."""
 
     TRANSFORM_NODE_NAME = "MR_Transform"
+    CHAR_EFFECTS_IN = ("write_on", "char_cascade", "char_pop", "char_blur")
+    CHAR_EFFECTS_OUT = ("char_cascade_out", "char_fade_out")
     BLUR_NODE_NAME = "MR_Blur"
     MASK_NODE_NAME = "MR_Mask"
     MATTE_NODE_NAME = "MR_Matte"
@@ -35,8 +37,9 @@ class AnimationEngine:
         if not template or not media_out:
             return None, None, None, None
 
-        # Check if comp has dual-text merge (HeroText + Template)
-        text_source = comp.FindTool("MR_TextMerge") or template
+        # Source to animate: a compiled template's output, a dual-text merge
+        # (HeroText + Template), or the plain Text+ tool.
+        text_source = comp.FindTool("MR_TemplateOut") or comp.FindTool("MR_TextMerge") or template
 
         mr_trans = comp.FindTool(self.TRANSFORM_NODE_NAME)
         if not mr_trans:
@@ -103,11 +106,40 @@ class AnimationEngine:
             mr_matte.Background.ConnectTo(mr_blur.Output)
             if hasattr(mr_matte, "EffectMask") and hasattr(mr_matte.EffectMask, "ConnectTo"):
                 mr_matte.EffectMask.ConnectTo(mr_mask.Mask)
-            media_out.Input.ConnectTo(mr_matte.Output)
+            head = mr_matte.Output
         else:
-            media_out.Input.ConnectTo(mr_blur.Output)
+            head = mr_blur.Output
+
+        # True opacity: Merge(transparent BG, title FG).Blend. A Transform's
+        # Blend only mixes back to the UNtransformed input (at 0 the title is
+        # fully visible at rest), so it can never fade a title out.
+        mr_fade = self._get_fade(comp)
+        if mr_fade is not None:
+            mr_fade.Foreground.ConnectTo(head)
+            head = mr_fade.Output
+        media_out.Input.ConnectTo(head)
 
         return mr_trans, mr_blur, template, media_out
+
+    FADE_NODE_NAME = "MR_Fade"
+    CLEAR_NODE_NAME = "MR_Clear"
+
+    def _get_fade(self, comp):
+        fade = comp.FindTool(self.FADE_NODE_NAME)
+        if fade:
+            return fade
+        try:
+            clear = comp.FindTool(self.CLEAR_NODE_NAME) or comp.AddTool("Background")
+            clear.SetAttrs({"TOOLS_Name": self.CLEAR_NODE_NAME})
+            clear.SetInput("UseFrameFormatSettings", 1)
+            for chn in ("TopLeftRed", "TopLeftGreen", "TopLeftBlue", "TopLeftAlpha"):
+                clear.SetInput(chn, 0.0)
+            fade = comp.AddTool("Merge")
+            fade.SetAttrs({"TOOLS_Name": self.FADE_NODE_NAME})
+            fade.Background.ConnectTo(clear.Output)
+            return fade
+        except Exception:
+            return None
 
     def remove_effects(self, timeline_item):
         if not timeline_item or timeline_item.GetFusionCompCount() == 0:
@@ -117,13 +149,15 @@ class AnimationEngine:
             template = comp.FindTool("Template")
             media_out = comp.FindTool("MediaOut1")
 
-            for node_name in [self.TRANSFORM_NODE_NAME, self.BLUR_NODE_NAME, self.MASK_NODE_NAME, self.MATTE_NODE_NAME]:
+            source = comp.FindTool("MR_TemplateOut") or comp.FindTool("MR_TextMerge") or template
+            for node_name in [self.TRANSFORM_NODE_NAME, self.BLUR_NODE_NAME, self.MASK_NODE_NAME,
+                              self.MATTE_NODE_NAME, self.FADE_NODE_NAME, self.CLEAR_NODE_NAME]:
                 t = comp.FindTool(node_name)
                 if t:
                     t.Delete()
 
-            if template and media_out:
-                media_out.Input.ConnectTo(template.Output)
+            if source and media_out:
+                media_out.Input.ConnectTo(source.Output)
             return True
         except Exception as e:
             print(f"[CaptionForge] Error removing effects: {e}")
@@ -229,7 +263,17 @@ class AnimationEngine:
             return False
 
         effect_in = self.resolve_auto_effect(effect_in, effect_out)
-        opts = options or {}
+        opts = dict(options or {})
+        # Preset motion names that used to fall through to a plain fade.
+        if effect_in == "fade_in_slow":
+            opts["duration"] = int(opts.get("duration", 10)) * 2
+            effect_in = "fade"
+        elif effect_in == "fade_in":
+            effect_in = "fade"
+        if effect_out in ("fade_out",):
+            effect_out = "fade"
+        char_in = effect_in if effect_in in self.CHAR_EFFECTS_IN else None
+        char_out = effect_out if effect_out in self.CHAR_EFFECTS_OUT else None
         comp = timeline_item.GetFusionCompByIndex(1)
         mr_trans, mr_blur, template, media_out = self.get_or_create_pipeline(comp)
         if not mr_trans:
@@ -308,6 +352,27 @@ class AnimationEngine:
                 )
         elif effect_in == "fade":
             blend_expr_parts.append(f"min(1, max(0, (time - comp.RenderStart) / {dur}))")
+        elif effect_in in ("scale_fade", "zoom_punch", "slam_drop", "slide_up_blur"):
+            fast = max(4, int(dur * (0.7 if effect_in == "slam_drop" else 1.2)))
+            p_in = f"math.max(0, math.min(1, (time - comp.RenderStart) / {fast}))"
+            ease = f"(1 - math.pow(1 - {p_in}, 4))"   # quart-out: readable, not a snap
+            if effect_in == "scale_fade":
+                size_expr_parts.append(f"- ({0.14 * intensity:.3f} * (1 - {ease}))")
+            elif effect_in == "zoom_punch":
+                size_expr_parts.append(f"+ ({0.38 * intensity:.3f} * (1 - {ease}))")
+            elif effect_in == "slam_drop":
+                center_expr_parts.append(f"+ Point(0.0, {0.2 * dist:.3f} * math.pow(1 - {p_in}, 3))")
+                # squash on landing, settling with a damped wobble
+                size_expr_parts.append(
+                    f"+ ({0.1 * intensity:.3f} * math.exp(-math.max(0, time - comp.RenderStart - {fast}) * 0.35)"
+                    f" * math.cos(math.max(0, time - comp.RenderStart - {fast}) * 0.9) * ({p_in} >= 1 and 1 or 0))")
+                opts["motion_blur"] = True
+                opts.setdefault("motion_blur_angle", 90.0)
+            elif effect_in == "slide_up_blur":
+                center_expr_parts.append(f"- Point(0.0, {0.06 * dist:.3f} * (1 - {ease}))")
+                opts["blur_in"] = True
+            blend_expr_parts.append(f"min(1, max(0, (time - comp.RenderStart) / {max(2, fast // 2)}))")
+            self._last_direction = "up"
 
         # 2. OUT Effects
         eff_out = effect_out
@@ -319,11 +384,19 @@ class AnimationEngine:
             center_expr_parts.append(curve_out)
         elif eff_out == "fade":
             blend_expr_parts.append(f"min(1, max(0, (comp.RenderEnd - time) / {dur}))")
+        elif eff_out == "scale_out":
+            p_out = f"math.max(0, math.min(1, (comp.RenderEnd - time) / {dur}))"
+            size_expr_parts.append(f"- ({0.12 * intensity:.3f} * (1 - math.pow({p_out}, 3)))")
+            blend_expr_parts.append(f"min(1, max(0, (comp.RenderEnd - time) / {dur}))")
+        elif eff_out == "blur_out":
+            blend_expr_parts.append(f"min(1, max(0, (comp.RenderEnd - time) / {dur}))")
+            opts["blur_out"] = True
 
         # Guarantee transparent first and last frames. The previous motion
         # offsets were small enough to leave titles partially visible at both
         # ends, particularly on short slide presets.
-        fade_span = f"math.max(1, math.min({dur}, (comp.RenderEnd - comp.RenderStart) / 3))"
+        edge = 2 if (char_in or char_out) else dur
+        fade_span = f"math.max(1, math.min({edge}, (comp.RenderEnd - comp.RenderStart) / 3))"
         blend_expr_parts.append(
             f"min(1, max(0, (time - comp.RenderStart) / ({fade_span})), "
             f"max(0, (comp.RenderEnd - time) / ({fade_span})))"
@@ -362,7 +435,7 @@ class AnimationEngine:
             mr_trans.Angle.SetExpression(f"{1.2 * scribble_intensity:.2f} * math.sin(math.floor(time * {freq_s:.2f}) * 5.1)")
 
         if center_expr_parts:
-            mr_trans.Center.SetExpression("Point(0.5, 0.5) " + " ".join(center_expr_parts) + " -- [safe 0.55 0.65 0.35]")
+            mr_trans.Center.SetExpression("Point(0.5, 0.5) " + " ".join(center_expr_parts))
 
         if size_expr_parts:
             mr_trans.Size.SetExpression("1.0 " + " ".join(size_expr_parts))
@@ -370,8 +443,12 @@ class AnimationEngine:
             # Override stale template keyframes when reusing this Text+ clip.
             mr_trans.Size.SetExpression("1.0")
 
-        if blend_expr_parts and hasattr(mr_trans, "Blend") and hasattr(mr_trans.Blend, "SetExpression"):
-            mr_trans.Blend.SetExpression(" * ".join(f"({part})" for part in blend_expr_parts))
+        fade_tool = self._get_fade(comp)
+        if blend_expr_parts:
+            expr = " * ".join(f"({part})" for part in blend_expr_parts)
+            target = fade_tool if fade_tool is not None else mr_trans
+            if hasattr(target, "Blend") and hasattr(target.Blend, "SetExpression"):
+                target.Blend.SetExpression(expr)
 
         # 3. Blur & Motion Blur
         if mr_blur:
@@ -380,11 +457,17 @@ class AnimationEngine:
                 blur_angle = max(0.0, min(180.0, float(opts.get("motion_blur_angle", 90.0))))
                 mr_blur.Length.SetExpression(f"{0.05 * blur_intensity} * math.exp(-math.max(0, time - comp.RenderStart) * 0.40)")
                 mr_blur.Angle = blur_angle
+            elif opts.get("blur_out", False):
+                mr_blur.Length.SetExpression(f"{0.04 * intensity} * math.exp(-math.max(0, comp.RenderEnd - time) * 0.35)")
+                mr_blur.Angle = 90.0
             elif effect_in == "blur_in" or opts.get("blur_in", False):
                 blur_intensity = float(opts.get("motion_blur_intensity", intensity))
                 blur_angle = max(0.0, min(180.0, float(opts.get("motion_blur_angle", 90.0))))
                 mr_blur.Length.SetExpression(f"{0.04 * blur_intensity} * math.exp(-math.max(0, time - comp.RenderStart) * 0.35)")
                 mr_blur.Angle = blur_angle
+
+        # 4. Per-character motion (Text+ Follower) - or a neutral Follower
+        self._apply_char_motion(comp, char_in, char_out, opts)
 
         # 4. Flicker
         flicker_enabled = opts.get("flicker", False) or effect_in == "flicker"
@@ -407,3 +490,93 @@ class AnimationEngine:
                     pass
 
         return True
+
+
+    # ------------------------------------------------------------------
+    # Per-character motion
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _key(tool, inp, keys, rs):
+        """Write cubic-bezier keys (frame offsets from comp start) on a Follower input."""
+        from core.templates.motion_curves import fusion_keyframes, expand_springs
+        keys = expand_springs(list(keys))
+        if keys and keys[0][0] > 0:
+            keys.insert(0, (0.0, keys[0][1], "linear"))
+        try:
+            tool.AddModifier(inp, "BezierSpline")
+            sp = getattr(tool, inp).GetConnectedOutput().GetTool()
+            table = fusion_keyframes([(rs + f, v, e) for f, v, e in keys])
+            sp.SetKeyFrames(table, True)
+            ours = {round(float(t), 4) for t in table}
+            for t in list((sp.GetKeyFrames() or {}).keys()):
+                if round(float(t), 4) not in ours:
+                    sp.DeleteKeyFrames(float(t) - 0.001, float(t) + 0.001)
+        except Exception as exc:
+            print(f"[Motion Resolve] Could not key {inp}: {exc}")
+
+    def _apply_char_motion(self, comp, char_in, char_out, opts):
+        try:
+            attrs = comp.GetAttrs()
+            rs = float(attrs.get("COMPN_RenderStart", 0) or 0)
+            last = float(attrs.get("COMPN_RenderEnd", rs + 72)) - rs
+        except Exception:
+            rs, last = 0.0, 72.0
+        for name in ("Template", "HeroText"):
+            tool = comp.FindTool(name)
+            if not tool:
+                continue
+            try:
+                if tool.StyledText.GetExpression():
+                    continue  # a count-up drives this text
+            except Exception:
+                pass
+            try:
+                out = tool.StyledText.GetConnectedOutput()
+                fol = out.GetTool() if out else None
+            except Exception:
+                continue  # not a Fusion Text+ (or Resolve refused): leave text motion as is
+            if fol is None or fol.GetAttrs().get("TOOLS_RegID") != "StyledTextFollower":
+                if not (char_in or char_out):
+                    continue
+                tool.AddModifier("StyledText", "StyledTextFollower")
+                fol = tool.StyledText.GetConnectedOutput().GetTool()
+            text = str(tool.GetInput("StyledText") or "")
+            n = max(1, len(text.replace("\n", "").strip()))
+            if not (char_in or char_out):
+                # neutral: keep the modifier (it holds the text) but no motion
+                for inp, v in (("Opacity1", 1.0), ("CharacterSizeX", 1.0), ("CharacterSizeY", 1.0),
+                               ("SoftnessX1", 0.0), ("SoftnessY1", 0.0)):
+                    self._key(fol, inp, [(0.0, v, "linear")], rs)
+                fol.SetInput("Delay", 0.0)
+                continue
+            delay = 1.6 if char_in == "write_on" else float(opts.get("char_delay", 1.2))
+            delay = min(delay, max(0.2, last * 0.18 / max(1, n - 1)))
+            span = max(3.0, float(opts.get("duration", 10)))
+            shift = (n - 1) * delay
+            out0 = max(span, last - span - shift)
+            fol.SetInput("Order", 0)
+            fol.SetInput("DelayType", 1)
+            fol.SetInput("Delay", delay)
+            op_in = {"write_on": [(0, 0, "hold"), (1, 1, "linear")]}.get(char_in, [(0, 0, "quartInOut"), (span * 0.6, 1, "linear")])
+            op = list(op_in) if char_in else [(0, 1, "linear")]
+            if char_out:
+                op += [(out0, 1, "cubicIn"), (out0 + span * 0.7, 0, "linear")]
+            self._key(fol, "Opacity1", op, rs)
+            if tool.GetInput("Enabled3"):
+                k = float(tool.GetInput("Opacity3") or 0.5)
+                self._key(fol, "Opacity3", [(f, v * k, e) for f, v, e in op], rs)
+            size = [(0, 1, "linear")]
+            if char_in == "char_pop":
+                size = [(0, 0.2, "spring"), (span, 1, "linear")]
+            elif char_in == "char_cascade":
+                size = [(0, 0.85, "expoOut"), (span, 1, "linear")]
+            self._key(fol, "CharacterSizeX", size, rs)
+            self._key(fol, "CharacterSizeY", size, rs)
+            soft = [(0, 0, "linear")]
+            if char_in in ("char_blur", "char_cascade"):
+                soft = [(0, 6.0, "expoOut"), (span, 0, "linear")]
+            if char_out:
+                soft = soft + [(out0, 0, "cubicIn"), (out0 + span * 0.7, 4.0, "linear")]
+            fol.SetInput("SoftnessOnFillColorToo1", 1)
+            self._key(fol, "SoftnessX1", soft, rs)
+            self._key(fol, "SoftnessY1", soft, rs)

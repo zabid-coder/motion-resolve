@@ -48,7 +48,10 @@
         "role": "headline",
         "character_spacing": 1.0,
         "alignment": "center",
-        "text_width": 0.76
+        "text_width": 0.76,
+        "stagger": {
+          "delay": 1.0
+        }
       },
       "motion_tracks": [
         {
@@ -58,12 +61,12 @@
             {
               "time": 0.0,
               "value": 0,
-              "easing": "quartInOut"
+              "easing": "linear"
             },
             {
-              "time": 0.2,
+              "time": 0.08,
               "value": 1,
-              "easing": "quartInOut"
+              "easing": "linear"
             }
           ]
         },
@@ -73,18 +76,13 @@
           "keyframes": [
             {
               "time": 0.0,
-              "value": 0.9,
-              "easing": "softSpring"
+              "value": 0.3,
+              "easing": "spring"
             },
             {
-              "time": 0.24,
-              "value": 1.045,
-              "easing": "softSpring"
-            },
-            {
-              "time": 0.42,
-              "value": 1,
-              "easing": "softSpring"
+              "time": 0.5,
+              "value": 1.0,
+              "easing": "expoOut"
             }
           ]
         },
@@ -93,7 +91,7 @@
           "phase": "out",
           "keyframes": [
             {
-              "time": 0.0,
+              "time": 0.05,
               "value": 1,
               "easing": "cubicIn"
             },
@@ -101,6 +99,22 @@
               "time": 0.25,
               "value": 0,
               "easing": "cubicIn"
+            }
+          ]
+        },
+        {
+          "property": "scale",
+          "phase": "out",
+          "keyframes": [
+            {
+              "time": 0.0,
+              "value": 1,
+              "easing": "expoIn"
+            },
+            {
+              "time": 0.25,
+              "value": 0.8,
+              "easing": "expoOut"
             }
           ]
         }

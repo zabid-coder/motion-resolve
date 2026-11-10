@@ -49,8 +49,8 @@
   "box_extend_y": 0.025,
   "box_round": 0.15,
   "box_level": 1,
-  "animation_in": "pop_in",
-  "animation_out": "fade",
+  "animation_in": "write_on",
+  "animation_out": "char_fade_out",
   "use_2color": true,
   "main_word": "EXEC",
   "hero_font": "Syne"
